@@ -7,22 +7,22 @@ const MainLayout = ({ children }) => {
   return (
     <div className="min-h-screen bg-space-900 text-white">
       {/* Navbar full width */}
-      <div className="w-full border-b border-gray-600">
+      <div className="w-full ">
         <Navbar />
       </div>
-
+{/* 
       <div className="flex">
-        {/* Sidebar only visible on desktop */}
+
         <div className="hidden lg:block mt-6 ml-8 border border-[#2a2a2a] rounded-xl min-w-[250px] p-4">
           <Sidebar />
         </div>
 
+      </div> */}
+
         {/* Main content area */}
-        <main className="flex-1 px-6 py-4">
+        <main className="flex-1 px-6 ">
           {children}
         </main>
-      </div>
-
       {/* Footer */}
       <Footer />
     </div>

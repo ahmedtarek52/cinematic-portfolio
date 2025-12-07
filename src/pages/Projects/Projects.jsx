@@ -20,7 +20,7 @@ const Projects = () => {
 
   const ProjectCard = ({ project }) => (
     <Link to={`/projects/${project.id}`}>
-      <div className="group relative rounded-xl overflow-hidden bg-space-700 hover:scale-[1.02] transition-transform duration-300 cursor-pointer border border-[#2a2a2a]">
+      <div className="group relative  bg-space-700 hover:scale-[1.02] transition-transform duration-300 cursor-pointer border border-[#2a2a2a]">
         <div className="aspect-video relative overflow-hidden">
           <img 
             src={project.thumbnail} 
@@ -29,13 +29,13 @@ const Projects = () => {
             loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <div className="absolute top-3 left-3">
+          {/* <div className="absolute top-3 left-3">
             <span className="bg-black/80 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-lg">
               {project.category}
             </span>
-          </div>
+          </div> */}
         </div>
-        <div className="p-4 bg-space-700">
+        {/* <div className="p-4 bg-space-700">
           <h3 className="text-white font-semibold text-lg mb-2">{project.title}</h3>
           <div className="flex gap-2 flex-wrap">
             {project.services.map((service) => (
@@ -44,7 +44,7 @@ const Projects = () => {
               </span>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </Link>
   );
@@ -53,8 +53,8 @@ const Projects = () => {
     <div className="space-y-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2">Projects</h1>
-        <p className="text-gray-400 text-sm">Browse our catalog of finished work</p>
+        {/* <h1 className="text-4xl font-bold text-white mb-2">Projects</h1> */}
+        <p className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 max-w-3xl">Browse our catalog of finished work</p>
       </div>
 
       {/* Projects Grid */}

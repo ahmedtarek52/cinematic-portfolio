@@ -69,7 +69,7 @@ const Home = () => {
                   <Film size={20} />
                   View Projects
                 </Link>
-                <Link to="/showreel" className="inline-flex items-center gap-2 bg-accent text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-200">
+                <Link to="/showreel" className="inline-flex items-center gap-2 bg-gradient-to-br from-[#1488CC] to-[#2B32B2] text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-200">
                   <Play size={20} />
                   Watch Showreel
                 </Link>

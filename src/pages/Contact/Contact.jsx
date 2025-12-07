@@ -1,17 +1,43 @@
 import React, { useState } from 'react';
-import { Mail, Send, X } from 'lucide-react';
+import { Linkedin, Instagram, Check } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    company: '',
-    topic: '',
     message: ''
   });
 
   const [focusedField, setFocusedField] = useState(null);
   const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const contactInfo = {
+    heading: "CONTACT",
+    title: "Get In Touch",
+    residing: {
+      title: "Residing",
+      location: "Daegu",
+      country: "South Korea"
+    },
+    stateHome: {
+      title: "State Side Home",
+      location: "Minnesota",
+      country: "USA"
+    },
+    email: "randon.sommars@gmail.com",
+    kakao: "Kakao: RandonScott",
+    social: {
+      linkedin: "https://linkedin.com",
+      instagram: "https://instagram.com"
+    }
+  };
+
+  const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,16 +45,44 @@ const Contact = () => {
       ...prev,
       [name]: value
     }));
+    
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
   };
 
   const handleSubmit = () => {
-    // Validate required fields
-    if (!formData.fullName || !formData.email || !formData.topic || !formData.message) {
-      alert('Please fill in all required fields');
+    const newErrors = {};
+    
+    // Validation
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First name is required';
+    }
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last name is required';
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = 'Please enter a valid email';
+    }
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      // Focus first error field
+      const firstErrorField = Object.keys(newErrors)[0];
+      document.getElementById(firstErrorField)?.focus();
       return;
     }
     
-    // Handle form submission here
+    // Handle form submission
     console.log('Form submitted:', formData);
     setSubmitted(true);
     
@@ -36,23 +90,12 @@ const Contact = () => {
     setTimeout(() => {
       setSubmitted(false);
       setFormData({
-        fullName: '',
+        firstName: '',
+        lastName: '',
         email: '',
-        company: '',
-        topic: '',
         message: ''
       });
     }, 3000);
-  };
-
-  const handleReset = () => {
-    setFormData({
-      fullName: '',
-      email: '',
-      company: '',
-      topic: '',
-      message: ''
-    });
   };
 
   const handleKeyPress = (e) => {
@@ -62,64 +105,159 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4 sm:p-6 lg:p-8">
-      <div className="w-full max-w-3xl">
-        
-        {/* Contact Form Card */}
-        <div className="bg-gradient-to-b from-gray-900 to-gray-950 rounded-3xl shadow-2xl border border-gray-800 overflow-hidden">
+    <div className="min-h-screen bg-black text-white py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
           
-          {/* Header */}
-          <div className="flex items-center justify-between p-6 sm:p-8 border-b border-gray-800">
-            <div className="flex items-center gap-3">
-              <Mail className="text-white" size={24} aria-hidden="true" />
-              <h1 className="text-2xl sm:text-3xl font-bold text-white">
-                Contact Spectra Post
+          {/* Left Column - Contact Info */}
+          <div className="space-y-12" role="complementary" aria-label="Contact information">
+            {/* Header */}
+            <div>
+              <p className="text-gray-400 text-sm font-semibold tracking-widest mb-4 uppercase">
+                {contactInfo.heading}
+              </p>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
+                {contactInfo.title}
               </h1>
             </div>
-            <button
-              type="button"
-              onClick={handleReset}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors duration-200 text-sm font-medium"
-              aria-label="Close and reset form"
-            >
-              <X size={18} aria-hidden="true" />
-              <span className="hidden sm:inline">Close</span>
-            </button>
+
+            {/* Location Info */}
+            <div className="grid sm:grid-cols-2 gap-8 pt-8">
+              {/* Residing */}
+              <div>
+                <h2 className="text-xl font-bold mb-4">{contactInfo.residing.title}</h2>
+                <p className="text-gray-300 mb-1">{contactInfo.residing.location}</p>
+                <p className="text-gray-300">{contactInfo.residing.country}</p>
+              </div>
+
+              {/* State Side Home */}
+              <div>
+                <h2 className="text-xl font-bold mb-4">{contactInfo.stateHome.title}</h2>
+                <p className="text-gray-300 mb-1">{contactInfo.stateHome.location}</p>
+                <p className="text-gray-300">{contactInfo.stateHome.country}</p>
+              </div>
+            </div>
+
+            {/* Contact Details */}
+            <div className="space-y-3 pt-8">
+              <a 
+                href={`mailto:${contactInfo.email}`}
+                className="block text-gray-300 hover:text-white transition-colors text-lg"
+                aria-label={`Email us at ${contactInfo.email}`}
+              >
+                {contactInfo.email}
+              </a>
+              <p className="text-gray-300 text-lg">{contactInfo.kakao}</p>
+            </div>
+
+            {/* Social Links */}
+            <div className="flex gap-4 pt-4">
+              <a
+                href={contactInfo.social.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-14 h-14 rounded-full border border-gray-700 hover:border-white flex items-center justify-center transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
+                aria-label="Visit our LinkedIn profile"
+              >
+                <Linkedin size={20} aria-hidden="true" />
+              </a>
+              <a
+                href={contactInfo.social.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-14 h-14 rounded-full border border-gray-700 hover:border-white flex items-center justify-center transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
+                aria-label="Visit our Instagram profile"
+              >
+                <Instagram size={20} aria-hidden="true" />
+              </a>
+            </div>
           </div>
 
-          {/* Form */}
-          <div className="p-6 sm:p-8 space-y-6" onKeyPress={handleKeyPress}>
-            
-            {/* Full Name */}
-            <div className="space-y-2">
-              <label 
-                htmlFor="fullName" 
-                className="block text-sm font-medium text-gray-300"
-              >
-                Full name
-              </label>
-              <input
-                type="text"
-                id="fullName"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
-                onFocus={() => setFocusedField('fullName')}
-                onBlur={() => setFocusedField(null)}
-                required
-                className={`w-full px-4 py-3 bg-gray-950 border rounded-xl text-white placeholder-gray-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  focusedField === 'fullName' ? 'border-blue-500' : 'border-gray-800'
-                }`}
-                placeholder="Enter your full name"
-                aria-required="true"
-              />
+          {/* Right Column - Contact Form */}
+          <div 
+            className="space-y-8" 
+            onKeyPress={handleKeyPress}
+            role="form"
+            aria-label="Contact form"
+          >
+            {/* Name Fields */}
+            <div className="grid sm:grid-cols-2 gap-6">
+              {/* First Name */}
+              <div className="space-y-2">
+                <label 
+                  htmlFor="firstName" 
+                  className="sr-only"
+                >
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  onFocus={() => setFocusedField('firstName')}
+                  onBlur={() => setFocusedField(null)}
+                  placeholder="First Name"
+                  aria-required="true"
+                  aria-invalid={errors.firstName ? 'true' : 'false'}
+                  aria-describedby={errors.firstName ? 'firstName-error' : undefined}
+                  className={`w-full px-4 py-4 bg-transparent border rounded-lg text-white placeholder-gray-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white ${
+                    errors.firstName 
+                      ? 'border-red-500' 
+                      : focusedField === 'firstName' 
+                        ? 'border-white' 
+                        : 'border-gray-700'
+                  }`}
+                />
+                {errors.firstName && (
+                  <p id="firstName-error" className="text-red-500 text-sm mt-1" role="alert">
+                    {errors.firstName}
+                  </p>
+                )}
+              </div>
+
+              {/* Last Name */}
+              <div className="space-y-2">
+                <label 
+                  htmlFor="lastName" 
+                  className="sr-only"
+                >
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  onFocus={() => setFocusedField('lastName')}
+                  onBlur={() => setFocusedField(null)}
+                  placeholder="Last Name"
+                  aria-required="true"
+                  aria-invalid={errors.lastName ? 'true' : 'false'}
+                  aria-describedby={errors.lastName ? 'lastName-error' : undefined}
+                  className={`w-full px-4 py-4 bg-transparent border rounded-lg text-white placeholder-gray-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white ${
+                    errors.lastName 
+                      ? 'border-red-500' 
+                      : focusedField === 'lastName' 
+                        ? 'border-white' 
+                        : 'border-gray-700'
+                  }`}
+                />
+                {errors.lastName && (
+                  <p id="lastName-error" className="text-red-500 text-sm mt-1" role="alert">
+                    {errors.lastName}
+                  </p>
+                )}
+              </div>
             </div>
 
             {/* Email */}
             <div className="space-y-2">
               <label 
                 htmlFor="email" 
-                className="block text-sm font-medium text-gray-300"
+                className="sr-only"
               >
                 Email
               </label>
@@ -131,68 +269,30 @@ const Contact = () => {
                 onChange={handleChange}
                 onFocus={() => setFocusedField('email')}
                 onBlur={() => setFocusedField(null)}
-                required
-                className={`w-full px-4 py-3 bg-gray-950 border rounded-xl text-white placeholder-gray-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  focusedField === 'email' ? 'border-blue-500' : 'border-gray-800'
-                }`}
-                placeholder="your.email@example.com"
+                placeholder="Email"
                 aria-required="true"
-              />
-            </div>
-
-            {/* Company (Optional) */}
-            <div className="space-y-2">
-              <label 
-                htmlFor="company" 
-                className="block text-sm font-medium text-gray-300"
-              >
-                Company (optional)
-              </label>
-              <input
-                type="text"
-                id="company"
-                name="company"
-                value={formData.company}
-                onChange={handleChange}
-                onFocus={() => setFocusedField('company')}
-                onBlur={() => setFocusedField(null)}
-                className={`w-full px-4 py-3 bg-gray-950 border rounded-xl text-white placeholder-gray-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  focusedField === 'company' ? 'border-blue-500' : 'border-gray-800'
+                aria-invalid={errors.email ? 'true' : 'false'}
+                aria-describedby={errors.email ? 'email-error' : undefined}
+                className={`w-full px-4 py-4 bg-transparent border rounded-lg text-white placeholder-gray-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white ${
+                  errors.email 
+                    ? 'border-red-500' 
+                    : focusedField === 'email' 
+                      ? 'border-white' 
+                      : 'border-gray-700'
                 }`}
-                placeholder="Your company name"
               />
-            </div>
-
-            {/* Topic */}
-            <div className="space-y-2">
-              <label 
-                htmlFor="topic" 
-                className="block text-sm font-medium text-gray-300"
-              >
-                Topic
-              </label>
-              <input
-                type="text"
-                id="topic"
-                name="topic"
-                value={formData.topic}
-                onChange={handleChange}
-                onFocus={() => setFocusedField('topic')}
-                onBlur={() => setFocusedField(null)}
-                required
-                className={`w-full px-4 py-3 bg-gray-950 border rounded-xl text-white placeholder-gray-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                  focusedField === 'topic' ? 'border-blue-500' : 'border-gray-800'
-                }`}
-                placeholder="What would you like to discuss?"
-                aria-required="true"
-              />
+              {errors.email && (
+                <p id="email-error" className="text-red-500 text-sm mt-1" role="alert">
+                  {errors.email}
+                </p>
+              )}
             </div>
 
             {/* Message */}
             <div className="space-y-2">
               <label 
                 htmlFor="message" 
-                className="block text-sm font-medium text-gray-300"
+                className="sr-only"
               >
                 Message
               </label>
@@ -203,83 +303,57 @@ const Contact = () => {
                 onChange={handleChange}
                 onFocus={() => setFocusedField('message')}
                 onBlur={() => setFocusedField(null)}
-                required
+                placeholder="Message"
                 rows={6}
-                className={`w-full px-4 py-3 bg-gray-950 border rounded-xl text-white placeholder-gray-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none ${
-                  focusedField === 'message' ? 'border-blue-500' : 'border-gray-800'
-                }`}
-                placeholder="Tell us more about your project..."
                 aria-required="true"
+                aria-invalid={errors.message ? 'true' : 'false'}
+                aria-describedby={errors.message ? 'message-error' : undefined}
+                className={`w-full px-4 py-4 bg-transparent border rounded-lg text-white placeholder-gray-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white resize-none ${
+                  errors.message 
+                    ? 'border-red-500' 
+                    : focusedField === 'message' 
+                      ? 'border-white' 
+                      : 'border-gray-700'
+                }`}
               />
+              {errors.message && (
+                <p id="message-error" className="text-red-500 text-sm mt-1" role="alert">
+                  {errors.message}
+                </p>
+              )}
             </div>
 
             {/* Submit Button */}
-            <div className="flex justify-end pt-4 border-t border-gray-800">
+            <div className="flex flex-col items-end gap-4 pt-4">
               <button
                 type="button"
                 onClick={handleSubmit}
                 disabled={submitted}
-                className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 ${
+                className={`px-8 py-4 border-2 rounded-lg font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black min-w-[140px] ${
                   submitted
-                    ? 'bg-green-600 text-white cursor-not-allowed'
-                    : 'bg-blue-600 hover:bg-blue-700 text-white hover:shadow-lg hover:shadow-blue-500/50'
+                    ? 'bg-white text-black border-white cursor-not-allowed'
+                    : 'bg-transparent text-white border-white hover:bg-white hover:text-black'
                 }`}
-                aria-label="Send message"
+                aria-label={submitted ? "Message sent successfully" : "Submit contact form"}
               >
-                {submitted ? (
-                  <>
-                    <svg 
-                      className="w-5 h-5" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M5 13l4 4L19 7" 
-                      />
-                    </svg>
-                    <span>Message sent!</span>
-                  </>
-                ) : (
-                  <>
-                    <Send size={18} aria-hidden="true" />
-                    <span>Send message</span>
-                  </>
-                )}
+                {submitted ? 'Submitted' : 'Submit'}
               </button>
+
+              {/* Success Message */}
+              {submitted && (
+                <div 
+                  className="flex items-center gap-2 text-white"
+                  role="status"
+                  aria-live="polite"
+                >
+                  <Check size={18} aria-hidden="true" />
+                  <span>Your submission was successful.</span>
+                </div>
+              )}
             </div>
-
           </div>
-        </div>
 
-        {/* Additional Info */}
-        <div className="mt-8 text-center space-y-4">
-          <p className="text-gray-400 text-sm">
-            We typically respond within 24 hours during business days
-          </p>
-          <div className="flex items-center justify-center gap-6 text-sm text-gray-500">
-            <a 
-              href="mailto:inquiries@spectrapost.com" 
-              className="hover:text-gray-300 transition-colors"
-              aria-label="Email us at inquiries@spectrapost.com"
-            >
-              inquiries@spectrapost.com
-            </a>
-            <span aria-hidden="true">•</span>
-            <a 
-              href="tel:+15551234567" 
-              className="hover:text-gray-300 transition-colors"
-              aria-label="Call us at +1 (555) 123-4567"
-            >
-              +1 (555) 123-4567
-            </a>
-          </div>
         </div>
-
       </div>
     </div>
   );

@@ -223,7 +223,7 @@ const About = () => {
             <p className="text-gray-400 leading-relaxed">
               {aboutData.sections[0].description}
             </p>
-            <button className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-red-500/50">
+            <button className="w-full sm:w-auto px-8 py-3 bg-gradient-to-br from-[#1488CC] to-[#2B32B2] text-white rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-blue-500/50">
               {aboutData.sections[0].cta}
             </button>
           </div>
@@ -238,7 +238,7 @@ const About = () => {
             <p className="text-gray-400 leading-relaxed">
               {aboutData.sections[1].description}
             </p>
-            <button className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-red-500/50">
+            <button className="w-full sm:w-auto px-8 py-3 bg-gradient-to-br from-[#1488CC] to-[#2B32B2] text-white rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-blue-500/50">
               {aboutData.sections[1].cta}
             </button>
           </div>

@@ -9,14 +9,14 @@ const Navbar = () => {
   const navItems = [
     "Home",
     "Projects",
-    "Services",
+    // "Services",
     "About",
-    "Careers",
+    // "Careers",
     "Contact",
   ];
 
   return (
-    <header className="w-full bg-space-800 border-b border-space-700 px-6 py-3 sticky top-0 z-50">
+    <header className="w-full bg-space-900 border-b border-space-700 px-6 py-3 static top-0 z-50">
       <div className="flex items-center justify-between">
         {/* Logo */}
         <div className="text-xl font-bold text-white tracking-wide flex-shrink-0">
@@ -24,7 +24,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex gap-6 ml-auto text-sm items-center">
+        <nav className="hidden md:flex gap-5 font-semibold ml-auto text-sm items-center">
           {navItems.map((item) => {
             const path = item === "Home" ? "/" : `/${item.toLowerCase()}`;
             const isProjects = item === "Projects";
@@ -42,7 +42,7 @@ const Navbar = () => {
                   
                   return `transition px-3 py-1.5 rounded-lg ${
                     isProjectActive
-                      ? "bg-space-700 text-white font-medium"
+                      ? "bg-space-800 text-white "
                       : "text-gray-400 hover:text-white hover:bg-space-800"
                   }`;
                 }}
@@ -55,7 +55,7 @@ const Navbar = () => {
           {/* Showreel button */}
           <Link
             to="/showreel"
-            className="flex items-center gap-2 bg-accent text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition"
+            className="flex items-center gap-2 bg-gradient-to-br from-[#1488CC] to-[#2B32B2] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition"
           >
             <Play size={16} />
             Showreel
