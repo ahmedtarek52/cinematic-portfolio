@@ -1,111 +1,120 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { Film, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { projects } from '../../data/projects';
-
-const ProjectCard = ({ project }) => (
-  <Link to={`/projects/${project.id}`}>
-    <div className="group relative rounded-lg overflow-hidden bg-space-700 hover:scale-[1.02] transition-transform duration-300 cursor-pointer">
-      <div className="aspect-video relative overflow-hidden">
-        <img 
-          src={project.thumbnail} 
-          alt={project.title}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <div className="absolute top-3 left-3">
-          <span className="bg-black/70 backdrop-blur-sm text-white text-xs font-medium px-2 py-1 rounded">
-            {project.category}
-          </span>
-        </div>
-      </div>
-      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-        <div className="flex items-end justify-between">
-          <div>
-            <h3 className="text-white font-semibold text-lg">{project.title}</h3>
-            <div className="flex gap-2 mt-1 flex-wrap">
-              {project.services.map((service) => (
-                <span key={service} className="text-gray-300 text-xs bg-space-800/50 px-2 py-0.5 rounded">
-                  {service}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </Link>
-);
-
+import ArtCollection from '../../components/home/ArtCollection';
+import ProjectCard from '../Projects/ProjectCard';
+import Hero from '../../components/home/Hero';
+import { OurProcess } from '../../components/home/OurProcess';
 
 const Home = () => {
+  const [isVisible, setIsVisible] = useState({});
+
+  // Scroll to top on component mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Animation variants
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+  };
+
+  // Create refs for each section to track when they come into view
+  const featuredWorksRef = React.useRef(null);
+  const artCollectionRef = React.useRef(null);
+  const ourProcessRef = React.useRef(null);
+
+  // Use useInView hook to detect when sections are in view
+  const isFeaturedWorksInView = useInView(featuredWorksRef, { once: true, margin: "-100px" });
+  const isArtCollectionInView = useInView(artCollectionRef, { once: true, margin: "-100px" });
+  const isOurProcessInView = useInView(ourProcessRef, { once: true, margin: "-100px" });
+
   return (
-<>
-        
-        {/* Hero Section */}
-        <section className="grid gap-8 items-start bg-space-700 text-red rounded-2xl overflow-hidden shadow-2xl" role="banner">
-          {/* Hero Image - Takes 2 columns */}
-          <div className="lg:col-span-2">
-            <div className="relative overflow-hidden  group">
-              <img 
-                src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&h=600&fit=crop" 
-                alt="Professional color grading studio with ambient lighting"
-                className="w-full h-[400px] sm:h-[500px] object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-            </div>
-            <div className="flex items-center justify-between flex-wrap gap-4 p-5 ">
-              <div>
-                <h1 className=" text-2xl font-bold leading-tight">
-                  Cinematic Color. Precise Finishing.
-                </h1>
-                <p className="text-gray-400 ">
-                  Film post-production studio specializing in color grading, editorial, and finishing.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-4 pt-2">
-                <Link to="/projects" className="inline-flex items-center gap-2 bg-space-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-space-900 transition-colors duration-200 border border-[#2a2a2a]">
-                  <Film size={20} />
-                  View Projects
-                </Link>
-                <Link to="/showreel" className="inline-flex items-center gap-2 bg-gradient-to-br from-[#1488CC] to-[#2B32B2] text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-200">
-                  <Play size={20} />
-                  Watch Showreel
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+    <>
+      <Hero />
+      
+      {/* Featured Works */}
+      <motion.section
+        ref={featuredWorksRef}
+        aria-labelledby="featured-works"
+        className="py-10 max-w-7xl mx-auto px-4 md:px-0"
+        id="featured-works"
+        initial="hidden"
+        animate={isFeaturedWorksInView ? "visible" : "hidden"}
+        variants={sectionVariants}
+      >
+        {/* Title */}
+        <motion.h1
+          className="w-full text-center font-extrabold leading-none  
+                 text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl 
+                 tracking-tight"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isFeaturedWorksInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.7 }}
+        >
+          Voyager
+        </motion.h1>
 
+        {/* Subtitle */}
+        <motion.p
+          className="text-gray-300 text-lg md:text-xl leading-relaxed 
+               max-w-[60ch] text-center mx-auto mb-16 mt-6 px-4 md:px-0"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isFeaturedWorksInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+        >
+          Voyager Press is a modern travel and lifestyle newsroom that showcases
+          inspiring stories, destination features, and travel industry updates.
+        </motion.p>
 
-                      {/* Featured Works */}
-        <section aria-labelledby="featured-works" className="mt-12 bg-space-700 text-red rounded-2xl overflow-hidden shadow-2xl p-12">
-          <div className="flex items-end justify-between mb-6">
-            <div>
-              <h2 id="featured-works" className="text-3xl font-bold mb-2">Featured Work</h2>
-              <p className="text-gray-400 text-sm">
-                Recent projects across narrative, commercial, and music video.
-              </p>
-            </div>
-          <Link
-            to="/projects"
-            className="flex items-center gap-2 bg-space-700 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-space-800 transition border border-[#2a2a2a]"
-          >
-            <Play size={16} />
-            See all projects
-          </Link>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {projects.slice(0, 3).map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
-        </section>
-
-
-   </>
+        {/* Grid with Individual Card Animations */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 mt-10">
+          {projects.slice(0, 4).map((project, index) => {
+            // Create a ref for each project card
+            const cardRef = React.useRef(null);
+            // Check if this specific card is in view
+            const isCardInView = useInView(cardRef, { once: true, margin: "-50px" });
+            
+            return (
+              <motion.div
+                key={project.id}
+                ref={cardRef}
+                id={`project-${project.id}`}
+                className="project-card-animate"
+                initial={{ opacity: 0, y: 30 }}
+                animate={isCardInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <ProjectCard project={project} />
+              </motion.div>
+            );
+          })}
+        </div>
+      </motion.section>
+      
+      <motion.section 
+        ref={artCollectionRef}
+        className="py-10 px-4 md:px-0"
+        initial="hidden"
+        animate={isArtCollectionInView ? "visible" : "hidden"}
+        variants={sectionVariants}
+      >
+        <ArtCollection />
+      </motion.section>
+      
+      <motion.section 
+        ref={ourProcessRef}
+        className="py-10"
+        initial="hidden"
+        animate={isOurProcessInView ? "visible" : "hidden"}
+        variants={sectionVariants}
+      >
+        <OurProcess />
+      </motion.section>
+    </>
   );
 };
 

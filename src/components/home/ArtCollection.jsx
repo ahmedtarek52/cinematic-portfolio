@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Services = () => {
+const ArtCollection = () => {
   const [activeImageId, setActiveImageId] = useState(2);
 
   const images = [
@@ -49,10 +49,10 @@ const Services = () => {
   ];
 
   return (
-    <div className="min-h-screen ">
+
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-12 text-center">
+        <div className=" text-center">
           <h1 className="text-4xl md:text-5xl font-bold  mb-4">
             Our Art Collection
           </h1>
@@ -90,8 +90,7 @@ const Services = () => {
           ))}
         </div>
       </div>
-    </div>
   );
 };
 
-export default Services;
+export default ArtCollection;

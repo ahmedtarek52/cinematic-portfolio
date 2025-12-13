@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Play, Menu, X } from "lucide-react"; // Hamburger & close icons
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
   const navItems = [
@@ -15,8 +16,33 @@ const Navbar = () => {
     "Contact",
   ];
 
+  // Handle scroll event to change navbar style
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Determine if we're on the home page
+  const isHomePage = location.pathname === "/";
+
   return (
-    <header className="w-full bg-space-900 border-b border-space-700 px-6 py-3 static top-0 z-50">
+    <header 
+      className={`w-full px-6 py-3 fixed top-0 z-50 transition-all duration-300 ${
+        isHomePage 
+          ? scrolled 
+            ? "bg-black/80 backdrop-blur-md border-b border-gray-800" 
+            : "bg-transparent"
+          : "bg-black/80 backdrop-blur-md  border-b border-gray-800"
+      }`}
+    >
       <div className="flex items-center justify-between">
         {/* Logo */}
         <div className="text-xl font-bold text-white tracking-wide flex-shrink-0">

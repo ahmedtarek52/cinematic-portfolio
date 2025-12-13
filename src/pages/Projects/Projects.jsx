@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { projects } from '../../data/projects';
+import ProjectCard from './ProjectCard';
 
 const Projects = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [isVisible, setIsVisible] = useState({});
   const projectsPerPage = 9;
 
   // Pagination
@@ -18,49 +19,56 @@ const Projects = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const ProjectCard = ({ project }) => (
-    <Link to={`/projects/${project.id}`}>
-      <div className="group relative  bg-space-700 hover:scale-[1.02] transition-transform duration-300 cursor-pointer border border-[#2a2a2a]">
-        <div className="aspect-video relative overflow-hidden">
-          <img 
-            src={project.thumbnail} 
-            alt={project.title}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          {/* <div className="absolute top-3 left-3">
-            <span className="bg-black/80 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-lg">
-              {project.category}
-            </span>
-          </div> */}
-        </div>
-        {/* <div className="p-4 bg-space-700">
-          <h3 className="text-white font-semibold text-lg mb-2">{project.title}</h3>
-          <div className="flex gap-2 flex-wrap">
-            {project.services.map((service) => (
-              <span key={service} className="text-gray-400 text-xs bg-space-800 px-2 py-1 rounded-md border border-[#2a2a2a]">
-                {service}
-              </span>
-            ))}
-          </div>
-        </div> */}
-      </div>
-    </Link>
-  );
+  // Handle animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(prev => ({
+              ...prev,
+              [entry.target.id]: true
+            }));
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    const elements = document.querySelectorAll('.project-card-animate');
+    elements.forEach((el) => observer.observe(el));
+
+    return () => {
+      elements.forEach((el) => observer.unobserve(el));
+    };
+  }, [currentPage]);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 py-20 max-w-7xl mx-auto px-4 md:px-0">
       {/* Header */}
       <div className="mb-8">
         {/* <h1 className="text-4xl font-bold text-white mb-2">Projects</h1> */}
         <p className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 max-w-3xl">Browse our catalog of finished work</p>
       </div>
 
-      {/* Projects Grid */}
+      {/* Projects Grid with Slide-in Animation */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {paginatedProjects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+        {paginatedProjects.map((project, index) => (
+          <div
+            key={project.id}
+            id={`project-${project.id}-${currentPage}`}
+            className={`project-card-animate transition-all duration-700 ease-out ${
+              isVisible[`project-${project.id}-${currentPage}`] 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-10'
+            }`}
+            style={{ transitionDelay: `${index * 100}ms` }}
+          >
+            <ProjectCard project={project} />
+          </div>
         ))}
       </div>
 
