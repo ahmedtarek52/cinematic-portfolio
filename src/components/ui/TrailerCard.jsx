@@ -46,9 +46,9 @@ export const TrailerCard = ({
           <span className="px-2.5 py-1 rounded-md text-[11px] font-semibold tracking-wide bg-black/60 backdrop-blur-md text-white/90 border border-white/10 shadow-sm">
             {trailer.category}
           </span>
-          <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-accent/80 backdrop-blur-sm text-white shadow-sm">
+          {/* <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-accent/80 backdrop-blur-sm text-white shadow-sm">
             {trailer.year}
-          </span>
+          </span> */}
         </div>
 
         {/* Pulsing Central Play Button */}

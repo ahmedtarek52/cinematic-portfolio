@@ -9,7 +9,7 @@ const aboutData = {
     backgroundImage: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/e4f82e123053265.60e65a86ead4f.jpg"
   },
   profile: {
-    image: "https://tse2.mm.bing.net/th/id/OIP.KU-Aw5uSRRwzr_Zca7CkQgHaJQ?cb=ucfimgc2&w=1400&h=1750&rs=1&pid=ImgDetMain&o=7&rm=3",
+    image: "/images/mahmoud.png",
     name: "Mahmoud Abo hessein",
     title: "About Me",
     bio: "I'm Mahmoud Abo-hessein, a post-production artist focused on color grading and editorial. My work blends precise craft with cinematic sensibility—balancing mood, pace, and clarity around the story.",

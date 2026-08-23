@@ -157,177 +157,320 @@ export const projects = [
     vimeo: null
   },
   {
-    id: "satin",
-    title: "Satin",
+    id: "lumina",
+    title: "Lumina",
     category: "Commercial",
-    year: "2024",
+    year: "2025",
     type: "Commercial",
-    heroImage: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1200&h=800&fit=crop",
-    thumbnail: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&h=600&fit=crop",
-    description: "A sleek commercial featuring sophisticated studio lighting and fashion photography.",
-    services: ["Finish"],
-    tags: ["Color Grading", "Finish"],
-    metadata: "2024 • Commercial • Finish",
-    overview: "This commercial project required precise color grading to achieve a luxurious, high-end look that complements the product's premium positioning.",
-    approach: "We developed a refined color palette that emphasizes texture and detail. Careful attention was paid to skin tones and fabric textures, ensuring a polished final product that meets the highest broadcast standards.",
+    heroImage: "/images/p_05/Untitled_1.275.1.jpg",
+    thumbnail: "/images/p_05/Untitled_1.275.1.jpg",
+    description: "An evocative cinematic visual journey through high-contrast chiaroscuro and precision tone curves.",
+    services: ["Color", "Finish"],
+    tags: ["Dolby Vision", "ACES", "Film Emulation", "Look Dev"],
+    metadata: "2025 • Commercial • Color, Finish",
+    overview: "Delivered a signature analog-to-digital film pipeline, sculpting dynamic range with customized film print emulation and meticulous highlight roll-off across multiple camera formats.",
+    approach: "Engineered custom LUTs in ACEScc working space to achieve rich, dense shadows without losing skin tone fidelity, finishing with a refined 35mm grain structure.",
     stills: [
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=800&h=800&fit=crop"
+      "/images/p_05/Untitled_1.214.1.jpg",
+      "/images/p_05/Untitled_1.275.1.jpg",
+      "/images/p_05/Untitled_1.276.1.jpg",
+      "/images/p_05/Untitled_1.309.1.jpg",
+      "/images/p_05/Untitled_1.354.1.jpg",
+      "/images/p_05/Untitled_1.390.1.jpg",
+      "/images/p_05/Untitled_1.72.1.jpg",
+      "/images/p_05/Untitled_3.100.1.jpg",
+      "/images/p_05/Untitled_3.124.1.jpg",
+      "/images/p_05/Untitled_3.46.1.jpg"
     ],
     credits: [
-      { role: "Director", name: "E. Clark" },
-      { role: "DP", name: "J. Miller" },
+      { role: "Director", name: "K. Vance" },
+      { role: "DP", name: "E. Morales" },
       { role: "Colorist", name: "M. Davies" },
-      { role: "Editor", name: "S. Davis" },
-      { role: "Producer", name: "F. Moore" }
+      { role: "Editor", name: "S. Tanaka" },
+      { role: "Producer", name: "H. Reed" }
     ],
     techSpecs: {
-      master: "4K",
-      colorSpace: "Rec. 709",
-      hdr: "SDR",
+      master: "4K DCI",
+      colorSpace: "P3-D65",
+      hdr: "Dolby V.",
       pipeline: "ACES"
     },
     vimeo: null
   },
   {
-    id: "amber-rooms",
-    title: "Amber Rooms",
+    id: "alf-leila",
+    title: "Alf Leila",
     category: "Narrative",
-    year: "2024",
+    year: "2025",
     type: "Narrative",
-    heroImage: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=1200&h=800&fit=crop",
-    thumbnail: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&h=600&fit=crop",
-    description: "A haunting narrative piece set in a mysterious forest environment.",
-    services: ["Color", "Sound"],
-    tags: ["Color Grading", "Sound Design"],
-    metadata: "2024 • Narrative • Color, Sound",
-    overview: "This narrative project required a collaborative approach between color grading and sound design to create an immersive, atmospheric experience.",
-    approach: "We established a cool, desaturated palette with warm accents to enhance the mysterious forest setting. The color work was closely integrated with sound design to create a cohesive sensory experience.",
-    stills: [
-      "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1511497584788-876760111969?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=800&fit=crop"
-    ],
-    credits: [
-      { role: "Director", name: "B. Jackson" },
-      { role: "DP", name: "H. Wright" },
-      { role: "Colorist", name: "M. Davies" },
-      { role: "Editor", name: "K. Patel" },
-      { role: "Sound Designer", name: "J. Adams" },
-      { role: "Producer", name: "G. Harris" }
-    ],
-    techSpecs: {
-      master: "4K",
-      colorSpace: "Rec. 709",
-      hdr: "SDR",
-      pipeline: "ACES"
-    },
-    vimeo: null
-  },
-  {
-    id: "charge",
-    title: "Charge",
-    category: "Commercial",
-    year: "2024",
-    type: "Commercial",
-    heroImage: "https://images.pexels.com/photos/13269202/pexels-photo-13269202.jpeg?w=1200&h=800&fit=crop",
-    thumbnail: "https://images.pexels.com/photos/13269202/pexels-photo-13269202.jpeg?w=800&h=600&fit=crop",
-    description: "A high-energy commercial featuring dynamic product photography and vibrant colors.",
-    services: ["Edit"],
-    tags: ["Editorial", "Color Grading"],
-    metadata: "2024 • Commercial • Edit",
-    overview: "This fast-paced commercial required tight editorial work to create a compelling narrative within a short timeframe.",
-    approach: "Our editorial team crafted a rhythmically-driven cut that emphasizes the product's key features. Color grading was applied to enhance the vibrant, energetic feel of the piece.",
-    stills: [
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=800&h=800&fit=crop"
-    ],
-    credits: [
-      { role: "Director", name: "T. Robinson" },
-      { role: "DP", name: "L. Martinez" },
-      { role: "Editor", name: "K. Patel" },
-      { role: "Colorist", name: "M. Davies" },
-      { role: "Producer", name: "M. Lewis" }
-    ],
-    techSpecs: {
-      master: "4K",
-      colorSpace: "Rec. 709",
-      hdr: "SDR",
-      pipeline: "ACES"
-    },
-    vimeo: null
-  },
-  {
-    id: "livewire",
-    title: "Livewire",
-    category: "Music Video",
-    year: "2024",
-    type: "Music Video",
-    heroImage: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1200&h=800&fit=crop",
-    thumbnail: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&h=600&fit=crop",
-    description: "An electrifying music video capturing the energy of live performance.",
-    services: ["VFX"],
-    tags: ["VFX", "Color Grading"],
-    metadata: "2024 • Music Video • VFX",
-    overview: "This music video combined live performance footage with sophisticated VFX work to create a visually stunning piece.",
-    approach: "Our VFX team integrated seamless effects that enhance the performance without distracting from the artist. Color grading unified the various elements into a cohesive visual experience.",
-    stills: [
-      "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1557683316-973673baf926?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&h=800&fit=crop"
-    ],
-    credits: [
-      { role: "Director", name: "A. Martinez" },
-      { role: "DP", name: "R. Taylor" },
-      { role: "VFX Supervisor", name: "D. Lee" },
-      { role: "Colorist", name: "M. Davies" },
-      { role: "Producer", name: "K. White" }
-    ],
-    techSpecs: {
-      master: "4K",
-      colorSpace: "Rec. 709",
-      hdr: "SDR",
-      pipeline: "ACES"
-    },
-    vimeo: null
-  },
-  {
-    id: "apogee",
-    title: "Apogee",
-    category: "Documentary",
-    year: "2024",
-    type: "Documentary",
-    heroImage: "https://images.unsplash.com/photo-1511497584788-876760111969?w=1200&h=800&fit=crop",
-    thumbnail: "https://images.unsplash.com/photo-1511497584788-876760111969?w=800&h=600&fit=crop",
-    description: "A contemplative documentary exploring urban landscapes and human stories.",
+    heroImage: "/images/p_06/ALF_LEILA_1.1.2.png",
+    thumbnail: "/images/p_06/ALF_LEILA_1.1.2.png",
+    description: "A grand period narrative immersed in rich golden hues, ambient oil-lamp lighting, and mystical atmosphere.",
     services: ["Color", "HDR"],
-    tags: ["Color Grading", "HDR", "Documentary"],
-    metadata: "2024 • Documentary • Color, HDR",
-    overview: "This documentary project required careful color grading to maintain authenticity while enhancing the visual storytelling. An HDR version was created for premium distribution.",
-    approach: "We applied a natural, documentary-style color grade that respects the source material. The HDR pass was carefully crafted to provide additional depth and detail for viewers with compatible displays.",
+    tags: ["Dolby Vision", "ACES", "Period Drama", "Skin Tones"],
+    metadata: "2025 • Narrative • Color, HDR",
+    overview: "Crafted the visual identity for an opulent period drama series, capturing historical grandeur with warm candlelit warmth and deep nocturnal indigos.",
+    approach: "Established a specialized split-toning approach harmonizing warm tungsten candle glimmers with cool midnight ambient light. Controlled highlight diffusion preserved intricate gold embroidery.",
     stills: [
-      "https://images.unsplash.com/photo-1511497584788-876760111969?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=800&fit=crop"
+      "/images/p_06/ALF_LEILA_1.1.2.png",
+      "/images/p_06/ALF_LEILA_1.17.2.png",
+      "/images/p_06/ALF_LEILA_1.2.2.png",
+      "/images/p_06/ALF_LEILA_1.32.2.png",
+      "/images/p_06/ALF_LEILA_1.49.2.png",
+      "/images/p_06/ALF_LEILA_1.59.2.png",
+      "/images/p_06/ALF_LEILA_1.74.2.png",
+      "/images/p_06/IMG_0421.png",
+      "/images/p_06/IMG_0440.png",
+      "/images/p_06/IMG_0441.png"
     ],
     credits: [
-      { role: "Director", name: "C. Brown" },
-      { role: "DP", name: "A. Wilson" },
+      { role: "Director", name: "T. El-Masri" },
+      { role: "DP", name: "Z. Mansour" },
       { role: "Colorist", name: "M. Davies" },
       { role: "Editor", name: "R. Thompson" },
-      { role: "Producer", name: "L. Garcia" }
+      { role: "Producer", name: "N. Salem" }
+    ],
+    techSpecs: {
+      master: "4K",
+      colorSpace: "Rec. 2020",
+      hdr: "Dolby V.",
+      pipeline: "ACES"
+    },
+    vimeo: null
+  },
+  {
+    id: "mirage",
+    title: "Mirage",
+    category: "Commercial",
+    year: "2025",
+    type: "Commercial",
+    heroImage: "/images/p_07/Still 2026-02-12 183439_1.7.1.png",
+    thumbnail: "/images/p_07/Still 2026-02-12 183439_1.7.1.png",
+    description: "High-octane luxury automotive cinematography showcasing radiant reflections and dramatic dusk transitions.",
+    services: ["Finish", "VFX"],
+    tags: ["HDR10", "Automotive", "Color Grading", "Beauty Retouch"],
+    metadata: "2025 • Commercial • Finish, VFX",
+    overview: "Engineered end-to-end commercial finish for a flagship automotive campaign, refining car paint specular highlights and seamless sky replacement.",
+    approach: "Layered dynamic window tracking across metallic vehicle surfaces, balancing high dynamic range dusk sunlight with rich obsidian paintwork.",
+    stills: [
+      "/images/p_07/Still 2026-02-12 183439_1.129.2.png",
+      "/images/p_07/Still 2026-02-12 183439_1.15.1.png",
+      "/images/p_07/Still 2026-02-12 183439_1.2.1.png",
+      "/images/p_07/Still 2026-02-12 183439_1.3.2.png",
+      "/images/p_07/Still 2026-02-12 183439_1.38.1.png",
+      "/images/p_07/Still 2026-02-12 183439_1.6.2.png",
+      "/images/p_07/Still 2026-02-12 183439_1.68.1.png",
+      "/images/p_07/Still 2026-02-12 183439_1.7.1.png",
+      "/images/p_07/Still 2026-02-12 183439_1.78.1.png",
+      "/images/p_07/Still 2026-02-12 183439_1.92.1.png"
+    ],
+    credits: [
+      { role: "Director", name: "A. Novak" },
+      { role: "DP", name: "L. Fischer" },
+      { role: "Colorist", name: "M. Davies" },
+      { role: "Editor", name: "K. Patel" },
+      { role: "Producer", name: "J. Stone" }
     ],
     techSpecs: {
       master: "4K",
       colorSpace: "P3-D65",
       hdr: "HDR10",
+      pipeline: "ACES"
+    },
+    vimeo: null
+  },
+  {
+    id: "veridian",
+    title: "Veridian",
+    category: "Music Video",
+    year: "2025",
+    type: "Music Video",
+    heroImage: "/images/p_08/Still 2026-03-12 042224_1.44.3.png",
+    thumbnail: "/images/p_08/Still 2026-03-12 042224_1.44.3.png",
+    description: "An electric cyberpunk music video bathed in saturated neon flares, deep emerald shadows, and kinetic pacing.",
+    services: ["Edit", "Color"],
+    tags: ["Music Video", "Neon Aesthetic", "Grain Management", "VFX"],
+    metadata: "2025 • Music Video • Edit, Color",
+    overview: "Collaborated on an avant-garde music video, crafting an otherworldly color palette driven by hyper-saturated primaries and dynamic rhythmic edits.",
+    approach: "Custom color separation pushed emerald greens and hot magentas while maintaining realistic skin tones through selective isolation keys and organic halation.",
+    stills: [
+      "/images/p_08/Still 2026-03-12 034411_1.224.1.png",
+      "/images/p_08/Still 2026-03-12 034411_1.335.2.png",
+      "/images/p_08/Still 2026-03-12 034411_1.336.2.png",
+      "/images/p_08/Still 2026-03-12 034411_1.337.1.png",
+      "/images/p_08/Still 2026-03-12 034411_2.15.3.png",
+      "/images/p_08/Still 2026-03-12 042224_1.30.2.png",
+      "/images/p_08/Still 2026-03-12 042224_1.32.1.png",
+      "/images/p_08/Still 2026-03-12 042224_1.44.3.png",
+      "/images/p_08/Still 2026-03-12 042224_1.95.1.png"
+    ],
+    credits: [
+      { role: "Director", name: "S. Thorne" },
+      { role: "DP", name: "C. Mendez" },
+      { role: "Colorist", name: "M. Davies" },
+      { role: "Editor", name: "T. Vance" },
+      { role: "Producer", name: "E. Hall" }
+    ],
+    techSpecs: {
+      master: "4K",
+      colorSpace: "Rec. 709",
+      hdr: "SDR",
+      pipeline: "DaVinci YRGB"
+    },
+    vimeo: null
+  },
+  {
+    id: "solstice",
+    title: "Solstice",
+    category: "Documentary",
+    year: "2025",
+    type: "Documentary",
+    heroImage: "/images/p_09/Still 2025-03-07 224644_1.52.1.png",
+    thumbnail: "/images/p_09/Still 2025-03-07 224644_1.52.1.png",
+    description: "An intimate environmental documentary exploring polar twilight, glaciers, and sublime natural lighting.",
+    services: ["Color", "HDR"],
+    tags: ["Dolby Vision", "Documentary", "HDR10", "ACES"],
+    metadata: "2025 • Documentary • Color, HDR",
+    overview: "Completed full HDR color grade for a feature documentary captured across extreme Arctic conditions, balancing piercing snow highlights with subtle ice blue gradations.",
+    approach: "Utilized ACES pipeline with wide gamut mapping to prevent cyan clipping in glacial ice crevices, delivering an immersive Dolby Vision master.",
+    stills: [
+      "/images/p_09/Still 2025-03-07 224644_1.11.1.png",
+      "/images/p_09/Still 2025-03-07 224644_1.27.1.png",
+      "/images/p_09/Still 2025-03-07 224644_1.32.1.png",
+      "/images/p_09/Still 2025-03-07 224644_1.38.1.png",
+      "/images/p_09/Still 2025-03-07 224644_1.52.1.png",
+      "/images/p_09/Still 2025-03-07 224644_1.6.2.png",
+      "/images/p_09/Still 2025-03-07 224644_1.69.1.png",
+      "/images/p_09/Still 2025-03-07 224644_1.70.1.png",
+      "/images/p_09/Still 2025-03-07 224644_1.8.1.png",
+      "/images/p_09/Still 2025-03-07 224644_1.9.1.png"
+    ],
+    credits: [
+      { role: "Director", name: "H. Lindqvist" },
+      { role: "DP", name: "O. Berg" },
+      { role: "Colorist", name: "M. Davies" },
+      { role: "Editor", name: "M. Lindgren" },
+      { role: "Producer", name: "K. Johansen" }
+    ],
+    techSpecs: {
+      master: "4K DCI",
+      colorSpace: "P3-D65",
+      hdr: "Dolby V.",
+      pipeline: "ACES"
+    },
+    vimeo: null
+  },
+  {
+    id: "erg",
+    title: "Erg",
+    category: "Commercial",
+    year: "2024",
+    type: "Commercial",
+    heroImage: "/images/p_10/ERG_10.2.2.png",
+    thumbnail: "/images/p_10/ERG_10.2.2.png",
+    description: "A high-fashion editorial set against sun-bleached dunes, emphasizing texture, warmth, and golden hour brilliance.",
+    services: ["Color", "Finish"],
+    tags: ["Fashion", "Color Grading", "Finish", "Film Look"],
+    metadata: "2024 • Commercial • Color, Finish",
+    overview: "Crafted a sensual, sun-drenched look for a luxury fashion brand film, prioritizing silk fabrics, warm skin tones, and soft contrast.",
+    approach: "Employed 65mm film emulations with soft toe compression and controlled saturation to give the bright daylight desert setting a timeless, editorial finish.",
+    stills: [
+      "/images/p_10/ERG_10.2.2.png",
+      "/images/p_10/ERG_4.10.1.png",
+      "/images/p_10/ERG_4.9.1.png",
+      "/images/p_10/ERG_6.1.2.png",
+      "/images/p_10/ERG_7.2.1.png"
+    ],
+    credits: [
+      { role: "Director", name: "D. Rossi" },
+      { role: "DP", name: "G. Laurent" },
+      { role: "Colorist", name: "M. Davies" },
+      { role: "Editor", name: "A. Becker" },
+      { role: "Producer", name: "S. Moreau" }
+    ],
+    techSpecs: {
+      master: "4K",
+      colorSpace: "Rec. 709",
+      hdr: "SDR",
+      pipeline: "ACES"
+    },
+    vimeo: null
+  },
+  {
+    id: "monolith",
+    title: "Monolith",
+    category: "Narrative",
+    year: "2024",
+    type: "Narrative",
+    heroImage: "/images/p_11/1.280.1_1.280.1.png",
+    thumbnail: "/images/p_11/1.280.1_1.280.1.png",
+    description: "A moody sci-fi psychological thriller defined by brutalist architecture, cold blues, and stark shadow play.",
+    services: ["Color", "VFX"],
+    tags: ["Sci-Fi", "Dolby Vision", "VFX Integration", "ACES"],
+    metadata: "2024 • Narrative • Color, VFX",
+    overview: "Developed the dark, dystopian visual atmosphere for a sci-fi short film, integrating complex CGI elements seamlessly with live-action anamorphic plates.",
+    approach: "Established monochromatic cold tones with subtle highlight warmth, using density-preserving curves to create an imposing sense of claustrophobia.",
+    stills: [
+      "/images/p_11/1.113.1_1.113.1.png",
+      "/images/p_11/1.134.1_1.134.1.png",
+      "/images/p_11/1.218.1_1.218.1.png",
+      "/images/p_11/1.280.1_1.280.1.png",
+      "/images/p_11/1.385.1_1.385.1.png",
+      "/images/p_11/1.93.1_1.93.1.png",
+      "/images/p_11/1.97.1_1.97.1.png"
+    ],
+    credits: [
+      { role: "Director", name: "M. Kowalski" },
+      { role: "DP", name: "J. Schneider" },
+      { role: "Colorist", name: "M. Davies" },
+      { role: "Editor", name: "E. Foster" },
+      { role: "Producer", name: "B. Wagner" }
+    ],
+    techSpecs: {
+      master: "4K",
+      colorSpace: "P3-D65",
+      hdr: "Dolby V.",
+      pipeline: "ACES"
+    },
+    vimeo: null
+  },
+  {
+    id: "afterglow",
+    title: "Afterglow",
+    category: "Music Video",
+    year: "2024",
+    type: "Music Video",
+    heroImage: "/images/p_12/d1d59025-4b8f-47dd-b73f-11608cda4a45.JPG",
+    thumbnail: "/images/p_12/d1d59025-4b8f-47dd-b73f-11608cda4a45.JPG",
+    description: "A retro-futuristic performance piece steeped in vintage anamorphic flare, warm amber hazes, and dreamlike softness.",
+    services: ["Edit", "Color"],
+    tags: ["Music Video", "Anamorphic", "Halation", "Film Emulation"],
+    metadata: "2024 • Music Video • Edit, Color",
+    overview: "Engineered a vintage 70s cinema aesthetic for an indie pop anthem, featuring customized optical halation, film gate weave, and rich pastel palettes.",
+    approach: "Custom color matrix adjustments gave skin tones a creamy, sunlit appearance, accented by soft anamorphic lens flare glows and authentic 16mm grain.",
+    stills: [
+      "/images/p_12/009b1338-122e-42cf-b7b6-6100acdfca0e.JPG",
+      "/images/p_12/58726a55-bffa-475a-82c8-743bf9ed5eb1.JPG",
+      "/images/p_12/6dbafe28-d61b-41bb-8cd1-5f36a868339f.JPG",
+      "/images/p_12/72b52f83-4b5f-47cc-a4d8-f4a0a9cd1f04.JPG",
+      "/images/p_12/788c012b-0229-4269-b232-3843f71d6357.JPG",
+      "/images/p_12/79416f75-50de-45cb-9dab-78a55664ed91.JPG",
+      "/images/p_12/8ccce3b7-04b5-47b3-8497-3641a72489df.JPG",
+      "/images/p_12/d1d59025-4b8f-47dd-b73f-11608cda4a45.JPG",
+      "/images/p_12/de50ba87-9ce0-4fdb-abae-669b43371f36.JPG",
+      "/images/p_12/f4489bd3-fbb5-4187-9576-f469bb198c5f.JPG"
+    ],
+    credits: [
+      { role: "Director", name: "L. Fontaine" },
+      { role: "DP", name: "P. Renaud" },
+      { role: "Colorist", name: "M. Davies" },
+      { role: "Editor", name: "S. Laurent" },
+      { role: "Producer", name: "C. Dupont" }
+    ],
+    techSpecs: {
+      master: "4K",
+      colorSpace: "Rec. 709",
+      hdr: "SDR",
       pipeline: "ACES"
     },
     vimeo: null

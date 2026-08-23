@@ -9,10 +9,12 @@ import Contact from "../pages/Contact/Contact";
 import Showreel from "../pages/Showreel/Showreel";
 import Trailers from "../pages/Trailers/Trailers";
 import MainLayout from "../components/layout/MainLayout";
+import ScrollToTop from "../components/layout/ScrollToTop";
 
 const AppRouter = () => {
   return (
     <MainLayout>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<Projects />} />

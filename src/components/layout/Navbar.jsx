@@ -35,11 +35,11 @@ const Navbar = () => {
   const isHomePage = location.pathname === "/";
 
   return (
-    <header 
+    <header
       className={`w-full px-6 py-3 fixed top-0 z-50 transition-all duration-300 ${
-        isHomePage 
-          ? scrolled 
-            ? "bg-black/80 backdrop-blur-md border-b border-gray-800" 
+        isHomePage
+          ? scrolled
+            ? "bg-black/80 backdrop-blur-md border-b border-gray-800"
             : "bg-transparent"
           : "bg-black/80 backdrop-blur-md  border-b border-gray-800"
       }`}
@@ -55,18 +55,18 @@ const Navbar = () => {
           {navItems.map((item) => {
             const path = item === "Home" ? "/" : `/${item.toLowerCase()}`;
             const isProjects = item === "Projects";
-            const isProjectPage = location.pathname.startsWith('/projects');
-            
+            const isProjectPage = location.pathname.startsWith("/projects");
+
             return (
               <NavLink
                 key={item}
                 to={path}
                 className={({ isActive }) => {
                   // For Projects, also check if we're on a project details page
-                  const isProjectActive = isProjects 
-                    ? (isActive || isProjectPage)
+                  const isProjectActive = isProjects
+                    ? isActive || isProjectPage
                     : isActive;
-                  
+
                   return `transition px-3 py-1.5 rounded-lg ${
                     isProjectActive
                       ? "bg-space-800 text-white "
@@ -104,8 +104,8 @@ const Navbar = () => {
           {navItems.map((item) => {
             const path = item === "Home" ? "/" : `/${item.toLowerCase()}`;
             const isProjects = item === "Projects";
-            const isProjectPage = location.pathname.startsWith('/projects');
-            
+            const isProjectPage = location.pathname.startsWith("/projects");
+
             return (
               <NavLink
                 key={item}
@@ -113,10 +113,10 @@ const Navbar = () => {
                 onClick={() => setIsOpen(false)}
                 className={({ isActive }) => {
                   // For Projects, also check if we're on a project details page
-                  const isProjectActive = isProjects 
-                    ? (isActive || isProjectPage)
+                  const isProjectActive = isProjects
+                    ? isActive || isProjectPage
                     : isActive;
-                  
+
                   return `transition px-3 py-2 rounded-lg ${
                     isProjectActive
                       ? "bg-space-700 text-white font-medium"

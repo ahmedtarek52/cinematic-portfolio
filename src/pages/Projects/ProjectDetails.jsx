@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { projects, getRelatedProjects } from "../../data/projects";
 import { ArrowLeft, Play } from "lucide-react";
@@ -7,6 +8,10 @@ const ProjectDetails = () => {
   const navigate = useNavigate();
   const project = projects.find((p) => p.id === id);
   const relatedProjects = getRelatedProjects(id, 2);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
 
   if (!project) {
     return (
@@ -84,28 +89,53 @@ const ProjectDetails = () => {
       </div>
 
       {/* Stills div */}
-      {project.stills && project.stills.length > 0 && (
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-white">Stills</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {project.stills.map((still, index) => (
-              <div 
-                key={index} 
-                className="relative aspect-square rounded-lg overflow-hidden group cursor-pointer"
-              >
-                <img 
-                  src={still} 
-                  alt={`${project.title} still ${index + 1}`}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-            ))}
+{project.stills && project.stills.length > 0 && (
+  <div className="space-y-6">
+    <h2 className="text-2xl font-bold text-white tracking-tight">Stills</h2>
+    
+    {/* 
+        We use grid-cols-4 for desktop to allow for complex spanning.
+        grid-flow-dense helps fill in gaps automatically.
+    */}
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 grid-flow-dense">
+      {project.stills.map((still, index) => {
+        // Define a repeating pattern of sizes (spans)
+        // This ensures the layout looks like the reference image
+        const getSpanClass = (i) => {
+          const pattern = i % 10;
+          switch (pattern) {
+            case 0: return "md:col-span-2 md:row-span-1"; // Top left wide
+            case 3: return "md:col-span-1 md:row-span-2"; // Tall vertical
+            case 4: return "md:col-span-2 md:row-span-2"; // Large featured
+            case 5: return "md:col-span-3 md:row-span-2"; // Bottom wide-large
+            case 9: return "md:col-span-2 md:row-span-1"; // Bottom right wide
+            default: return "md:col-span-1 md:row-span-1"; // Standard squares
+          }
+        };
+
+        return (
+          <div 
+            key={index} 
+            className={`relative overflow-hidden group cursor-pointer rounded-sm md:rounded-md bg-zinc-900 ${getSpanClass(index)}`}
+            style={{ minHeight: '200px' }} // Ensures small items have height
+          >
+            <img 
+              src={still} 
+              alt={`${project.title} still ${index + 1}`}
+              className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
+              loading="lazy"
+            />
+            {/* Subtle overlay on hover */}
+            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
-        </div>
-      )}
+        );
+      })}
+    </div>
+  </div>
+)}
 
       {/* Credits div */}
-      {project.credits && project.credits.length > 0 && (
+      {/* {project.credits && project.credits.length > 0 && (
         <div className="space-y-4">
           <h2 className="text-2xl font-bold text-white">Credits</h2>
           <div className="space-y-0 border border-[#2a2a2a] rounded-lg overflow-hidden bg-space-800">
@@ -122,7 +152,7 @@ const ProjectDetails = () => {
             ))}
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Tech Specs div */}
       {project.techSpecs && (

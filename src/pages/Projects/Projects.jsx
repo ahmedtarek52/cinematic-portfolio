@@ -20,6 +20,11 @@ const Projects = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Scroll to top on page enter
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Handle animations
   useEffect(() => {
     const observer = new IntersectionObserver(
