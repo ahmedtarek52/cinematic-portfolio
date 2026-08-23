@@ -5,8 +5,8 @@ export const projects = [
     category: "Narrative",
     year: "2025",
     type: "Commercial",
-    heroImage: "https://images.pexels.com/photos/32891033/pexels-photo-32891033.jpeg?w=1200&h=800&fit=crop",
-    thumbnail: "https://images.pexels.com/photos/32891033/pexels-photo-32891033.jpeg?w=800&h=600&fit=crop",
+    heroImage: "/images/P_01/IMG_5511.png",
+    thumbnail: "/images/P_01/IMG_5511.png",
     description: "A cinematic exploration of urban nightlife through the lens of color and mood.",
     services: ["Color", "HDR"],
     tags: ["ACES", "Dolby Vision", "HDR10", "Grain Management"],
@@ -14,10 +14,15 @@ export const projects = [
     overview: "Our team delivered a complete color pipeline for this atmospheric narrative piece, balancing the warm glow of sodium streetlight and neon reflections with natural skin tones. The final deliverable included a Dolby Vision pass for streaming platforms, maintaining consistency across all viewing environments.",
     approach: "We established a teal-amber palette to enhance the night-time atmosphere while preserving detail in deep blacks and controlled highlights. Shot-matched keys and tracked power windows allowed for precise control over specific elements. SDR trims were created for broadcast and social media distribution.",
     stills: [
-      "https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1489824904134-891ab64532f1?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&h=800&fit=crop"
+      "/images/P_01/IMG_5508.png",
+      "/images/P_01/IMG_5509.png",
+      "/images/P_01/IMG_5510.png",
+      "/images/P_01/IMG_5507.png",
+      "/images/P_01/IMG_5512.png",
+      "/images/P_01/IMG_5513.png",
+      "/images/P_01/IMG_5514.png",
+      "/images/P_01/IMG_5515.png",
+      "/images/P_01/IMG_5516.png"
     ],
     credits: [
       { role: "Director", name: "A. Rivera" },
@@ -40,8 +45,8 @@ export const projects = [
     category: "Commercial",
     year: "2024",
     type: "Commercial",
-    heroImage: "https://images.pexels.com/photos/7319345/pexels-photo-7319345.jpeg?w=1200&h=800&fit=crop",
-    thumbnail: "https://images.pexels.com/photos/7319345/pexels-photo-7319345.jpeg?w=800&h=600&fit=crop",
+    heroImage: "/images/P_02/Still 2025-09-05 192054_1.3.1.png",
+    thumbnail: "/images/P_02/Still 2025-09-05 192054_1.3.1.png",
     description: "An epic journey through vast desert landscapes, showcasing the power of natural light and color.",
     services: ["Finish", "Dolby Vision"],
     tags: ["ACES", "Dolby Vision", "HDR10"],
@@ -49,10 +54,13 @@ export const projects = [
     overview: "This commercial project required extensive color grading and finishing work to bring out the rich textures of the desert landscape. We worked closely with the director to achieve a cinematic look that emphasizes the natural beauty of the environment.",
     approach: "We utilized a warm, earth-toned palette to complement the desert setting. Advanced color grading techniques were applied to enhance the natural light variations throughout the day. The final deliverable included a Dolby Vision master for premium viewing experiences.",
     stills: [
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=800&fit=crop"
+      "/images/P_02/Still 2025-09-05 192054_1.6.png",
+      "/images/P_02/Still 2025-09-06 171151_1.5.1.png",
+      "/images/P_02/Still 2025-09-06 171151_1.9.2.png",
+      "/images/P_02/Still 2025-09-06 171151_1.21.4.png",
+      "/images/P_02/Still 2025-09-06 171151_1.25.1.png",
+      "/images/P_02/Still 2025-09-06 182600_1.19.2.png",
+      "/images/P_02/Still 2025-09-06 182854_1.20.3.png"
     ],
     credits: [
       { role: "Director", name: "S. Martinez" },
@@ -75,8 +83,8 @@ export const projects = [
     category: "Music Video",
     year: "2024",
     type: "Music Video",
-    heroImage: "https://images.pexels.com/photos/10465489/pexels-photo-10465489.jpeg?w=1200&h=800&fit=crop",
-    thumbnail: "https://images.pexels.com/photos/10465489/pexels-photo-10465489.jpeg?w=800&h=600&fit=crop",
+    heroImage: "/images/P_03/Still 2026-06-16 163206_1.7.1.png",
+    thumbnail: "/images/P_03/Still 2026-06-16 163206_1.7.1.png",
     description: "A vibrant music video featuring dynamic lighting and energetic visuals.",
     services: ["Edit", "VFX"],
     tags: ["VFX", "Color Grading", "Motion Graphics"],
@@ -84,10 +92,14 @@ export const projects = [
     overview: "This high-energy music video combined editorial finesse with stunning visual effects. We created a seamless narrative that syncs perfectly with the music's rhythm and energy.",
     approach: "Our editorial team worked closely with the artist to craft a compelling visual story. VFX enhancements were integrated to amplify the performance scenes, creating an immersive viewing experience that captures the essence of live performance.",
     stills: [
-      "https://images.unsplash.com/photo-1557683316-973673baf926?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&h=800&fit=crop"
+      "/images/P_03/Still 2026-06-16 163206_1.9.1.png",
+      "/images/P_03/Still 2026-06-16 163206_1.11.1.png",
+      "/images/P_03/Still 2026-06-16 163206_1.13.1.png",
+      "/images/P_03/Still 2026-06-16 163206_1.15.1.png",
+      "/images/P_03/Still 2026-06-16 163206_1.16.1.png",
+      "/images/P_03/Still 2026-06-16 163206_1.16.2.png",
+      "/images/P_03/Still 2026-06-16 163206_1.18.1.png",
+      "/images/P_03/Still 2026-06-16 163206_1.20.1.png"
     ],
     credits: [
       { role: "Director", name: "K. Johnson" },
@@ -110,8 +122,8 @@ export const projects = [
     category: "Documentary",
     year: "2024",
     type: "Documentary",
-    heroImage: "https://images.pexels.com/photos/7991498/pexels-photo-7991498.jpeg?w=1200&h=800&fit=crop",
-    thumbnail: "https://images.pexels.com/photos/7991498/pexels-photo-7991498.jpeg?w=800&h=600&fit=crop",
+    heroImage: "/images/P_04/IMG_6932.png",
+    thumbnail: "/images/P_04/IMG_6932.png",
     description: "A thoughtful documentary exploring human connections and natural landscapes.",
     services: ["Color"],
     tags: ["Color Grading", "Documentary"],
@@ -119,10 +131,15 @@ export const projects = [
     overview: "This documentary required a sensitive approach to color grading, maintaining the authenticity of the footage while enhancing the emotional resonance of the narrative.",
     approach: "We applied a natural, restrained color palette that respects the documentary's authentic footage. Subtle enhancements were made to guide the viewer's attention and support the storytelling without overwhelming the content.",
     stills: [
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1511497584788-876760111969?w=800&h=800&fit=crop"
+      "/images/P_04/IMG_6933.png",
+      "/images/P_04/IMG_6934.png",
+      "/images/P_04/IMG_7241.png",
+      "/images/P_04/IMG_7243.png",
+      "/images/P_04/IMG_7245.png",
+      "/images/P_04/IMG_7260.png",
+      "/images/P_04/IMG_7261.png",
+      "/images/P_04/IMG_7268.png",
+      "/images/P_04/IMG_7296.png"
     ],
     credits: [
       { role: "Director", name: "P. Wilson" },

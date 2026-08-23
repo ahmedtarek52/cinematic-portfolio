@@ -7,6 +7,7 @@ import About from "../pages/About/About";
 // import Careers from "../pages/Careers/Careers";
 import Contact from "../pages/Contact/Contact";
 import Showreel from "../pages/Showreel/Showreel";
+import Trailers from "../pages/Trailers/Trailers";
 import MainLayout from "../components/layout/MainLayout";
 
 const AppRouter = () => {
@@ -16,6 +17,7 @@ const AppRouter = () => {
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/projects/:id" element={<ProjectDetails />} />
+        <Route path="/trailers" element={<Trailers />} />
         <Route path="/services" element={<Services />} />
         <Route path="/about" element={<About />} />
         {/* <Route path="/careers" element={<Careers />} /> */}

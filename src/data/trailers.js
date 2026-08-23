@@ -1,0 +1,200 @@
+export const trailers = [
+  {
+    id: "al-sofara",
+    vimeoId: "811861466",
+    title: "Al Sofara",
+    subtitle: "Official Ramadan Series Trailer",
+    year: "2023",
+    duration: "02:26",
+    category: "Series Trailer",
+    filterCategory: "Official Trailers",
+    genre: "Drama / Comedy",
+    client: "Ramadan Production",
+    thumbnail: "https://i.vimeocdn.com/video/2166664097-6cf28b9f2f89362683d620e6476fc6b167a02daaf7b099af6cf31b9081880b64-d_1280x720",
+    vimeoReviewUrl: "https://vimeo.com/reviews/f7bdc38a-e98a-4106-9714-ec52fa0254eb/videos/811861466",
+    description: "Official promotional trailer and color grade for the hit seasonal comedy-drama series 'Al Sofara', balancing vibrant atmospheric warmth with crisp detail.",
+    specs: {
+      resolution: "4K Master",
+      colorSpace: "ACES / Rec.709",
+      sound: "5.1 Surround",
+      role: "Colorist & Trailer Finish"
+    },
+    tags: ["Trailer Cut", "Color Grade", "ACES", "Sound Mix"]
+  },
+  {
+    id: "6-shohoor",
+    vimeoId: "1200744297",
+    title: "6 Shohoor",
+    subtitle: "Watch IT Original Series Trailer",
+    year: "2024",
+    duration: "01:41",
+    category: "Original Series",
+    filterCategory: "Official Trailers",
+    genre: "Psychological Drama",
+    client: "Watch IT Originals",
+    thumbnail: "https://i.vimeocdn.com/video/2167921817-b53fe7752a97916a5e00a5adfa2b2da0d10acac980e0a8aea80b87c28614f9de-d_1280x720",
+    vimeoReviewUrl: "https://vimeo.com/reviews/f7bdc38a-e98a-4106-9714-ec52fa0254eb/videos/1200744297",
+    description: "High-contrast dramatic teaser trailer showcasing intimate character lighting, tight tension pacing, and rich shadow tone separation.",
+    specs: {
+      resolution: "4K DCI",
+      colorSpace: "Dolby Vision HDR",
+      sound: "Dolby Atmos",
+      role: "Full Post & Finishing"
+    },
+    tags: ["Official Teaser", "Dolby Vision", "Finishing", "HDR Master"]
+  },
+  {
+    id: "darsh",
+    vimeoId: "1199610549",
+    title: "Darsh",
+    subtitle: "Ramadan 2026 Feature Trailer",
+    year: "2026",
+    duration: "02:46",
+    category: "Feature Trailer",
+    filterCategory: "Official Trailers",
+    genre: "Action / Epic Drama",
+    client: "Official Feature Trailer",
+    thumbnail: "https://i.vimeocdn.com/video/2166664699-96f946636d4def7aac3d16f7f066695d11e52f904198168ab9b2ff70774a956b-d_1280x720",
+    vimeoReviewUrl: "https://vimeo.com/reviews/f7bdc38a-e98a-4106-9714-ec52fa0254eb/videos/1199610549",
+    description: "High-octane official trailer featuring dynamic pacing, custom VFX integration, explosive contrast grading, and immersive theatrical sound design.",
+    specs: {
+      resolution: "8K Red RAW",
+      colorSpace: "P3-D65 / HDR10+",
+      sound: "Theatrical Mix",
+      role: "Trailer DI & VFX Polish"
+    },
+    tags: ["Feature Trailer", "VFX & DI", "HDR10+", "Surround"]
+  },
+  {
+    id: "gawdar-part1",
+    vimeoId: "1199749565",
+    title: "Gawdar (Part 1)",
+    subtitle: "Ramadan 2024 Teaser Promo",
+    year: "2024",
+    duration: "00:34",
+    category: "Teaser Promo",
+    filterCategory: "Teasers & Spots",
+    genre: "Fantasy / Epic Historical",
+    client: "Ramadan 2024 Production",
+    thumbnail: "https://i.vimeocdn.com/video/2166663347-c5ec49e5380c217bb8445103bcf9ca162c5ba87c4fed35ea1190dd12e83826c0-d_1280x720",
+    vimeoReviewUrl: "https://vimeo.com/reviews/f7bdc38a-e98a-4106-9714-ec52fa0254eb/videos/1199749565",
+    description: "High-fantasy teaser trailer featuring rich mystical tone separation, intricate VFX color integration, and deep cinematic atmosphere.",
+    specs: {
+      resolution: "4K Master",
+      colorSpace: "ACES Pipeline",
+      sound: "Dolby Atmos",
+      role: "DI Color & Finishing"
+    },
+    tags: ["Teaser", "ACES", "VFX Grade", "Dolby Atmos"]
+  },
+  {
+    id: "gawdar-promo3",
+    vimeoId: "1199760751",
+    title: "Gawdar - Promo 03",
+    subtitle: "Ramadan 2024 Character Spot",
+    year: "2024",
+    duration: "00:26",
+    category: "Character Spot",
+    filterCategory: "Teasers & Spots",
+    genre: "Fantasy / Adventure",
+    client: "Ramadan 2024 Series",
+    thumbnail: "https://i.vimeocdn.com/video/2166773296-30a8520f7c24f6899dc8be446f551579ec27c7017d21e12d692b1040ff60d235-d_1280x720",
+    vimeoReviewUrl: "https://vimeo.com/reviews/f7bdc38a-e98a-4106-9714-ec52fa0254eb/videos/1199760751",
+    description: "Dynamic character spotlight promo delivering saturated color depth, sharp lighting contrast, and high-impact sound design.",
+    specs: {
+      resolution: "4K UHD",
+      colorSpace: "Rec.709 Master",
+      sound: "Surround 5.1",
+      role: "Look Development & Grade"
+    },
+    tags: ["Promo Spot", "Look Dev", "Color Grade", "Trailer"]
+  },
+  {
+    id: "el-captin",
+    vimeoId: "1199880154",
+    title: "El Captin",
+    subtitle: "Ramadan 2025 Official Trailer",
+    year: "2025",
+    duration: "01:47",
+    category: "Official Trailer",
+    filterCategory: "Official Trailers",
+    genre: "Action / Drama",
+    client: "Ramadan 2025 Official",
+    thumbnail: "https://i.vimeocdn.com/video/2166831904-7899073f420627ff65dc04cc5df60ba32d93ba9a1ccc0eceb0ad6eea5ab2110f-d_1280x720",
+    vimeoReviewUrl: "https://vimeo.com/reviews/f7bdc38a-e98a-4106-9714-ec52fa0254eb/videos/1199880154",
+    description: "Full official theatrical trailer featuring relentless pacing, rich skin tone retention under harsh lighting, and explosive action sequences.",
+    specs: {
+      resolution: "4K DCI",
+      colorSpace: "HDR10+",
+      sound: "5.1 Surround",
+      role: "Lead Colorist & Master Finish"
+    },
+    tags: ["Official Trailer", "HDR10+", "Action Grade", "Colorist"]
+  },
+  {
+    id: "sokkar-part2",
+    vimeoId: "1199887096",
+    title: "Sokkar - Part II",
+    subtitle: "Theatrical Musical Trailer 2025",
+    year: "2025",
+    duration: "02:03",
+    category: "Theatrical Trailer",
+    filterCategory: "Theatrical",
+    genre: "Musical / Family Adventure",
+    client: "MBC / Theatrical Release",
+    thumbnail: "https://i.vimeocdn.com/video/2166851925-3ad69316eb87e2bad793ce44420775e667f746bacda41f53056f3a9dae9bc1b5-d_1280x720",
+    vimeoReviewUrl: "https://vimeo.com/reviews/f7bdc38a-e98a-4106-9714-ec52fa0254eb/videos/1199887096",
+    description: "Vibrant and fantastical musical trailer showcasing lush saturation, fairytale visual polish, and grand orchestral audio mastering.",
+    specs: {
+      resolution: "4K Master",
+      colorSpace: "P3-D65 / Dolby Vision",
+      sound: "Dolby Atmos",
+      role: "Theatrical DI & Color Polish"
+    },
+    tags: ["Musical Trailer", "Dolby Vision", "Color DI", "Theatrical"]
+  },
+  {
+    id: "mody",
+    vimeoId: "1199902264",
+    title: "Mody",
+    subtitle: "Ramadan 2026 Official Trailer",
+    year: "2026",
+    duration: "01:50",
+    category: "Official Trailer",
+    filterCategory: "Official Trailers",
+    genre: "Drama / Suspense",
+    client: "Ramadan 2026 Production",
+    thumbnail: "https://i.vimeocdn.com/video/2166857315-870944b1afbb6ca5239bb7e6d209571b1872e54aa598478c1356fecf74f52d16-d_1280x720",
+    vimeoReviewUrl: "https://vimeo.com/reviews/f7bdc38a-e98a-4106-9714-ec52fa0254eb/videos/1199902264",
+    description: "Moody, suspenseful trailer grade emphasizing shadow texture, cool cinematic undertones, and emotional tension.",
+    specs: {
+      resolution: "6K Red RAW",
+      colorSpace: "ACES Color Pipeline",
+      sound: "5.1 Surround",
+      role: "Full Trailer Finish"
+    },
+    tags: ["Official Trailer", "ACES", "Suspense Grade", "Finishing"]
+  },
+  {
+    id: "hakim-basha",
+    vimeoId: "1199906094",
+    title: "Hakim Basha",
+    subtitle: "Ramadan 2025 Official Teaser",
+    year: "2025",
+    duration: "00:30",
+    category: "Teaser Spot",
+    filterCategory: "Teasers & Spots",
+    genre: "Upper Egypt Drama / Action",
+    client: "Ramadan 2025 Series",
+    thumbnail: "https://i.vimeocdn.com/video/2166858905-b26876d444c49192b9b70eca49342e0be946bd9366a3e6e7b43a4b8ccfd0d772-d_1280x720",
+    vimeoReviewUrl: "https://vimeo.com/reviews/f7bdc38a-e98a-4106-9714-ec52fa0254eb/videos/1199906094",
+    description: "Gritty, high-contrast teaser trailer featuring tactile film grain emulation, intense warm earthen color palette, and impactful sound design.",
+    specs: {
+      resolution: "4K Master",
+      colorSpace: "Dolby Vision / Film Grain",
+      sound: "5.1 Surround",
+      role: "Color Grade & Film Grain"
+    },
+    tags: ["Teaser Cut", "Film Grain", "Dolby Vision", "Color Grade"]
+  }
+];

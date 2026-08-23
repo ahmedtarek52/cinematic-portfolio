@@ -10,6 +10,7 @@ const Navbar = () => {
   const navItems = [
     "Home",
     "Projects",
+    "Trailers",
     // "Services",
     "About",
     // "Careers",
@@ -46,7 +47,7 @@ const Navbar = () => {
       <div className="flex items-center justify-between">
         {/* Logo */}
         <div className="text-xl font-bold text-white tracking-wide flex-shrink-0">
-          Spectra Post
+          ABO HUSSAIN
         </div>
 
         {/* Desktop nav */}

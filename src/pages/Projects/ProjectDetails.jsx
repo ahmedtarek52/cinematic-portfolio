@@ -21,7 +21,7 @@ const ProjectDetails = () => {
 
   return (
     <div className="space-y-12">
-      {/* Hero Section */}
+      {/* Hero div */}
       <div className="relative rounded-xl overflow-hidden">
         <div className="relative h-[500px] md:h-[600px] overflow-hidden">
           <img 
@@ -37,7 +37,7 @@ const ProjectDetails = () => {
           </div>
         </div>
       </div>
-
+<div className="px-4 md:px-6">
       {/* Title and Metadata */}
       <div className="flex items-start justify-between flex-wrap gap-4">
         <div>
@@ -61,8 +61,8 @@ const ProjectDetails = () => {
         </div>
       </div>
 
-      {/* Overview Section */}
-      <section className="space-y-4">
+      {/* Overview div */}
+      <div className="space-y-4">
         <h2 className="text-2xl font-bold text-white">Overview</h2>
         <p className="text-gray-400 leading-relaxed text-lg">{project.overview}</p>
         <div className="flex flex-wrap gap-2 mt-4">
@@ -75,17 +75,17 @@ const ProjectDetails = () => {
             </span>
           ))}
         </div>
-      </section>
+      </div>
 
-      {/* Approach Section */}
-      <section className="space-y-4">
+      {/* Approach div */}
+      <div className="space-y-4">
         <h2 className="text-2xl font-bold text-white">Approach</h2>
         <p className="text-gray-400 leading-relaxed text-lg">{project.approach}</p>
-      </section>
+      </div>
 
-      {/* Stills Section */}
+      {/* Stills div */}
       {project.stills && project.stills.length > 0 && (
-        <section className="space-y-4">
+        <div className="space-y-4">
           <h2 className="text-2xl font-bold text-white">Stills</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {project.stills.map((still, index) => (
@@ -101,12 +101,12 @@ const ProjectDetails = () => {
               </div>
             ))}
           </div>
-        </section>
+        </div>
       )}
 
-      {/* Credits Section */}
+      {/* Credits div */}
       {project.credits && project.credits.length > 0 && (
-        <section className="space-y-4">
+        <div className="space-y-4">
           <h2 className="text-2xl font-bold text-white">Credits</h2>
           <div className="space-y-0 border border-[#2a2a2a] rounded-lg overflow-hidden bg-space-800">
             {project.credits.map((credit, index) => (
@@ -121,12 +121,12 @@ const ProjectDetails = () => {
               </div>
             ))}
           </div>
-        </section>
+        </div>
       )}
 
-      {/* Tech Specs Section */}
+      {/* Tech Specs div */}
       {project.techSpecs && (
-        <section className="space-y-4">
+        <div className="space-y-4">
           <h2 className="text-2xl font-bold text-white">Tech Specs</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-space-800 border border-[#2a2a2a] rounded-lg p-4">
@@ -146,12 +146,12 @@ const ProjectDetails = () => {
               <div className="text-gray-400 text-sm">Pipeline</div>
             </div>
           </div>
-        </section>
+        </div>
       )}
 
-      {/* Related Projects Section */}
+      {/* Related Projects div */}
       {relatedProjects.length > 0 && (
-        <section className="space-y-4">
+        <div className="space-y-4">
           <h2 className="text-2xl font-bold text-white">Related Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {relatedProjects.map((relatedProject) => (
@@ -177,9 +177,9 @@ const ProjectDetails = () => {
               </Link>
             ))}
           </div>
-        </section>
+        </div>
       )}
-    </div>
+    </div></div>
   );
 };
 
