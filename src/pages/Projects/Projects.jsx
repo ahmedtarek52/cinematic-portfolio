@@ -1,12 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { projects } from '../../data/projects';
-import ProjectCard from './ProjectCard';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import { getAllProjects } from "../../services/projects";
+import ProjectCard from "./ProjectCard";
 
 const Projects = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isVisible, setIsVisible] = useState({});
   const projectsPerPage = 9;
+
+  const {
+    data: projects = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["projects"],
+    queryFn: getAllProjects,
+  });
 
   // Pagination
   const totalPages = Math.ceil(projects.length / projectsPerPage);
@@ -17,7 +27,7 @@ const Projects = () => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   // Scroll to top on page enter
@@ -33,24 +43,57 @@ const Projects = () => {
           if (entry.isIntersecting) {
             setIsVisible((prev) => ({
               ...prev,
-              [entry.target.id]: true
+              [entry.target.id]: true,
             }));
           }
         });
       },
       {
         threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: "0px 0px -50px 0px",
       }
     );
 
-    const elements = document.querySelectorAll('.project-card-animate');
+    const elements = document.querySelectorAll(".project-card-animate");
     elements.forEach((el) => observer.observe(el));
 
     return () => {
       elements.forEach((el) => observer.unobserve(el));
     };
-  }, [currentPage]);
+  }, [currentPage, projects]);
+
+  // Loading skeleton
+  if (isLoading) {
+    return (
+      <div className="min-h-screen py-24 px-4 md:px-6 space-y-12 relative">
+        <div className="absolute top-28 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-accent/10 blur-[160px] pointer-events-none rounded-full" />
+        <div className="relative text-center space-y-4 pt-6">
+          <div className="h-12 w-80 mx-auto bg-space-700 rounded-lg animate-pulse" />
+          <div className="h-6 w-96 mx-auto bg-space-800 rounded-lg animate-pulse" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="aspect-[4/3] bg-space-800 rounded-xl animate-pulse border border-[#2a2a2a]"
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <p className="text-red-400 text-lg">Failed to load projects</p>
+          <p className="text-gray-500 text-sm">{error.message}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen py-24 px-4 md:px-6 space-y-12 relative">
@@ -65,7 +108,10 @@ const Projects = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white"
         >
-          Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-white">Projects</span>
+          Featured{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-white">
+            Projects
+          </span>
         </motion.h1>
 
         <motion.p
@@ -74,7 +120,9 @@ const Projects = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed"
         >
-          Browse our complete portfolio of finished commercial, narrative, documentary, and music video projects engineered with precision color grading.
+          Browse our complete portfolio of finished commercial, narrative,
+          documentary, and music video projects engineered with precision color
+          grading.
         </motion.p>
       </div>
 
@@ -86,8 +134,8 @@ const Projects = () => {
             id={`project-${project.id}-${currentPage}`}
             className={`project-card-animate h-full transition-all duration-700 ease-out ${
               isVisible[`project-${project.id}-${currentPage}`]
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-10'
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
             }`}
             style={{ transitionDelay: `${index * 100}ms` }}
           >
@@ -112,8 +160,8 @@ const Projects = () => {
               onClick={() => handlePageChange(page)}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer ${
                 currentPage === page
-                  ? 'bg-accent text-white shadow-[0_0_20px_rgba(0,68,255,0.4)]'
-                  : 'bg-space-800 text-gray-400 hover:text-white border border-[#2a2a2a]'
+                  ? "bg-accent text-white shadow-[0_0_20px_rgba(0,68,255,0.4)]"
+                  : "bg-space-800 text-gray-400 hover:text-white border border-[#2a2a2a]"
               }`}
             >
               {page}
@@ -132,4 +180,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default Projects;

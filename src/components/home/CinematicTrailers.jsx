@@ -2,7 +2,8 @@ import React, { useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { Film, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { trailers } from "../../data/trailers";
+import { useQuery } from "@tanstack/react-query";
+import { getAllTrailers } from "../../services/trailers";
 import TrailerCard from "../ui/TrailerCard";
 import CinemaModal from "../ui/CinemaModal";
 
@@ -13,24 +14,31 @@ export const CinematicTrailers = () => {
   const mobileSliderRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
 
+  const { data: trailers = [] } = useQuery({
+    queryKey: ["trailers"],
+    queryFn: getAllTrailers,
+  });
+
   // Home page renders only top 3 featured trailers
-  const featuredTrailers = useMemo(() => trailers.slice(0, 3), []);
+  const featuredTrailers = useMemo(() => trailers.slice(0, 3), [trailers]);
 
   // Current active trailer for Cinema Modal
   const activeTrailer = useMemo(() => {
     return trailers.find((t) => t.id === activeTrailerId) || null;
-  }, [activeTrailerId]);
+  }, [activeTrailerId, trailers]);
 
   const activeIndex = useMemo(() => {
     return trailers.findIndex((t) => t.id === activeTrailerId);
-  }, [activeTrailerId]);
+  }, [activeTrailerId, trailers]);
 
   const handleNextTrailer = () => {
+    if (trailers.length === 0) return;
     const nextIdx = (activeIndex + 1) % trailers.length;
     setActiveTrailerId(trailers[nextIdx].id);
   };
 
   const handlePrevTrailer = () => {
+    if (trailers.length === 0) return;
     const prevIdx = (activeIndex - 1 + trailers.length) % trailers.length;
     setActiveTrailerId(trailers[prevIdx].id);
   };

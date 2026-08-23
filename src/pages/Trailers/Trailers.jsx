@@ -1,16 +1,27 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Film, Search, Clapperboard } from 'lucide-react';
-import { trailers } from '../../data/trailers';
-import TrailerCard from '../../components/ui/TrailerCard';
-import CinemaModal from '../../components/ui/CinemaModal';
+import React, { useState, useEffect, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Film, Search } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { getAllTrailers } from "../../services/trailers";
+import TrailerCard from "../../components/ui/TrailerCard";
+import CinemaModal from "../../components/ui/CinemaModal";
 
-const CATEGORIES = ['All', 'Official Trailers', 'Teasers & Spots', 'Theatrical'];
+const CATEGORIES = [
+  "All",
+  "Official Trailers",
+  "Teasers & Spots",
+  "Theatrical",
+];
 
 const Trailers = () => {
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
   const [activeTrailerId, setActiveTrailerId] = useState(null);
+
+  const { data: trailers = [], isLoading } = useQuery({
+    queryKey: ["trailers"],
+    queryFn: getAllTrailers,
+  });
 
   // Scroll to top on mount
   useEffect(() => {
@@ -21,26 +32,28 @@ const Trailers = () => {
   const filteredTrailers = useMemo(() => {
     return trailers.filter((t) => {
       const matchesCategory =
-        selectedCategory === 'All' || t.filterCategory === selectedCategory;
+        selectedCategory === "All" || t.filterCategory === selectedCategory;
       const matchesSearch =
-        searchQuery.trim() === '' ||
+        searchQuery.trim() === "" ||
         t.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        t.subtitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        t.genre.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        t.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+        (t.subtitle || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (t.genre || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        t.tags.some((tag) =>
+          tag.toLowerCase().includes(searchQuery.toLowerCase())
+        );
 
       return matchesCategory && matchesSearch;
     });
-  }, [selectedCategory, searchQuery]);
+  }, [selectedCategory, searchQuery, trailers]);
 
   // Current active trailer for Cinema Modal
   const activeTrailer = useMemo(() => {
     return trailers.find((t) => t.id === activeTrailerId) || null;
-  }, [activeTrailerId]);
+  }, [activeTrailerId, trailers]);
 
   const activeIndex = useMemo(() => {
     return trailers.findIndex((t) => t.id === activeTrailerId);
-  }, [activeTrailerId]);
+  }, [activeTrailerId, trailers]);
 
   const handleNextTrailer = () => {
     const nextIdx = (activeIndex + 1) % trailers.length;
@@ -52,6 +65,27 @@ const Trailers = () => {
     setActiveTrailerId(trailers[prevIdx].id);
   };
 
+  // Loading skeleton
+  if (isLoading) {
+    return (
+      <div className="min-h-screen py-24 px-4 md:px-6 space-y-12 relative">
+        <div className="absolute top-28 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-accent/10 blur-[160px] pointer-events-none rounded-full" />
+        <div className="relative text-center space-y-4 pt-6">
+          <div className="h-12 w-80 mx-auto bg-space-700 rounded-lg animate-pulse" />
+          <div className="h-6 w-96 mx-auto bg-space-800 rounded-lg animate-pulse" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="aspect-video bg-space-800 rounded-xl animate-pulse border border-[#2a2a2a]"
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen py-24 px-4 md:px-6 space-y-12 relative">
       {/* Background ambient lighting */}
@@ -59,8 +93,6 @@ const Trailers = () => {
 
       {/* Page Header */}
       <div className="relative text-center space-y-4 pt-6">
-        
-
         {/* Main Title */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -68,7 +100,10 @@ const Trailers = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white"
         >
-          Trailers &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-white">Promos Vault</span>
+          Trailers &amp;{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-white">
+            Promos Vault
+          </span>
         </motion.h1>
 
         {/* Lead Subtitle */}
@@ -78,7 +113,9 @@ const Trailers = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed"
         >
-          Browse our complete catalog of theatrical trailers, television teasers, and high-impact promo cuts mastered in Dolby Vision, ACES, and theatrical 5.1 surround sound.
+          Browse our complete catalog of theatrical trailers, television teasers,
+          and high-impact promo cuts mastered in Dolby Vision, ACES, and
+          theatrical 5.1 surround sound.
         </motion.p>
 
         {/* Filters & Search Control Bar */}
@@ -92,7 +129,7 @@ const Trailers = () => {
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
             {CATEGORIES.map((cat) => {
               const count =
-                cat === 'All'
+                cat === "All"
                   ? trailers.length
                   : trailers.filter((t) => t.filterCategory === cat).length;
               const isActive = selectedCategory === cat;
@@ -103,14 +140,16 @@ const Trailers = () => {
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 cursor-pointer flex items-center gap-1.5 ${
                     isActive
-                      ? 'bg-accent text-white shadow-[0_0_20px_rgba(0,68,255,0.4)]'
-                      : 'bg-space-800/90 text-gray-400 hover:text-white border border-[#2a2a2a] hover:border-white/20'
+                      ? "bg-accent text-white shadow-[0_0_20px_rgba(0,68,255,0.4)]"
+                      : "bg-space-800/90 text-gray-400 hover:text-white border border-[#2a2a2a] hover:border-white/20"
                   }`}
                 >
                   <span>{cat}</span>
                   <span
                     className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                      isActive ? 'bg-black/30 text-white' : 'bg-space-700 text-gray-400'
+                      isActive
+                        ? "bg-black/30 text-white"
+                        : "bg-space-700 text-gray-400"
                     }`}
                   >
                     {count}
@@ -132,7 +171,7 @@ const Trailers = () => {
             />
             {searchQuery && (
               <button
-                onClick={() => setSearchQuery('')}
+                onClick={() => setSearchQuery("")}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white text-xs"
               >
                 Clear
@@ -164,14 +203,16 @@ const Trailers = () => {
           ) : (
             <div className="col-span-full py-16 text-center space-y-3">
               <Film className="w-12 h-12 text-gray-600 mx-auto" />
-              <h3 className="text-xl font-bold text-white">No trailers found</h3>
+              <h3 className="text-xl font-bold text-white">
+                No trailers found
+              </h3>
               <p className="text-gray-400 text-sm">
                 Try selecting a different category or clearing your search.
               </p>
               <button
                 onClick={() => {
-                  setSelectedCategory('All');
-                  setSearchQuery('');
+                  setSelectedCategory("All");
+                  setSearchQuery("");
                 }}
                 className="px-4 py-2 rounded-lg bg-accent text-white text-xs font-semibold hover:bg-blue-600 transition"
               >

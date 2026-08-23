@@ -1,16 +1,34 @@
-# React + Vite
+# Cinematic Portfolio (Spectra Post / Mahmoud Abo Hussain)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An ultra-premium, dark-mode-first digital showcase built for cinematic color grading, editorial direction, and trailer finishing.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📄 Product Requirement Document & Technical Specification
+For full architectural details, component hierarchy, static data schemas, and script relations, see:
+👉 **[PRD.md](file:///e:/Web%20Projects/Cinematic-portfolio/PRD.md)**
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Quick Start
 
-## Expanding the ESLint configuration
+```bash
+# Install dependencies
+npm install
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Run local development server
+npm run dev
+
+# Build production bundle
+npm run build
+```
+
+---
+
+## 🛠 Tech Stack
+* **Framework:** React 19 + React Router DOM v7
+* **Bundler:** Vite (Rolldown)
+* **Styling:** Tailwind CSS v3
+* **Animations:** Framer Motion v12
+* **Icons:** Lucide React
+

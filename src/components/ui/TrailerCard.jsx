@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Clock, ExternalLink } from 'lucide-react';
+import { getOptimizedUrl } from '../../lib/cloudinary';
 
 export const TrailerCard = ({
   trailer,
@@ -32,9 +33,10 @@ export const TrailerCard = ({
       >
         {/* Poster Image */}
         <img
-          src={trailer.thumbnail}
+          src={getOptimizedUrl(trailer.thumbnail, { width: 800 })}
           alt={trailer.title}
           loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
         />
 

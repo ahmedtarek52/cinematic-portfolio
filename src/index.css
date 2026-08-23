@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Toast notification animation */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 /* Add custom animations for the OurProcess component */
 /* @layer base {
   @keyframes perforations-scroll {

@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { getOptimizedUrl } from "../../lib/cloudinary";
 
 const ProjectCard = ({ project }) => {
   const cardRef = useRef(null);
@@ -58,10 +59,11 @@ const ProjectCard = ({ project }) => {
       >
         {/* Project Thumbnail Image with Cinematic Scale */}
         <img
-          src={project.thumbnail}
+          src={getOptimizedUrl(project.thumbnail, { width: 800 })}
           alt={project.title}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
           loading="lazy"
+          decoding="async"
         />
 
         {/* Ambient Dark Gradient Overlay */}

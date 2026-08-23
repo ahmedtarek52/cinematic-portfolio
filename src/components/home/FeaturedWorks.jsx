@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { projects } from "../../data/projects";
+import { useQuery } from "@tanstack/react-query";
+import { getAllProjects } from "../../services/projects";
 import ProjectCard from "../../pages/Projects/ProjectCard";
 
 const FeaturedProjectCard = ({ project, index }) => {
@@ -24,6 +25,11 @@ const FeaturedProjectCard = ({ project, index }) => {
 export const FeaturedWorks = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
+
+  const { data: projects = [] } = useQuery({
+    queryKey: ["projects"],
+    queryFn: getAllProjects,
+  });
 
   return (
     <section
