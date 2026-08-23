@@ -47,7 +47,7 @@ const Navbar = () => {
       <div className="flex items-center justify-between">
         {/* Logo */}
         <div className="text-xl font-bold text-white tracking-wide flex-shrink-0">
-          ABO HUSSAIN
+          Mahmoud Abo Hussein
         </div>
 
         {/* Desktop nav */}
