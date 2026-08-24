@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getProjectById, getRelatedProjects } from "../../services/projects";
 import { ArrowLeft, Play } from "lucide-react";
 import { getOptimizedUrl } from "../../lib/cloudinary";
+import ProjectCard from "./ProjectCard";
 
 const ProjectDetails = () => {
   const { id } = useParams();
@@ -32,7 +33,7 @@ const ProjectDetails = () => {
   // Loading skeleton
   if (isLoading) {
     return (
-      <div className="space-y-12">
+      <div className="space-y-12 pb-16">
         <div className="relative rounded-xl overflow-hidden">
           <div className="h-[500px] md:h-[600px] bg-space-700 animate-pulse" />
         </div>
@@ -64,7 +65,7 @@ const ProjectDetails = () => {
   }
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-12 pb-16">
       {/* Hero div */}
       <div className="relative rounded-xl overflow-hidden">
         <div className="relative h-[500px] md:h-[600px] overflow-hidden">
@@ -88,7 +89,7 @@ const ProjectDetails = () => {
           </div>
         </div>
       </div>
-      <div className="px-4 md:px-6">
+      <div className="px-4 md:px-6 space-y-16">
         {/* Title and Metadata */}
         <div className="flex items-start justify-between flex-wrap gap-4">
           <div>
@@ -232,34 +233,10 @@ const ProjectDetails = () => {
             <h2 className="text-2xl font-bold text-white">Related Projects</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {relatedProjects.map((relatedProject) => (
-                <Link
+                <ProjectCard
                   key={relatedProject.id}
-                  to={`/projects/${relatedProject.id}`}
-                  className="group"
-                >
-                  <div className="relative rounded-xl overflow-hidden bg-space-700 hover:scale-[1.02] transition-transform duration-300 cursor-pointer border border-[#2a2a2a]">
-                    <div className="aspect-video relative overflow-hidden">
-                      <img
-                        src={getOptimizedUrl(relatedProject.thumbnail, { width: 800 })}
-                        alt={relatedProject.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        loading="lazy"
-                        decoding="async"
-                        onError={(e) => {
-                          if (relatedProject.thumbnail && e.currentTarget.src !== relatedProject.thumbnail) {
-                            e.currentTarget.src = relatedProject.thumbnail;
-                          }
-                        }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    </div>
-                    <div className="p-4 bg-space-700">
-                      <h3 className="text-white font-semibold text-lg">
-                        {relatedProject.title}
-                      </h3>
-                    </div>
-                  </div>
-                </Link>
+                  project={relatedProject}
+                />
               ))}
             </div>
           </div>

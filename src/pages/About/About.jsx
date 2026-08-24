@@ -1,5 +1,6 @@
 import React from 'react';
 import { Award, Film, Briefcase, Play } from 'lucide-react';
+import GridMotion from '../../components/ui/GridMotion/GridMotion';
 
 // Mock data - Replace with your actual data source
 const aboutData = {
@@ -127,7 +128,7 @@ const About = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black" />
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
+        <div className="relative px-4 md:px-6 h-full flex flex-col justify-center">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 max-w-3xl">
             {aboutData.hero.title}
           </h1>
@@ -137,24 +138,24 @@ const About = () => {
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 pb-16">
+      <div className="px-4 md:px-6 space-y-16 pb-16">
         
         {/* About Me Section */}
-        <section className="grid lg:grid-cols-5 gap-8" aria-labelledby="about-title">
+        <section className="grid md:grid-cols-4 gap-8" aria-labelledby="about-title">
           {/* Profile Image */}
-          <div className="lg:col-span-2">
-            <div className="rounded-2xl overflow-hidden shadow-2xl sticky top-8">
+          <div className="md:col-span-2 lg:col-span-1">
+            <div className="rounded-2xl overflow-hidden shadow-2xl top-8">
               <img 
                 src={aboutData.profile.image}
                 alt={aboutData.profile.name}
-                className="w-full aspect-[3/4] object-cover"
+                className="w-full h-[350px] md:h-[550px] lg:h-[400px] object-cover"
                 loading="lazy"
               />
             </div>
           </div>
 
           {/* Profile Content */}
-          <div className="lg:col-span-3 space-y-6">
+          <div className="md:col-span-2 lg:col-span-3 space-y-6">
             <div>
               <h2 id="about-title" className="text-3xl font-bold mb-4">
                 {aboutData.profile.title}
@@ -169,7 +170,7 @@ const About = () => {
 
             {/* Info Grid */}
             <div className="grid sm:grid-cols-2 gap-4 pt-4">
-              <div className="bg-gray-900 rounded-xl p-4 border border-gray-800">
+              <div className="rounded-xl p-4 border border-gray-800" style={{ backgroundColor: '#111' }}>
                 <div className="flex items-start gap-3">
                   <Award className="text-blue-500 flex-shrink-0 mt-1" size={20} aria-hidden="true" />
                   <div>
@@ -180,7 +181,7 @@ const About = () => {
                 </div>
               </div>
 
-              <div className="bg-gray-900 rounded-xl p-4 border border-gray-800">
+              <div className="rounded-xl p-4 border border-gray-800" style={{ backgroundColor: '#111' }}>
                 <div className="flex items-start gap-3">
                   <Film className="text-blue-500 flex-shrink-0 mt-1" size={20} aria-hidden="true" />
                   <div>
@@ -191,13 +192,13 @@ const About = () => {
                 </div>
               </div>
 
-              <div className="bg-gray-900 rounded-xl p-4 border border-gray-800 sm:col-span-2">
+              <div className="rounded-xl p-4 border border-gray-800 sm:col-span-2" style={{ backgroundColor: '#111' }}>
                 <p className="text-gray-400 text-sm">
                   <span className="text-white font-medium">Tools:</span> {aboutData.profile.tools.replace('Tools: ', '')}
                 </p>
               </div>
 
-              <div className="bg-gray-900 rounded-xl p-4 border border-gray-800 sm:col-span-2">
+              <div className="rounded-xl p-4 border border-gray-800 sm:col-span-2" style={{ backgroundColor: '#111' }}>
                 <p className="text-gray-400 text-sm">
                   <span className="text-white font-medium">Highlights:</span> {aboutData.profile.highlights.replace('Highlights: ', '')}
                 </p>
@@ -207,7 +208,7 @@ const About = () => {
         </section>
 
         {/* Where Color Meets Emotion */}
-        <section className="grid lg:grid-cols-2 gap-8 items-center">
+        {/* <section className="grid lg:grid-cols-2 gap-8 items-center">
           <div className="rounded-2xl overflow-hidden shadow-2xl">
             <img 
               src={aboutData.sections[0].image}
@@ -227,10 +228,10 @@ const About = () => {
               {aboutData.sections[0].cta}
             </button>
           </div>
-        </section>
+        </section> */}
 
         {/* Storytelling Through Editing */}
-        <section className="grid lg:grid-cols-2 gap-8 items-center">
+        {/* <section className="grid lg:grid-cols-2 gap-8 items-center">
           <div className="space-y-6 lg:order-1">
             <h2 className="text-3xl font-bold">
               {aboutData.sections[1].title}
@@ -250,6 +251,50 @@ const About = () => {
               loading="lazy"
             />
           </div>
+        </section> */}
+
+        {/* Grid Motion Showcase */}
+        <section className="relative -mx-4 sm:-mx-6 lg:-mx-8" aria-label="Visual grid showcase">
+          <div className="h-[600px] lg:h-[700px]">
+            <GridMotion
+              items={[
+                'Color Grading',
+                <div key="gm-1" className="text-sm font-semibold text-blue-400">DaVinci Resolve</div>,
+                '/images/hero_01.webp',
+                'Film Editing',
+                <div key="gm-2" className="text-sm font-semibold text-purple-400">Premiere Pro</div>,
+                '/images/art_01.png',
+                'HDR Mastering',
+                <div key="gm-3" className="text-sm font-semibold text-amber-400">After Effects</div>,
+                '/images/hero_02.webp',
+                'Look Development',
+                <div key="gm-4" className="text-sm font-semibold text-emerald-400">ACES Pipeline</div>,
+                '/images/art_02.png',
+                'Dolby Vision',
+                <div key="gm-5" className="text-sm font-semibold text-rose-400">Film Emulation</div>,
+                '/images/hero_03.webp',
+                'Narrative Pacing',
+                <div key="gm-6" className="text-sm font-semibold text-cyan-400">Conforms</div>,
+                '/images/art_03.png',
+                'Shot Matching',
+                <div key="gm-7" className="text-sm font-semibold text-orange-400">Online Finishing</div>,
+                '/images/after_edit.webp',
+                'Rec. 709',
+                <div key="gm-8" className="text-sm font-semibold text-violet-400">Show LUTs</div>,
+                '/images/art_04.png',
+                'Grain & Texture',
+                <div key="gm-9" className="text-sm font-semibold text-teal-400">Halation</div>,
+                '/images/before_edit.webp',
+                'Sound Polish',
+                <div key="gm-10" className="text-sm font-semibold text-pink-400">Delivery QC</div>,
+                '/images/art_05.png',
+                'P3 Color Space',
+                <div key="gm-11" className="text-sm font-semibold text-lime-400">HDR10</div>,
+                '/images/art_06.png',
+              ]}
+              gradientColor="#0a0a0a"
+            />
+          </div>
         </section>
 
         {/* Skills & Tools */}
@@ -261,7 +306,8 @@ const About = () => {
             {aboutData.skills.map((skill, index) => (
               <div 
                 key={index}
-                className="bg-gradient-to-br from-gray-900 to-gray-950 rounded-xl p-6 border border-gray-800 hover:border-gray-700 transition-all duration-300"
+                className="rounded-xl p-6 border border-gray-800 hover:border-gray-700 transition-all duration-300"
+                style={{ backgroundColor: '#111' }}
               >
                 <h3 className="text-white font-semibold mb-2">
                   {skill.category}
@@ -275,7 +321,7 @@ const About = () => {
         </section>
 
         {/* Workflow */}
-        <section aria-labelledby="workflow-title">
+        {/* <section aria-labelledby="workflow-title">
           <h2 id="workflow-title" className="text-3xl font-bold mb-8">
             Workflow
           </h2>
@@ -297,10 +343,10 @@ const About = () => {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
         {/* Highlights */}
-        <section aria-labelledby="highlights-title">
+        {/* <section aria-labelledby="highlights-title">
           <h2 id="highlights-title" className="text-3xl font-bold mb-8">
             Highlights
           </h2>
@@ -322,7 +368,7 @@ const About = () => {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
       </div>
     </div>

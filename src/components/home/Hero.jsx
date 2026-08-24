@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import gsap from 'gsap';
 
 const heroImages = [
   '/images/hero_01.webp',
@@ -7,8 +8,112 @@ const heroImages = [
   '/images/hero_03.webp',
 ];
 
+// 3D Fold Animation Variants
+const titleContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const titleFoldVariants = {
+  hidden: {
+    opacity: 0,
+    rotateX: -85,
+    y: 35,
+    scale: 0.95,
+    filter: 'blur(6px)',
+  },
+  visible: {
+    opacity: 1,
+    rotateX: 0,
+    y: 0,
+    scale: 1,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 0.85,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
+
+const descContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.03,
+      delayChildren: 0.5,
+    },
+  },
+};
+
+const descFoldVariants = {
+  hidden: {
+    opacity: 0,
+    rotateX: -70,
+    y: 20,
+    filter: 'blur(4px)',
+  },
+  visible: {
+    opacity: 1,
+    rotateX: 0,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 0.65,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
+
+const titleWords = [
+  { text: 'Welcome', isGradient: false },
+  { text: 'to', isGradient: false },
+  { text: 'Our', isGradient: false },
+  { text: 'Creative', isGradient: true },
+  { text: 'Studio', isGradient: true },
+];
+
+const descriptionText = 'Discover stunning visuals and exceptional design work that brings your vision to life.';
+const descWords = descriptionText.split(' ');
+
+// Module-level flag — survives re-mounts (SPA navigation) but resets on full page reload
+let hasPlayedCurtain = false;
+
 const Hero = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const curtainLeftRef = useRef(null);
+  const curtainRightRef = useRef(null);
+  const contentRef = useRef(null);
+  const scrollIndicatorRef = useRef(null);
+  const slideIndicatorsRef = useRef(null);
+
+  // Curtain reveal effect using GSAP — only on first page load
+  useLayoutEffect(() => {
+    if (hasPlayedCurtain) {
+      // Already played: snap everything to its final state immediately
+      gsap.set(curtainLeftRef.current, { xPercent: -100 });
+      gsap.set(curtainRightRef.current, { xPercent: 100 });
+      return;
+    }
+
+    hasPlayedCurtain = true;
+
+    const tl = gsap.timeline();
+
+    tl.to(curtainLeftRef.current, { xPercent: -100, duration: 1, ease: "power3.inOut" }, 0)
+      .to(curtainRightRef.current, { xPercent: 100, duration: 1, ease: "power3.inOut" }, 0)
+      .from(contentRef.current, { scale: 0.5, opacity: 0, duration: 0.8, ease: "back.out(1.7)" }, 0.5)
+      .from(scrollIndicatorRef.current, { opacity: 0, y: 20, duration: 0.6, ease: "power2.out" }, 1.1)
+      .from(slideIndicatorsRef.current, { opacity: 0, y: 10, duration: 0.5, ease: "power2.out" }, 1.2);
+
+    return () => tl.kill();
+  }, []);
 
   // Auto slide images every 5 seconds
   useEffect(() => {
@@ -43,40 +148,89 @@ const Hero = () => {
         </AnimatePresence>
       </div>
 
+      {/* Curtain Overlays */}
+      <div
+        ref={curtainLeftRef}
+        className="absolute inset-y-0 left-0 w-1/2 z-30"
+        style={{ backgroundColor: '#0a0a0a' }}
+      />
+      <div
+        ref={curtainRightRef}
+        className="absolute inset-y-0 right-0 w-1/2 z-30"
+        style={{ backgroundColor: '#0a0a0a' }}
+      />
+
       {/* Dark overlay for better text readability */}
       <div className="absolute inset-0 bg-black/50 z-10 pointer-events-none"></div>
 
       {/* Content Container */}
-      <div className="relative z-20 max-w-4xl mx-auto px-6 text-center text-white">
-        {/* Title with Fade In Animation */}
+      <div ref={contentRef} className="relative z-20 max-w-4xl mx-auto px-6 text-center text-white">
+        {/* Title with 3D Fold Animation */}
         <motion.h1 
           className="text-5xl sm:text-6xl md:text-7xl font-extrabold mb-6 leading-tight drop-shadow-lg tracking-tight"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          variants={titleContainerVariants}
+          initial="hidden"
+          animate="visible"
+          style={{ perspective: 1200 }}
         >
-          Welcome to Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-white">Creative Studio</span>
+          {titleWords.map((item, idx) => (
+            <span
+              key={idx}
+              className="inline-block mr-[0.28em] last:mr-0 [perspective:1000px]"
+            >
+              <motion.span
+                variants={titleFoldVariants}
+                className={`inline-block ${
+                  item.isGradient
+                    ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-white'
+                    : 'text-white'
+                }`}
+                style={{
+                  transformOrigin: '50% 100% -15px',
+                  transformStyle: 'preserve-3d',
+                  backfaceVisibility: 'hidden',
+                }}
+              >
+                {item.text}
+              </motion.span>
+            </span>
+          ))}
         </motion.h1>
 
-        {/* Modern & Simple Description Animation */}
+        {/* Description with Staggered 3D Fold Animation */}
         <motion.p 
           className="text-lg md:text-2xl mb-8 text-gray-200 drop-shadow-md max-w-2xl mx-auto font-light leading-relaxed"
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          variants={descContainerVariants}
+          initial="hidden"
+          animate="visible"
+          style={{ perspective: 1000 }}
         >
-          Discover stunning visuals and exceptional design work that brings your vision to life.
+          {descWords.map((word, idx) => (
+            <span
+              key={idx}
+              className="inline-block mr-[0.28em] last:mr-0 [perspective:800px]"
+            >
+              <motion.span
+                variants={descFoldVariants}
+                className="inline-block"
+                style={{
+                  transformOrigin: '50% 100%',
+                  transformStyle: 'preserve-3d',
+                  backfaceVisibility: 'hidden',
+                }}
+              >
+                {word}
+              </motion.span>
+            </span>
+          ))}
         </motion.p>
       </div>
 
       {/* Scroll indicator as CTA */}
-      <motion.div 
+      <div 
+        ref={scrollIndicatorRef}
         className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-20 cursor-pointer group"
         onClick={scrollToContent}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1 }}
-        // whileHover={{ y: -5 }}
       >
         <div className="flex flex-col items-center gap-2">
           <p className="text-white text-sm font-medium group-hover:text-accent transition-colors duration-300">Scroll to explore</p>
@@ -94,10 +248,10 @@ const Hero = () => {
             />
           </svg>
         </div>
-      </motion.div>
+      </div>
 
       {/* Slide Indicators */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex gap-2">
+      <div ref={slideIndicatorsRef} className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex gap-2">
         {heroImages.map((_, idx) => (
           <button
             key={idx}
