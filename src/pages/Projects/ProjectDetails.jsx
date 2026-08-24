@@ -74,6 +74,11 @@ const ProjectDetails = () => {
             className="w-full h-full object-cover"
             loading="eager"
             decoding="async"
+            onError={(e) => {
+              if (project.heroImage && e.currentTarget.src !== project.heroImage) {
+                e.currentTarget.src = project.heroImage;
+              }
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
           <div className="absolute top-6 left-6">
@@ -174,6 +179,11 @@ const ProjectDetails = () => {
                       className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
                       loading="lazy"
                       decoding="async"
+                      onError={(e) => {
+                        if (still && e.currentTarget.src !== still) {
+                          e.currentTarget.src = still;
+                        }
+                      }}
                     />
                     <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
@@ -235,6 +245,11 @@ const ProjectDetails = () => {
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         loading="lazy"
                         decoding="async"
+                        onError={(e) => {
+                          if (relatedProject.thumbnail && e.currentTarget.src !== relatedProject.thumbnail) {
+                            e.currentTarget.src = relatedProject.thumbnail;
+                          }
+                        }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     </div>

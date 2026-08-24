@@ -46,9 +46,14 @@ const Navbar = () => {
     >
       <div className="flex items-center justify-between">
         {/* Logo */}
-        <div className="text-xl font-bold text-white tracking-wide flex-shrink-0">
-          Mahmoud Abo Hussein
-        </div>
+        <Link to="/" className="flex flex-col flex-shrink-0 leading-tight">
+          <span className="text-lg font-bold text-white tracking-wider">
+            MAHMOUD
+          </span>
+          <span className="text-xs font-medium text-gray-300 tracking-widest">
+            ABO HUSSEIN
+          </span>
+        </Link>
 
         {/* Desktop nav */}
         <nav className="hidden md:flex gap-5 font-semibold ml-auto text-sm items-center">
@@ -80,13 +85,13 @@ const Navbar = () => {
           })}
 
           {/* Showreel button */}
-          <Link
+          {/* <Link
             to="/showreel"
             className="flex items-center gap-2 bg-gradient-to-br from-[#1488CC] to-[#2B32B2] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition"
           >
             <Play size={16} />
             Showreel
-          </Link>
+          </Link> */}
         </nav>
 
         {/* Mobile toggle button */}

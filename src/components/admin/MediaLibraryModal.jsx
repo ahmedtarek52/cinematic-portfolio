@@ -13,6 +13,7 @@ import { getOptimizedUrl } from "../../lib/cloudinary";
 const MediaLibraryModal = ({ isOpen, onClose, onSelect, title = "Select from Media Library" }) => {
   const [search, setSearch] = useState("");
   const [selectedUrl, setSelectedUrl] = useState(null);
+  const [failedUrls, setFailedUrls] = useState(new Set());
 
   const { data: projects = [] } = useQuery({
     queryKey: ["projects"],
@@ -30,19 +31,19 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelect, title = "Select from Med
 
     // From projects
     projects.forEach((p) => {
-      if (p.heroImage && p.heroImage.includes("cloudinary.com")) {
+      if (p.heroImage && p.heroImage.includes("cloudinary.com") && !failedUrls.has(p.heroImage)) {
         if (!map.has(p.heroImage)) {
           map.set(p.heroImage, { url: p.heroImage, title: `${p.title} (Hero)`, project: p.title });
         }
       }
-      if (p.thumbnail && p.thumbnail.includes("cloudinary.com")) {
+      if (p.thumbnail && p.thumbnail.includes("cloudinary.com") && !failedUrls.has(p.thumbnail)) {
         if (!map.has(p.thumbnail)) {
           map.set(p.thumbnail, { url: p.thumbnail, title: `${p.title} (Thumb)`, project: p.title });
         }
       }
       if (Array.isArray(p.stills)) {
         p.stills.forEach((s, idx) => {
-          if (s && s.includes("cloudinary.com") && !map.has(s)) {
+          if (s && s.includes("cloudinary.com") && !failedUrls.has(s) && !map.has(s)) {
             map.set(s, { url: s, title: `${p.title} (Still #${idx + 1})`, project: p.title });
           }
         });
@@ -51,7 +52,7 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelect, title = "Select from Med
 
     // From trailers
     trailers.forEach((t) => {
-      if (t.thumbnail && t.thumbnail.includes("cloudinary.com")) {
+      if (t.thumbnail && t.thumbnail.includes("cloudinary.com") && !failedUrls.has(t.thumbnail)) {
         if (!map.has(t.thumbnail)) {
           map.set(t.thumbnail, { url: t.thumbnail, title: `${t.title} (Trailer)`, project: t.title });
         }
@@ -59,7 +60,7 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelect, title = "Select from Med
     });
 
     return Array.from(map.values());
-  }, [projects, trailers]);
+  }, [projects, trailers, failedUrls]);
 
   const filteredItems = useMemo(() => {
     if (!search.trim()) return mediaItems;
@@ -148,6 +149,9 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelect, title = "Select from Med
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         loading="lazy"
                         decoding="async"
+                        onError={() => {
+                          setFailedUrls((prev) => new Set(prev).add(item.url));
+                        }}
                       />
                     </div>
 

@@ -153,14 +153,14 @@ const CloudinaryUploader = ({ value, onChange, folder, label }) => {
                   JPG, PNG, WebP — automatically deduplicated
                 </p>
               </div>
-              <button
+              {/* <button
                 type="button"
                 onClick={() => setShowLibrary(true)}
                 className="px-3 py-1.5 rounded-lg bg-space-700 hover:bg-space-600 text-gray-300 text-xs font-medium border border-[#2a2a2a] transition flex items-center gap-1.5 cursor-pointer"
               >
                 <FolderOpen className="w-3.5 h-3.5 text-accent" />
                 Select Existing Library Image
-              </button>
+              </button> */}
             </div>
           )}
         </div>

@@ -122,7 +122,7 @@ const MultiImageUploader = ({ value = [], onChange, folder, label }) => {
       )}
 
       {/* Add More Drop Zone / Action Buttons */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1">
         <label
           onDrop={handleDrop}
           onDragOver={(e) => {
@@ -157,14 +157,14 @@ const MultiImageUploader = ({ value = [], onChange, folder, label }) => {
           />
         </label>
 
-        <button
+        {/* <button
           type="button"
           onClick={() => setShowLibrary(true)}
           className="flex items-center justify-center gap-2 h-20 rounded-xl border border-[#2a2a2a] bg-space-800/50 hover:bg-space-800 text-gray-300 hover:text-white transition cursor-pointer"
         >
           <FolderOpen className="w-4 h-4 text-accent" />
           <span className="text-xs font-medium">Select from Existing Media</span>
-        </button>
+        </button> */}
       </div>
 
       {error && <p className="text-red-400 text-xs">{error}</p>}

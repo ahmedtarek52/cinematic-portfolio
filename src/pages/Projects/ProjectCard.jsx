@@ -64,6 +64,11 @@ const ProjectCard = ({ project }) => {
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
           loading="lazy"
           decoding="async"
+          onError={(e) => {
+            if (project.thumbnail && e.currentTarget.src !== project.thumbnail) {
+              e.currentTarget.src = project.thumbnail;
+            }
+          }}
         />
 
         {/* Ambient Dark Gradient Overlay */}

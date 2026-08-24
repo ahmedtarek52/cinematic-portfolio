@@ -237,7 +237,7 @@ export async function deleteImagesFromCloudinary(urlsOrPublicIds = []) {
  * @param {number} [options.width=1200] - Max display width in pixels
  * @param {number} [options.height] - Max display height in pixels
  * @param {string} [options.crop="limit"] - Crop mode ("limit", "fill", "fit", "thumb")
- * @param {string} [options.quality="auto"] - Quality setting ("auto", "auto:good", "auto:best")
+ * @param {string} [options.quality] - Quality setting ("auto", "auto:good", "auto:best")
  * @returns {string}
  */
 export function getOptimizedUrl(originalUrl, options = {}) {
@@ -245,43 +245,52 @@ export function getOptimizedUrl(originalUrl, options = {}) {
     return originalUrl || "";
   }
 
+  // If not a Cloudinary upload URL, return original as-is
   if (!originalUrl.includes("cloudinary.com") || !originalUrl.includes("/upload/")) {
     return originalUrl;
   }
 
-  const uploadIdx = originalUrl.indexOf("/upload/");
-  const baseUrl = originalUrl.substring(0, uploadIdx + "/upload/".length);
-  let rest = originalUrl.substring(uploadIdx + "/upload/".length);
-
-  // If there are existing transformation parameters before version or folder, strip them
-  // e.g. /upload/f_auto,q_auto/v1234/file.jpg -> rest becomes v1234/file.jpg
-  const transformMatch = rest.match(/^(?:[a-z0-9_,:]+\/)+(v\d+\/.+)$/i);
-  if (transformMatch) {
-    rest = transformMatch[1];
-  } else {
-    // If no version tag, check if first segment is a transform string
-    const segments = rest.split("/");
-    if (segments.length > 1 && /^(?:[a-z]{1,3}_|f_|q_|c_|w_|h_|dpr_|b_|e_|o_|r_|a_)/.test(segments[0])) {
-      segments.shift();
-      rest = segments.join("/");
-    }
-  }
-
-  const transforms = [
-    "f_auto", // Deliver next-gen WebP/AVIF format
-    options.quality ? `q_${options.quality}` : "q_auto:good", // Smart compression
+  // Build transform string
+  const transformList = [
+    "f_auto",
+    options.quality ? `q_${options.quality}` : "q_auto",
   ];
 
   if (options.width) {
-    transforms.push(`w_${options.width}`);
-    transforms.push(`c_${options.crop || "limit"}`);
+    transformList.push(`w_${options.width}`);
+    transformList.push(`c_${options.crop || "limit"}`);
   } else if (options.height) {
-    transforms.push(`h_${options.height}`);
-    transforms.push(`c_${options.crop || "limit"}`);
-  } else {
-    transforms.push("w_1400");
-    transforms.push("c_limit");
+    transformList.push(`h_${options.height}`);
+    transformList.push(`c_${options.crop || "limit"}`);
   }
 
-  return `${baseUrl}${transforms.join(",")}/${rest}`;
+  const transformString = transformList.join(",");
+
+  // 1. If URL has a version tag: /upload/(optional_old_transforms/)v123456/path/to/img.ext
+  const versionMatch = originalUrl.match(
+    /(https:\/\/res\.cloudinary\.com\/[^/]+\/image\/upload\/)(?:[^/]+\/)*(v\d+\/.+)$/i
+  );
+  if (versionMatch) {
+    const uploadPrefix = versionMatch[1]; // e.g. "https://res.cloudinary.com/do85jzh6y/image/upload/"
+    const versionAndAsset = versionMatch[2]; // e.g. "v1740345678/portfolio/projects/p_05/img.jpg"
+    return `${uploadPrefix}${transformString}/${versionAndAsset}`;
+  }
+
+  // 2. If URL has no version tag: /upload/(optional_old_transforms/)path/to/img.ext
+  const uploadIdx = originalUrl.indexOf("/upload/");
+  const uploadPrefix = originalUrl.substring(0, uploadIdx + "/upload/".length);
+  const remaining = originalUrl.substring(uploadIdx + "/upload/".length);
+
+  // If first segment is a known Cloudinary transform string (e.g. f_auto,q_auto)
+  const segments = remaining.split("/");
+  if (
+    segments.length > 1 &&
+    segments[0].includes("f_") ||
+    segments[0].includes("q_") ||
+    segments[0].includes("w_")
+  ) {
+    segments.shift();
+  }
+
+  return `${uploadPrefix}${transformString}/${segments.join("/")}`;
 }
