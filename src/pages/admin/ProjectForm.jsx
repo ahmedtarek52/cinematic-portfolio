@@ -115,6 +115,9 @@ const ProjectForm = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
+      if (id) {
+        queryClient.invalidateQueries({ queryKey: ["project", id] });
+      }
       toast.success(isEditing ? "Project updated!" : "Project created!");
       navigate("/admin/projects");
     },

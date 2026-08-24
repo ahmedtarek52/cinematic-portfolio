@@ -18,25 +18,20 @@ async function generateSha1(message) {
 
 const HASH_CACHE_KEY = "portfolio_cloudinary_hash_map";
 
-function getHashCache() {
+/**
+ * Clear the local upload hash cache.
+ */
+export function clearHashCache() {
   try {
-    const raw = localStorage.getItem(HASH_CACHE_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch (e) {
-    return {};
-  }
-}
-
-function saveHashCache(hash, data) {
-  try {
-    const cache = getHashCache();
-    cache[hash] = data;
-    localStorage.setItem(HASH_CACHE_KEY, JSON.stringify(cache));
+    localStorage.removeItem(HASH_CACHE_KEY);
   } catch (e) {}
 }
 
+// Automatically clear legacy hash cache to prevent stale 404 URL loops
+clearHashCache();
+
 /**
- * Calculate SHA-256 hash of a file for content-based deduplication.
+ * Calculate SHA-256 hash of a file.
  * @param {File} file
  * @returns {Promise<string>}
  */
@@ -49,25 +44,13 @@ export async function calculateFileHash(file) {
 
 /**
  * Upload a file to Cloudinary via unsigned upload preset.
- * Automatically checks content hash to prevent duplicate uploads if the file already exists.
+ * Always performs direct Cloudinary upload to ensure the returned asset is active and valid.
  *
  * @param {File} file - The file to upload
- * @param {string} folder - Cloudinary folder path, e.g. "portfolio/projects/nocturne"
+ * @param {string} folder - Cloudinary folder path, e.g. "portfolio/trailers"
  * @returns {Promise<{url: string, publicId: string}>}
  */
 export async function uploadToCloudinary(file, folder) {
-  // 1. Content Hash Deduplication: Check if identical file was already uploaded
-  try {
-    const fileHash = await calculateFileHash(file);
-    const cache = getHashCache();
-    if (cache[fileHash] && cache[fileHash].url) {
-      // Re-use already uploaded image without making another network upload
-      return cache[fileHash];
-    }
-  } catch (e) {
-    console.warn("Could not compute file hash for deduplication:", e);
-  }
-
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const uploadPreset =
     import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET ||
@@ -96,18 +79,10 @@ export async function uploadToCloudinary(file, folder) {
   }
 
   const data = await res.json();
-  const result = {
+  return {
     url: data.secure_url,
     publicId: data.public_id,
   };
-
-  // Cache the uploaded asset by file content hash
-  try {
-    const fileHash = await calculateFileHash(file);
-    saveHashCache(fileHash, result);
-  } catch (e) {}
-
-  return result;
 }
 
 /**
@@ -285,9 +260,10 @@ export function getOptimizedUrl(originalUrl, options = {}) {
   const segments = remaining.split("/");
   if (
     segments.length > 1 &&
-    segments[0].includes("f_") ||
-    segments[0].includes("q_") ||
-    segments[0].includes("w_")
+    (segments[0].includes("f_") ||
+      segments[0].includes("q_") ||
+      segments[0].includes("w_") ||
+      segments[0].includes("c_"))
   ) {
     segments.shift();
   }

@@ -33,10 +33,30 @@ export const TrailerCard = ({
       >
         {/* Poster Image */}
         <img
-          src={getOptimizedUrl(trailer.thumbnail, { width: 800 })}
+          src={
+            trailer.thumbnail
+              ? getOptimizedUrl(trailer.thumbnail, { width: 800 })
+              : trailer.vimeoId
+              ? `https://vumbnail.com/${trailer.vimeoId}.jpg`
+              : ""
+          }
           alt={trailer.title}
           loading="lazy"
           decoding="async"
+          onError={(e) => {
+            // Fallback tier 1: try raw unoptimized thumbnail if different
+            if (trailer.thumbnail && e.currentTarget.src !== trailer.thumbnail) {
+              e.currentTarget.src = trailer.thumbnail;
+              return;
+            }
+            // Fallback tier 2: try Vimeo thumbnail via vumbnail
+            if (trailer.vimeoId && !e.currentTarget.src.includes("vumbnail.com")) {
+              e.currentTarget.src = `https://vumbnail.com/${trailer.vimeoId}.jpg`;
+              return;
+            }
+            // Fallback tier 3: hide broken image cleanly
+            e.currentTarget.style.display = "none";
+          }}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
         />
 

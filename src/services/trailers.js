@@ -1,5 +1,6 @@
 import { supabase } from "../lib/supabaseClient";
 import { deleteFromCloudinary } from "../lib/cloudinary";
+import { isImageReferencedElsewhere } from "./projects";
 
 // ──────────────────────────────────────────────────────
 // Row Mappers
@@ -108,10 +109,13 @@ export async function deleteTrailer(id) {
   const { error } = await supabase.from("trailers").delete().eq("id", id);
   if (error) throw error;
 
-  // 3. Delete thumbnail from Cloudinary if present
+  // 3. Delete thumbnail from Cloudinary if present and not referenced elsewhere
   if (trailerToDelete?.thumbnail) {
-    deleteFromCloudinary(trailerToDelete.thumbnail).catch((err) => {
-      console.error("Error deleting trailer thumbnail from Cloudinary:", err);
-    });
+    const isUsed = await isImageReferencedElsewhere(trailerToDelete.thumbnail);
+    if (!isUsed) {
+      deleteFromCloudinary(trailerToDelete.thumbnail).catch((err) => {
+        console.error("Error deleting trailer thumbnail from Cloudinary:", err);
+      });
+    }
   }
 }

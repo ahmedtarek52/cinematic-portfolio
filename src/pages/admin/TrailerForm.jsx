@@ -77,6 +77,9 @@ const TrailerForm = () => {
     mutationFn: (data) => isEditing ? updateTrailer(id, data) : createTrailer(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["trailers"] });
+      if (id) {
+        queryClient.invalidateQueries({ queryKey: ["trailer", id] });
+      }
       toast.success(isEditing ? "Trailer updated!" : "Trailer created!");
       navigate("/admin/trailers");
     },

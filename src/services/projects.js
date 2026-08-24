@@ -130,7 +130,7 @@ export async function updateProject(id, payload) {
   return mapRowToProject(data);
 }
 
-async function isImageReferencedElsewhere(imageUrl, excludeProjectId = null) {
+export async function isImageReferencedElsewhere(imageUrl, excludeProjectId = null) {
   if (!imageUrl) return false;
   try {
     const { data: projects } = await supabase

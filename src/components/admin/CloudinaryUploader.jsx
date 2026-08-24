@@ -15,22 +15,15 @@ const CloudinaryUploader = ({ value, onChange, folder, label }) => {
       setError(null);
       setUploading(true);
       try {
-        const oldUrl = value;
         const result = await uploadToCloudinary(file, folder);
         onChange(result.url);
-        // Only clean up old image if it's not the same URL
-        if (oldUrl && oldUrl !== result.url) {
-          deleteFromCloudinary(oldUrl).catch((e) =>
-            console.warn("Could not delete old image:", e)
-          );
-        }
       } catch (err) {
         setError(err.message);
       } finally {
         setUploading(false);
       }
     },
-    [folder, onChange, value]
+    [folder, onChange]
   );
 
   const handleFileSelect = (e) => {
@@ -55,11 +48,6 @@ const CloudinaryUploader = ({ value, onChange, folder, label }) => {
   };
 
   const handleRemove = () => {
-    if (value) {
-      deleteFromCloudinary(value).catch((e) =>
-        console.warn("Could not delete removed image:", e)
-      );
-    }
     onChange("");
   };
 

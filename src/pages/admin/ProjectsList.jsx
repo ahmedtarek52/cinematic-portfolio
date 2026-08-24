@@ -5,7 +5,7 @@ import { getAllProjects, deleteProject } from "../../services/projects";
 import { useToast } from "../../components/admin/Toast";
 import DataTable from "../../components/admin/DataTable";
 import ConfirmDeleteDialog from "../../components/admin/ConfirmDeleteDialog";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit, Trash2, Film } from "lucide-react";
 import { getOptimizedUrl } from "../../lib/cloudinary";
 
 const ProjectsList = () => {
@@ -23,6 +23,7 @@ const ProjectsList = () => {
     mutationFn: (id) => deleteProject(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["project"] });
       toast.success("Project deleted successfully");
       setDeleteTarget(null);
     },
@@ -35,15 +36,27 @@ const ProjectsList = () => {
     {
       key: "thumbnail",
       label: "",
-      render: (row) => (
-        <img
-          src={getOptimizedUrl(row.thumbnail, { width: 150 })}
-          alt={row.title}
-          className="w-12 h-8 object-cover rounded"
-          loading="lazy"
-          decoding="async"
-        />
-      ),
+      render: (row) =>
+        row.thumbnail ? (
+          <img
+            src={getOptimizedUrl(row.thumbnail, { width: 150 })}
+            alt={row.title}
+            className="w-12 h-8 object-cover rounded bg-space-900"
+            loading="lazy"
+            decoding="async"
+            onError={(e) => {
+              if (row.thumbnail && e.currentTarget.src !== row.thumbnail) {
+                e.currentTarget.src = row.thumbnail;
+                return;
+              }
+              e.currentTarget.style.display = "none";
+            }}
+          />
+        ) : (
+          <div className="w-12 h-8 bg-space-700 rounded flex items-center justify-center text-gray-500">
+            <Film className="w-3.5 h-3.5" />
+          </div>
+        ),
     },
     { key: "title", label: "Title", sortable: true },
     { key: "category", label: "Category", sortable: true },

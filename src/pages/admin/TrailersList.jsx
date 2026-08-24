@@ -5,7 +5,7 @@ import { getAllTrailers, deleteTrailer } from "../../services/trailers";
 import { useToast } from "../../components/admin/Toast";
 import DataTable from "../../components/admin/DataTable";
 import ConfirmDeleteDialog from "../../components/admin/ConfirmDeleteDialog";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit, Trash2, Film } from "lucide-react";
 import { getOptimizedUrl } from "../../lib/cloudinary";
 
 const TrailersList = () => {
@@ -23,6 +23,7 @@ const TrailersList = () => {
     mutationFn: (id) => deleteTrailer(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["trailers"] });
+      queryClient.invalidateQueries({ queryKey: ["trailer"] });
       toast.success("Trailer deleted successfully");
       setDeleteTarget(null);
     },
@@ -38,12 +39,25 @@ const TrailersList = () => {
           <img
             src={getOptimizedUrl(row.thumbnail, { width: 150 })}
             alt={row.title}
-            className="w-16 h-10 object-cover rounded"
+            className="w-16 h-10 object-cover rounded bg-space-900"
             loading="lazy"
             decoding="async"
+            onError={(e) => {
+              if (row.thumbnail && e.currentTarget.src !== row.thumbnail) {
+                e.currentTarget.src = row.thumbnail;
+                return;
+              }
+              if (row.vimeoId && !e.currentTarget.src.includes("vumbnail.com")) {
+                e.currentTarget.src = `https://vumbnail.com/${row.vimeoId}.jpg`;
+                return;
+              }
+              e.currentTarget.style.display = "none";
+            }}
           />
         ) : (
-          <div className="w-16 h-10 bg-space-700 rounded" />
+          <div className="w-16 h-10 bg-space-700 rounded flex items-center justify-center text-gray-500">
+            <Film className="w-4 h-4" />
+          </div>
         ),
     },
     { key: "title", label: "Title", sortable: true },
