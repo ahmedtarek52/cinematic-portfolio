@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Film, Search } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllTrailers } from "../../services/trailers";
@@ -17,6 +17,9 @@ const Trailers = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTrailerId, setActiveTrailerId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isVisible, setIsVisible] = useState({});
+  const trailersPerPage = 9;
 
   const { data: trailers = [], isLoading } = useQuery({
     queryKey: ["trailers"],
@@ -27,6 +30,11 @@ const Trailers = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // Reset page when filtering or searching
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, searchQuery]);
 
   // Filter trailers based on category and search query
   const filteredTrailers = useMemo(() => {
@@ -45,6 +53,47 @@ const Trailers = () => {
       return matchesCategory && matchesSearch;
     });
   }, [selectedCategory, searchQuery, trailers]);
+
+  // Pagination
+  const totalPages = Math.ceil(filteredTrailers.length / trailersPerPage);
+  const paginatedTrailers = useMemo(() => {
+    return filteredTrailers.slice(
+      (currentPage - 1) * trailersPerPage,
+      currentPage * trailersPerPage
+    );
+  }, [filteredTrailers, currentPage, trailersPerPage]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Handle animations (standardized with Projects component)
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible((prev) => ({
+              ...prev,
+              [entry.target.id]: true,
+            }));
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      }
+    );
+
+    const elements = document.querySelectorAll(".trailer-card-animate");
+    elements.forEach((el) => observer.observe(el));
+
+    return () => {
+      elements.forEach((el) => observer.unobserve(el));
+    };
+  }, [currentPage, paginatedTrailers]);
 
   // Current active trailer for Cinema Modal
   const activeTrailer = useMemo(() => {
@@ -181,47 +230,80 @@ const Trailers = () => {
         </motion.div>
       </div>
 
-      {/* Trailers Grid */}
-      <motion.div
-        layout
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10"
-      >
-        <AnimatePresence mode="popLayout">
-          {filteredTrailers.length > 0 ? (
-            filteredTrailers.map((trailer, index) => (
+      {/* Trailers Grid with Standard Slide-in Animation */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+        {paginatedTrailers.length > 0 ? (
+          paginatedTrailers.map((trailer, index) => (
+            <div
+              key={`trailer-${trailer.id}-${currentPage}`}
+              id={`trailer-${trailer.id}-${currentPage}`}
+              className={`trailer-card-animate h-full transition-all duration-700 ease-out ${
+                isVisible[`trailer-${trailer.id}-${currentPage}`]
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-10"
+              }`}
+              style={{ transitionDelay: `${(index % 9) * 80}ms` }}
+            >
               <TrailerCard
-                key={trailer.id}
                 trailer={trailer}
-                layout={true}
                 onPlay={(t) => setActiveTrailerId(t.id)}
-                initial={{ opacity: 0, scale: 0.94 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
               />
-            ))
-          ) : (
-            <div className="col-span-full py-16 text-center space-y-3">
-              <Film className="w-12 h-12 text-gray-600 mx-auto" />
-              <h3 className="text-xl font-bold text-white">
-                No trailers found
-              </h3>
-              <p className="text-gray-400 text-sm">
-                Try selecting a different category or clearing your search.
-              </p>
-              <button
-                onClick={() => {
-                  setSelectedCategory("All");
-                  setSearchQuery("");
-                }}
-                className="px-4 py-2 rounded-lg bg-accent text-white text-xs font-semibold hover:bg-blue-600 transition"
-              >
-                Reset Filters
-              </button>
             </div>
-          )}
-        </AnimatePresence>
-      </motion.div>
+          ))
+        ) : (
+          <div className="col-span-full py-16 text-center space-y-3">
+            <Film className="w-12 h-12 text-gray-600 mx-auto" />
+            <h3 className="text-xl font-bold text-white">
+              No trailers found
+            </h3>
+            <p className="text-gray-400 text-sm">
+              Try selecting a different category or clearing your search.
+            </p>
+            <button
+              onClick={() => {
+                setSelectedCategory("All");
+                setSearchQuery("");
+              }}
+              className="px-4 py-2 rounded-lg bg-accent text-white text-xs font-semibold hover:bg-blue-600 transition"
+            >
+              Reset Filters
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-2 mt-12 relative z-10">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 rounded-xl bg-space-800 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:bg-space-700 transition border border-[#2a2a2a] text-xs font-semibold cursor-pointer"
+          >
+            Previous
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => handlePageChange(page)}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer ${
+                currentPage === page
+                  ? "bg-accent text-white shadow-[0_0_20px_rgba(0,68,255,0.4)]"
+                  : "bg-space-800 text-gray-400 hover:text-white border border-[#2a2a2a]"
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 rounded-xl bg-space-800 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:bg-space-700 transition border border-[#2a2a2a] text-xs font-semibold cursor-pointer"
+          >
+            Next
+          </button>
+        </div>
+      )}
 
       {/* Reusable Cinema Lightbox Modal */}
       <CinemaModal

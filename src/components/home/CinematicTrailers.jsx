@@ -144,17 +144,21 @@ export const CinematicTrailers = () => {
         </div>
       </div>
 
-      {/* Desktop Layout: 3-column Grid (Unchanged) */}
+      {/* Desktop Layout: 3-column Grid */}
       <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
         {featuredTrailers.map((trailer, index) => (
-          <TrailerCard
+          <motion.div
             key={trailer.id}
-            trailer={trailer}
-            onPlay={(t) => setActiveTrailerId(t.id)}
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
             transition={{ duration: 0.6, delay: index * 0.15 }}
-          />
+            className="h-full"
+          >
+            <TrailerCard
+              trailer={trailer}
+              onPlay={(t) => setActiveTrailerId(t.id)}
+            />
+          </motion.div>
         ))}
       </div>
 
@@ -166,7 +170,7 @@ export const CinematicTrailers = () => {
           onScroll={handleMobileScroll}
           className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar gap-4 pb-6 pt-1 -mx-4 px-4 touch-pan-x"
         >
-          {featuredTrailers.map((trailer, index) => (
+          {featuredTrailers.map((trailer) => (
             <div
               key={trailer.id}
               className="w-[85vw] max-w-[340px] flex-shrink-0 snap-center"
@@ -174,11 +178,6 @@ export const CinematicTrailers = () => {
               <TrailerCard
                 trailer={trailer}
                 onPlay={(t) => setActiveTrailerId(t.id)}
-                initial={{ opacity: 0, y: 30 }}
-                animate={
-                  isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
-                }
-                transition={{ duration: 0.5, delay: index * 0.1 }}
               />
             </div>
           ))}

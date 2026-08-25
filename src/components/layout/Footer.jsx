@@ -7,35 +7,41 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const Footer = () => {
-  const footerRef = useRef(null);
-  const footerInnerRef = useRef(null);
+  const footerRef = useRef(null);      // static wrapper — stays in normal flow, never moves
+  const clipRef = useRef(null);        // gets the expanding circular clip-path
   const location = useLocation();
 
   useEffect(() => {
     const footer = footerRef.current;
-    const inner = footerInnerRef.current;
-    if (!footer || !inner) return;
+    const clipTarget = clipRef.current;
+    if (!footer || !clipTarget) return;
 
-    // --- Initial hidden state: footer sits below its resting position ---
-    gsap.set(inner, { y: 120, opacity: 0 });
-
-    // --- Bounce-in animation, played once when the footer enters the viewport ---
     const ctx = gsap.context(() => {
-      gsap.to(inner, {
-        y: 0,
-        opacity: 1,
-        duration: 1.2,
-        ease: 'bounce.out', // built-in GSAP ease, no extra plugin needed
-        scrollTrigger: {
-          trigger: footer,
-          start: 'top 85%',       // fires a bit before the footer fully enters view
-          toggleActions: 'play none none reverse', // play on enter, reverse on scroll back up
-          // markers: true,        // uncomment while tuning
-        },
-      });
+      // The footer content is masked by an expanding circle centered on the block.
+      // clip-path is GPU-accelerated and, unlike animating width/height or a mask image,
+      // doesn't trigger layout — the footer stays static, only the visible region grows.
+      //
+      // NOTE on the end value: CSS resolves a circle() percentage against
+      // sqrt(width² + height²) / sqrt(2) — the center-to-corner distance. So 100%
+      // exactly reaches the corner. We go past that (150%) so wide/short footers on
+      // large screens fully clear their corners with margin, instead of being cropped.
+      gsap.fromTo(
+        clipTarget,
+        { clipPath: 'circle(0% at 50% 50%)' },
+        {
+          clipPath: 'circle(150% at 50% 50%)',
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: footer,
+            start: 'top 90%', // begins just before the footer reaches the bottom of the viewport
+            end: 'top 25%',   // fully revealed once the footer has mostly settled into view
+            scrub: 0.6,       // ties progress directly to scroll position, no free-running tween
+          },
+        }
+      );
     }, footer);
 
-    // Refresh ScrollTrigger after a short delay to account for new page content rendering
+    // Recalculate trigger positions after route content settles (e.g. images/fonts shifting layout)
     const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 300);
 
     return () => {
@@ -46,7 +52,7 @@ const Footer = () => {
 
   return (
     <footer ref={footerRef} className="footer relative mt-0 overflow-hidden">
-      <div ref={footerInnerRef}>
+      <div ref={clipRef} style={{ clipPath: 'circle(0% at 50% 50%)' }}>
         {/* Footer body */}
         <div className="relative bg-space-900">
           {/* Noise / grain overlay */}

@@ -6,25 +6,15 @@ import { getOptimizedUrl } from '../../lib/cloudinary';
 export const TrailerCard = ({
   trailer,
   onPlay,
-  layout = false,
-  initial = { opacity: 0, y: 30 },
-  animate = { opacity: 1, y: 0 },
-  exit,
-  transition = { duration: 0.5 },
   className = ''
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <motion.div
-      layout={layout}
-      initial={initial}
-      animate={animate}
-      exit={exit}
-      transition={transition}
+    <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`group relative rounded-2xl overflow-hidden bg-[#121216] border border-[#2a2a2a] transition-all duration-500 flex flex-col shadow-xl ${className}`}
+      className={`group relative rounded-2xl overflow-hidden bg-[#121216] border border-[#2a2a2a] transition-all duration-500 flex flex-col shadow-xl h-full ${className}`}
     >
       {/* Top Video Preview & Poster */}
       <div
@@ -161,7 +151,7 @@ export const TrailerCard = ({
           </div> */}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
