@@ -14,45 +14,65 @@ const Footer = () => {
   useEffect(() => {
     const footer = footerRef.current;
     const clipTarget = clipRef.current;
-    if (!footer || !clipTarget) return;
+    let ctx = null;
 
-    const ctx = gsap.context(() => {
-      // The footer content is masked by an expanding circle centered on the block.
-      // clip-path is GPU-accelerated and, unlike animating width/height or a mask image,
-      // doesn't trigger layout — the footer stays static, only the visible region grows.
-      //
-      // NOTE on the end value: CSS resolves a circle() percentage against
-      // sqrt(width² + height²) / sqrt(2) — the center-to-corner distance. So 100%
-      // exactly reaches the corner. We go past that (150%) so wide/short footers on
-      // large screens fully clear their corners with margin, instead of being cropped.
-      gsap.fromTo(
-        clipTarget,
-        { clipPath: 'circle(0% at 50% 50%)' },
-        {
-          clipPath: 'circle(150% at 50% 50%)',
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: footer,
-            start: 'top 90%', // begins just before the footer reaches the bottom of the viewport
-            end: 'top 25%',   // fully revealed once the footer has mostly settled into view
-            scrub: 0.6,       // ties progress directly to scroll position, no free-running tween
-          },
-        }
-      );
-    }, footer);
+    const setupAnimation = () => {
+      if (ctx) ctx.revert();
 
-    // Recalculate trigger positions after route content settles (e.g. images/fonts shifting layout)
-    const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 300);
+      // Check if page has sufficient scroll distance past the viewport
+      const isScrollable =
+        document.documentElement.scrollHeight > window.innerHeight + 100;
+
+      if (!isScrollable) {
+        // Page fits in viewport or is too short to scroll; ensure footer is fully visible
+        gsap.set(clipTarget, { clipPath: 'circle(150% at 50% 50%)' });
+        return;
+      }
+
+      ctx = gsap.context(() => {
+        gsap.fromTo(
+          clipTarget,
+          { clipPath: 'circle(0% at 50% 50%)' },
+          {
+            clipPath: 'circle(150% at 50% 50%)',
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: footer,
+              start: 'top bottom',
+              end: 'bottom bottom',
+              scrub: 0.5,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+      }, footer);
+    };
+
+    setupAnimation();
+
+    // ResizeObserver catches dynamic page content changes (like filtering projects/trailers)
+    const resizeObserver = new ResizeObserver(() => {
+      setupAnimation();
+      ScrollTrigger.refresh();
+    });
+
+    resizeObserver.observe(document.body);
+
+    const refreshTimer = setTimeout(() => {
+      setupAnimation();
+      ScrollTrigger.refresh();
+    }, 300);
 
     return () => {
       clearTimeout(refreshTimer);
-      ctx.revert();
+      resizeObserver.disconnect();
+      if (ctx) ctx.revert();
     };
   }, [location.pathname]);
 
   return (
     <footer ref={footerRef} className="footer relative mt-0 overflow-hidden">
-      <div ref={clipRef} style={{ clipPath: 'circle(0% at 50% 50%)' }}>
+      <div ref={clipRef} style={{ clipPath: 'circle(150% at 50% 50%)' }}>
         {/* Footer body */}
         <div className="relative bg-space-900">
           {/* Noise / grain overlay */}

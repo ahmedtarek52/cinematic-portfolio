@@ -520,11 +520,13 @@ html {
     max-width: 90vw;
   }
 
-  /* Prevent horizontal scroll when mobile menu is open */
+  /* Prevent scroll when mobile menu is open */
+  html.mobile-menu-open,
   body.mobile-menu-open {
-    overflow-x: hidden;
-    position: fixed;
-    width: 100%;
+    overflow: hidden !important;
+    height: 100% !important;
+    touch-action: none !important;
+    overscroll-behavior: none !important;
   }
 
   /* Ensure touch interactions work well on mobile */

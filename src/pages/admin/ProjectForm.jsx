@@ -205,10 +205,17 @@ const ProjectForm = () => {
                 className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition"
               >
                 <option value="">Select category...</option>
-                <option value="Narrative">Narrative</option>
-                <option value="Commercial">Commercial</option>
-                <option value="Music Video">Music Video</option>
-                <option value="Documentary">Documentary</option>
+                <option value="TCP">TCP</option>
+                <option value="Cinema">Cinema</option>
+                <option value="Drama">Drama</option>
+                {existingProject?.category &&
+                  !["TCP", "Cinema", "Drama"].some(
+                    (c) => c.toLowerCase() === existingProject.category.toLowerCase()
+                  ) && (
+                    <option value={existingProject.category}>
+                      {existingProject.category}
+                    </option>
+                  )}
               </select>
               {errors.category && (
                 <p className="text-red-400 text-xs mt-1">{errors.category.message}</p>

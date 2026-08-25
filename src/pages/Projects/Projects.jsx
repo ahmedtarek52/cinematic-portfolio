@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
+import { Film, Search } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllProjects } from "../../services/projects";
 import ProjectCard from "./ProjectCard";
 
+const CATEGORIES = ["All", "TCP", "Cinema", "Drama"];
+
 const Projects = () => {
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isVisible, setIsVisible] = useState({});
   const projectsPerPage = 9;
@@ -18,22 +23,57 @@ const Projects = () => {
     queryFn: getAllProjects,
   });
 
+  // Scroll to top on page enter
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Reset page when filtering or searching
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, searchQuery]);
+
+  // Filter projects based on category and search query
+  const filteredProjects = useMemo(() => {
+    return projects.filter((p) => {
+      const matchesCategory =
+        selectedCategory === "All" ||
+        (p.category || "").trim().toLowerCase() ===
+          selectedCategory.trim().toLowerCase();
+
+      const matchesSearch =
+        searchQuery.trim() === "" ||
+        (p.title || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (p.category || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (p.year || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (p.type || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (p.description || "")
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        (p.services || []).some((s) =>
+          s.toLowerCase().includes(searchQuery.toLowerCase())
+        ) ||
+        (p.tags || []).some((tag) =>
+          tag.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
+      return matchesCategory && matchesSearch;
+    });
+  }, [selectedCategory, searchQuery, projects]);
+
   // Pagination
-  const totalPages = Math.ceil(projects.length / projectsPerPage);
-  const paginatedProjects = projects.slice(
-    (currentPage - 1) * projectsPerPage,
-    currentPage * projectsPerPage
-  );
+  const totalPages = Math.ceil(filteredProjects.length / projectsPerPage);
+  const paginatedProjects = useMemo(() => {
+    return filteredProjects.slice(
+      (currentPage - 1) * projectsPerPage,
+      currentPage * projectsPerPage
+    );
+  }, [filteredProjects, currentPage, projectsPerPage]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  // Scroll to top on page enter
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   // Handle animations
   useEffect(() => {
@@ -60,7 +100,7 @@ const Projects = () => {
     return () => {
       elements.forEach((el) => observer.unobserve(el));
     };
-  }, [currentPage, projects]);
+  }, [currentPage, paginatedProjects]);
 
   // Loading skeleton
   if (isLoading) {
@@ -124,57 +164,154 @@ const Projects = () => {
           documentary, and music video projects engineered with precision color
           grading.
         </motion.p>
-      </div>
 
-      {/* Projects Grid with Slide-in Animation */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
-        {paginatedProjects.map((project, index) => (
-          <div
-            key={project.id}
-            id={`project-${project.id}-${currentPage}`}
-            className={`project-card-animate h-full transition-all duration-700 ease-out ${
-              isVisible[`project-${project.id}-${currentPage}`]
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
-            }`}
-            style={{ transitionDelay: `${index * 100}ms` }}
-          >
-            <ProjectCard project={project} />
+        {/* Filters & Search Control Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-[#2a2a2a]/60 max-w-5xl mx-auto"
+        >
+          {/* Category Filter Tabs */}
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+            {CATEGORIES.map((cat) => {
+              const count =
+                cat === "All"
+                  ? projects.length
+                  : projects.filter(
+                      (p) =>
+                        (p.category || "").trim().toLowerCase() ===
+                        cat.trim().toLowerCase()
+                    ).length;
+              const isActive = selectedCategory === cat;
+
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 cursor-pointer flex items-center gap-1.5 ${
+                    isActive
+                      ? "bg-accent text-white shadow-[0_0_20px_rgba(0,68,255,0.4)]"
+                      : "bg-space-800/90 text-gray-400 hover:text-white border border-[#2a2a2a] hover:border-white/20"
+                  }`}
+                >
+                  <span>{cat}</span>
+                  <span
+                    className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                      isActive
+                        ? "bg-black/30 text-white"
+                        : "bg-space-700 text-gray-400"
+                    }`}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
           </div>
-        ))}
+
+          {/* Search Box */}
+          <div className="relative w-full sm:w-64">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <input
+              type="text"
+              placeholder="Search projects..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-9 pr-4 py-2 rounded-xl bg-space-800/90 text-sm text-white placeholder-gray-500 border border-[#2a2a2a] focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition-all"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white text-xs cursor-pointer"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+        </motion.div>
       </div>
 
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex justify-center items-center gap-2 mt-12 relative z-10">
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="px-4 py-2 rounded-xl bg-space-800 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:bg-space-700 transition border border-[#2a2a2a] text-xs font-semibold cursor-pointer"
-          >
-            Previous
-          </button>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+      {/* Empty State */}
+      {paginatedProjects.length === 0 ? (
+        <div className="text-center py-20 bg-space-800/30 rounded-2xl border border-[#2a2a2a] relative z-10 max-w-xl mx-auto">
+          <Film className="w-12 h-12 text-gray-600 mx-auto mb-4" />
+          <h3 className="text-lg font-bold text-white mb-2">
+            No Projects Found
+          </h3>
+          <p className="text-gray-400 text-sm max-w-md mx-auto">
+            {searchQuery
+              ? `No projects found matching "${searchQuery}".`
+              : "No projects found in this category."}{" "}
+            Try selecting a different category or clearing your search.
+          </p>
+          {(selectedCategory !== "All" || searchQuery) && (
             <button
-              key={page}
-              onClick={() => handlePageChange(page)}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer ${
-                currentPage === page
-                  ? "bg-accent text-white shadow-[0_0_20px_rgba(0,68,255,0.4)]"
-                  : "bg-space-800 text-gray-400 hover:text-white border border-[#2a2a2a]"
-              }`}
+              onClick={() => {
+                setSelectedCategory("All");
+                setSearchQuery("");
+              }}
+              className="mt-6 px-4 py-2 rounded-xl bg-accent text-white text-xs font-semibold hover:bg-blue-600 transition cursor-pointer"
             >
-              {page}
+              Clear Filters
             </button>
-          ))}
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className="px-4 py-2 rounded-xl bg-space-800 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:bg-space-700 transition border border-[#2a2a2a] text-xs font-semibold cursor-pointer"
-          >
-            Next
-          </button>
+          )}
         </div>
+      ) : (
+        <>
+          {/* Projects Grid with Slide-in Animation */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+            {paginatedProjects.map((project, index) => (
+              <div
+                key={project.id}
+                id={`project-${project.id}-${currentPage}`}
+                className={`project-card-animate h-full transition-all duration-700 ease-out ${
+                  isVisible[`project-${project.id}-${currentPage}`]
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-10"
+                }`}
+                style={{ transitionDelay: `${index * 100}ms` }}
+              >
+                <ProjectCard project={project} />
+              </div>
+            ))}
+          </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-2 mt-12 relative z-10">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="px-4 py-2 rounded-xl bg-space-800 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:bg-space-700 transition border border-[#2a2a2a] text-xs font-semibold cursor-pointer"
+              >
+                Previous
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => (
+                  <button
+                    key={page}
+                    onClick={() => handlePageChange(page)}
+                    className={`px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer ${
+                      currentPage === page
+                        ? "bg-accent text-white shadow-[0_0_20px_rgba(0,68,255,0.4)]"
+                        : "bg-space-800 text-gray-400 hover:text-white border border-[#2a2a2a]"
+                    }`}
+                  >
+                    {page}
+                  </button>
+                )
+              )}
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 rounded-xl bg-space-800 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:bg-space-700 transition border border-[#2a2a2a] text-xs font-semibold cursor-pointer"
+              >
+                Next
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
