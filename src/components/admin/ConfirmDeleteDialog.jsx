@@ -13,7 +13,7 @@ const ConfirmDeleteDialog = ({ isOpen, onClose, onConfirm, title, message, isLoa
       />
 
       {/* Dialog */}
-      <div className="relative bg-space-800 border border-[#2a2a2a] rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl">
+      <div className="relative bg-space-800 border border-border rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-white transition"
@@ -41,7 +41,7 @@ const ConfirmDeleteDialog = ({ isOpen, onClose, onConfirm, title, message, isLoa
           <button
             onClick={onClose}
             disabled={isLoading}
-            className="px-4 py-2 rounded-lg bg-space-700 text-gray-300 text-sm font-medium hover:bg-space-600 transition border border-[#2a2a2a] disabled:opacity-50"
+            className="px-4 py-2 rounded-lg bg-space-700 text-gray-300 text-sm font-medium hover:bg-space-600 transition border border-border disabled:opacity-50"
           >
             Cancel
           </button>

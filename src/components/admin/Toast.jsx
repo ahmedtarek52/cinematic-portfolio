@@ -32,7 +32,7 @@ export function ToastProvider({ children }) {
                 ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
                 : t.type === "error"
                   ? "bg-red-500/20 text-red-300 border-red-500/30"
-                  : "bg-blue-500/20 text-blue-300 border-blue-500/30"
+                  : "bg-accent/20 text-accent border-accent/30"
             }`}
           >
             <div className="flex items-center gap-2">

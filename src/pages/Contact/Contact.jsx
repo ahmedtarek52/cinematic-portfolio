@@ -151,7 +151,7 @@ const Contact = () => {
             </div>
 
             {/* Social Links */}
-            <div className="flex gap-4 pt-4">
+            {/* <div className="flex gap-4 pt-4">
               <a
                 href={contactInfo.social.linkedin}
                 target="_blank"
@@ -170,7 +170,7 @@ const Contact = () => {
               >
                 <Instagram size={20} aria-hidden="true" />
               </a>
-            </div>
+            </div> */}
           </div>
 
           {/* Right Column - Contact Form */}

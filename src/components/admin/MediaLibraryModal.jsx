@@ -87,9 +87,9 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelect, title = "Select from Med
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
 
       {/* Modal Content */}
-      <div className="relative bg-space-800 border border-[#2a2a2a] rounded-2xl w-full max-w-4xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+      <div className="relative bg-space-800 border border-border rounded-2xl w-full max-w-4xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="p-5 border-b border-[#2a2a2a] flex items-center justify-between flex-shrink-0">
+        <div className="p-5 border-b border-border flex items-center justify-between flex-shrink-0">
           <div>
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
               <ImageIcon className="w-5 h-5 text-accent" />
@@ -108,7 +108,7 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelect, title = "Select from Med
         </div>
 
         {/* Search Bar */}
-        <div className="p-4 border-b border-[#2a2a2a] bg-space-900/50 flex-shrink-0">
+        <div className="p-4 border-b border-border bg-space-900/50 flex-shrink-0">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />
             <input
@@ -116,7 +116,7 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelect, title = "Select from Med
               placeholder="Search images by project name or role..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 rounded-xl bg-space-800 text-sm text-white placeholder-gray-500 border border-[#2a2a2a] focus:border-accent focus:outline-none transition"
+              className="w-full pl-9 pr-4 py-2 rounded-xl bg-space-800 text-sm text-white placeholder-gray-500 border border-border focus:border-accent focus:outline-none transition"
             />
           </div>
         </div>
@@ -139,7 +139,7 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelect, title = "Select from Med
                     className={`group relative rounded-xl overflow-hidden border cursor-pointer transition-all ${
                       isSelected
                         ? "border-accent ring-2 ring-accent scale-[0.98]"
-                        : "border-[#2a2a2a] hover:border-gray-500"
+                        : "border-border hover:border-gray-500"
                     }`}
                   >
                     <div className="aspect-[4/3] bg-space-900">
@@ -157,7 +157,7 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelect, title = "Select from Med
 
                     {/* Selected badge */}
                     {isSelected && (
-                      <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-accent text-white flex items-center justify-center shadow-lg">
+                      <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-accent text-accent-foreground flex items-center justify-center shadow-lg">
                         <Check className="w-3.5 h-3.5" />
                       </div>
                     )}
@@ -174,21 +174,21 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelect, title = "Select from Med
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-[#2a2a2a] bg-space-900/50 flex items-center justify-between flex-shrink-0">
+        <div className="p-4 border-t border-border bg-space-900/50 flex items-center justify-between flex-shrink-0">
           <p className="text-xs text-gray-400">
             {filteredItems.length} images available
           </p>
           <div className="flex gap-3">
             <button
               onClick={onClose}
-              className="px-4 py-2 rounded-xl bg-space-700 text-gray-300 text-sm font-medium hover:bg-space-600 transition border border-[#2a2a2a]"
+              className="px-4 py-2 rounded-xl bg-space-700 text-gray-300 text-sm font-medium hover:bg-space-600 transition border border-border"
             >
               Cancel
             </button>
             <button
               onClick={handleConfirm}
               disabled={!selectedUrl}
-              className="px-5 py-2 rounded-xl bg-accent text-white text-sm font-semibold hover:bg-blue-600 transition disabled:opacity-40 disabled:cursor-not-allowed"
+              className="px-5 py-2 rounded-xl bg-accent text-accent-foreground text-sm font-semibold hover:bg-accent-hover transition disabled:opacity-40 disabled:cursor-not-allowed"
             >
               Use Selected Image
             </button>

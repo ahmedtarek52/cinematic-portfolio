@@ -50,7 +50,7 @@ const ServicesList = () => {
           <h1 className="text-2xl font-bold text-white">Services</h1>
           <p className="text-gray-500 text-sm mt-1">Studio service offerings</p>
         </div>
-        <button onClick={() => setEditing({ _isNew: true, id: "", title: "", description: "", icon: "", details: [], sortOrder: 0 })} className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-accent text-white text-sm font-semibold hover:bg-blue-600 transition">
+        <button onClick={() => setEditing({ _isNew: true, id: "", title: "", description: "", icon: "", details: [], sortOrder: 0 })} className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-accent text-accent-foreground text-sm font-semibold hover:bg-accent-hover transition">
           <Plus className="w-4 h-4" />New Service
         </button>
       </div>
@@ -72,23 +72,23 @@ const ServicesList = () => {
       {editing && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center">
           <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setEditing(null)} />
-          <div className="relative bg-space-800 border border-[#2a2a2a] rounded-2xl p-6 max-w-lg w-full mx-4 space-y-4">
+          <div className="relative bg-space-800 border border-border rounded-2xl p-6 max-w-lg w-full mx-4 space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-bold text-white">{editing._isNew ? "New Service" : "Edit Service"}</h3>
               <button onClick={() => setEditing(null)} className="text-gray-400 hover:text-white"><X className="w-5 h-5" /></button>
             </div>
             <form onSubmit={(e) => { e.preventDefault(); const fd = new FormData(e.target); saveMutation.mutate({ ...editing, id: editing._isNew ? fd.get("id") : editing.id, title: fd.get("title"), description: fd.get("description"), icon: fd.get("icon"), sortOrder: Number(fd.get("sortOrder") || 0) }); }}>
-              {editing._isNew && <div><label className="block text-sm font-medium text-gray-300 mb-1">ID (slug)</label><input name="id" defaultValue="" required className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>}
-              <div><label className="block text-sm font-medium text-gray-300 mb-1">Title</label><input name="title" defaultValue={editing.title} required className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
-              <div><label className="block text-sm font-medium text-gray-300 mb-1">Description</label><textarea name="description" defaultValue={editing.description} rows={3} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition resize-none" /></div>
+              {editing._isNew && <div><label className="block text-sm font-medium text-gray-300 mb-1">ID (slug)</label><input name="id" defaultValue="" required className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>}
+              <div><label className="block text-sm font-medium text-gray-300 mb-1">Title</label><input name="title" defaultValue={editing.title} required className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+              <div><label className="block text-sm font-medium text-gray-300 mb-1">Description</label><textarea name="description" defaultValue={editing.description} rows={3} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition resize-none" /></div>
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="block text-sm font-medium text-gray-300 mb-1">Icon</label><input name="icon" defaultValue={editing.icon} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
-                <div><label className="block text-sm font-medium text-gray-300 mb-1">Sort Order</label><input name="sortOrder" type="number" defaultValue={editing.sortOrder} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+                <div><label className="block text-sm font-medium text-gray-300 mb-1">Icon</label><input name="icon" defaultValue={editing.icon} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+                <div><label className="block text-sm font-medium text-gray-300 mb-1">Sort Order</label><input name="sortOrder" type="number" defaultValue={editing.sortOrder} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
               </div>
               <div className="flex justify-end gap-3 pt-2">
-                <button type="button" onClick={() => setEditing(null)} className="px-4 py-2 rounded-lg bg-space-700 text-gray-300 text-sm font-medium border border-[#2a2a2a]">Cancel</button>
-                <button type="submit" disabled={saveMutation.isPending} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-accent text-white text-sm font-semibold hover:bg-blue-600 transition disabled:opacity-50">
-                  {saveMutation.isPending ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-4 h-4" />}Save
+                <button type="button" onClick={() => setEditing(null)} className="px-4 py-2 rounded-lg bg-space-700 text-gray-300 text-sm font-medium border border-border">Cancel</button>
+                <button type="submit" disabled={saveMutation.isPending} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-accent text-accent-foreground text-sm font-semibold hover:bg-accent-hover transition disabled:opacity-50">
+                  {saveMutation.isPending ? <div className="w-4 h-4 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" /> : <Save className="w-4 h-4" />}Save
                 </button>
               </div>
             </form>

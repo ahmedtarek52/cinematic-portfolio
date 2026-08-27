@@ -118,7 +118,7 @@ const Trailers = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen py-24 px-4 md:px-6 space-y-12 relative">
-        <div className="absolute top-28 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-accent/10 blur-[160px] pointer-events-none rounded-full" />
+        <div className="absolute top-28 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-zinc-700/10 blur-[160px] pointer-events-none rounded-full" />
         <div className="relative text-center space-y-4 pt-6">
           <div className="h-12 w-80 mx-auto bg-space-700 rounded-lg animate-pulse" />
           <div className="h-6 w-96 mx-auto bg-space-800 rounded-lg animate-pulse" />
@@ -127,7 +127,7 @@ const Trailers = () => {
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
-              className="aspect-video bg-space-800 rounded-xl animate-pulse border border-[#2a2a2a]"
+              className="aspect-video bg-space-800 rounded-xl animate-pulse border border-border"
             />
           ))}
         </div>
@@ -138,7 +138,7 @@ const Trailers = () => {
   return (
     <div className="min-h-screen py-24 px-4 md:px-6 space-y-12 relative">
       {/* Background ambient lighting */}
-      <div className="absolute top-28 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-accent/10 blur-[160px] pointer-events-none rounded-full" />
+      <div className="absolute top-28 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-zinc-700/10 blur-[160px] pointer-events-none rounded-full" />
 
       {/* Page Header */}
       <div className="relative text-center space-y-4 pt-6">
@@ -150,7 +150,7 @@ const Trailers = () => {
           className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white"
         >
           Trailers &amp;{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-white">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 via-zinc-200 to-zinc-400">
             Promos Vault
           </span>
         </motion.h1>
@@ -172,7 +172,7 @@ const Trailers = () => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-[#2a2a2a]/60 max-w-5xl mx-auto"
+          className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-border/60 max-w-5xl mx-auto"
         >
           {/* Category Filter Tabs */}
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
@@ -189,16 +189,16 @@ const Trailers = () => {
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 cursor-pointer flex items-center gap-1.5 ${
                     isActive
-                      ? "bg-accent text-white shadow-[0_0_20px_rgba(0,68,255,0.4)]"
-                      : "bg-space-800/90 text-gray-400 hover:text-white border border-[#2a2a2a] hover:border-white/20"
+                      ? "bg-zinc-100 text-zinc-950 font-bold border border-white shadow-[0_0_20px_rgba(255,255,255,0.25)]"
+                      : "bg-space-800/90 text-zinc-400 hover:text-white border border-border hover:border-zinc-500"
                   }`}
                 >
                   <span>{cat}</span>
                   <span
                     className={`text-[10px] px-1.5 py-0.5 rounded-full ${
                       isActive
-                        ? "bg-black/30 text-white"
-                        : "bg-space-700 text-gray-400"
+                        ? "bg-zinc-900 text-zinc-200"
+                        : "bg-space-700 text-zinc-400"
                     }`}
                   >
                     {count}
@@ -216,7 +216,7 @@ const Trailers = () => {
               placeholder="Search trailers..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 rounded-xl bg-space-800/90 text-sm text-white placeholder-gray-500 border border-[#2a2a2a] focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition-all"
+              className="w-full pl-9 pr-4 py-2 rounded-xl bg-space-800/90 text-sm text-white placeholder-gray-500 border border-border focus:border-zinc-300 focus:outline-none focus:ring-1 focus:ring-zinc-300 transition-all"
             />
             {searchQuery && (
               <button
@@ -264,7 +264,7 @@ const Trailers = () => {
                 setSelectedCategory("All");
                 setSearchQuery("");
               }}
-              className="px-4 py-2 rounded-lg bg-accent text-white text-xs font-semibold hover:bg-blue-600 transition"
+              className="px-4 py-2 rounded-lg bg-zinc-100 text-zinc-950 text-xs font-semibold hover:bg-white transition"
             >
               Reset Filters
             </button>
@@ -278,7 +278,7 @@ const Trailers = () => {
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-4 py-2 rounded-xl bg-space-800 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:bg-space-700 transition border border-[#2a2a2a] text-xs font-semibold cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-space-800 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:bg-space-700 transition border border-border text-xs font-semibold cursor-pointer"
           >
             Previous
           </button>
@@ -288,8 +288,8 @@ const Trailers = () => {
               onClick={() => handlePageChange(page)}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer ${
                 currentPage === page
-                  ? "bg-accent text-white shadow-[0_0_20px_rgba(0,68,255,0.4)]"
-                  : "bg-space-800 text-gray-400 hover:text-white border border-[#2a2a2a]"
+                  ? "bg-zinc-100 text-zinc-950 font-bold border border-white shadow-[0_0_20px_rgba(255,255,255,0.25)]"
+                  : "bg-space-800 text-zinc-400 hover:text-white border border-border hover:border-zinc-500"
               }`}
             >
               {page}
@@ -298,7 +298,7 @@ const Trailers = () => {
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 rounded-xl bg-space-800 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:bg-space-700 transition border border-[#2a2a2a] text-xs font-semibold cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-space-800 text-white disabled:opacity-40 disabled:cursor-not-allowed hover:bg-space-700 transition border border-border text-xs font-semibold cursor-pointer"
           >
             Next
           </button>

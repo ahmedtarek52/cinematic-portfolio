@@ -12,36 +12,31 @@ export function OurProcess() {
       number: "01",
       title: "Concept & Script",
       description: "Scene‑by‑scene draft with dialogues and time‑codes",
-      color: "accent-blue",
-      borderColorClass: "border-accent-blue",
+      borderColorClass: "border-zinc-200",
     },
     {
       number: "02",
       title: "Look & Storyboard",
       description: "AI engine selection and visual testing",
-      color: "accent-emerald",
-      borderColorClass: "border-accent-emerald",
+      borderColorClass: "border-zinc-300",
     },
     {
       number: "03",
       title: "AI Production",
       description: "Motion tests and multi-variant generation",
-      color: "accent-purple",
-      borderColorClass: "border-accent-purple",
+      borderColorClass: "border-zinc-400",
     },
     {
       number: "04",
       title: "Post‑production",
       description: "VFX, color grading, and audio mixing",
-      color: "accent-blue",
-      borderColorClass: "border-accent-blue",
+      borderColorClass: "border-zinc-200",
     },
     {
       number: "05",
       title: "Master Delivery",
       description: "Multi-format export and secure transfer",
-      color: "accent-purple",
-      borderColorClass: "border-accent-purple",
+      borderColorClass: "border-zinc-300",
     },
   ];
 
@@ -84,11 +79,11 @@ export function OurProcess() {
         {/* Header */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-3 mb-6">
-            <div className="w-3 h-3 bg-accent-emerald rounded-full animate-pulse" />
+            <div className="w-3 h-3 bg-zinc-400 rounded-full animate-pulse" />
             <span className="text-sm font-semibold text-muted-foreground">
               Behind the Scenes
             </span>
-            <div className="w-3 h-3 bg-accent-blue rounded-full animate-pulse" />
+            <div className="w-3 h-3 bg-zinc-300 rounded-full animate-pulse" />
           </div>
 
           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-6 text-foreground">
@@ -319,7 +314,7 @@ export function OurProcess() {
           <div className="inline-flex items-center gap-6 bg-card/80 backdrop-blur-sm clean-border rounded-2xl px-8 py-4 subtle-shadow">
             {/* Film Speed Indicator */}
             <div className="flex items-center gap-3">
-              <div className="w-2 h-2 bg-accent-emerald rounded-full animate-pulse" />
+              <div className="w-2 h-2 bg-zinc-400 rounded-full animate-pulse" />
               <span className="text-sm font-semibold text-foreground">
                 24 FPS
               </span>
@@ -330,7 +325,7 @@ export function OurProcess() {
             {/* Duration */}
             <div className="flex items-center gap-3">
               <div
-                className="w-2 h-2 bg-accent-blue rounded-full animate-pulse"
+                className="w-2 h-2 bg-zinc-300 rounded-full animate-pulse"
                 style={{ animationDelay: "0.5s" }}
               />
               <span className="text-sm font-semibold text-foreground">
@@ -343,7 +338,7 @@ export function OurProcess() {
             {/* Quality */}
             <div className="flex items-center gap-3">
               <div
-                className="w-2 h-2 bg-accent-purple rounded-full animate-pulse"
+                className="w-2 h-2 bg-zinc-300 rounded-full animate-pulse"
                 style={{ animationDelay: "1s" }}
               />
               <span className="text-sm font-semibold text-foreground">

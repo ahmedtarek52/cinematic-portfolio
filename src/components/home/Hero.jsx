@@ -182,7 +182,7 @@ const Hero = () => {
                 variants={titleFoldVariants}
                 className={`inline-block ${
                   item.isGradient
-                    ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-white'
+                    ? 'text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 via-zinc-200 to-zinc-400'
                     : 'text-white'
                 }`}
                 style={{
@@ -233,9 +233,9 @@ const Hero = () => {
         onClick={scrollToContent}
       >
         <div className="flex flex-col items-center gap-2">
-          <p className="text-white text-sm font-medium group-hover:text-accent transition-colors duration-300">Scroll to explore</p>
+          <p className="text-white text-sm font-medium group-hover:text-zinc-300 transition-colors duration-300">Scroll to explore</p>
           <svg 
-            className="w-6 h-6 text-white animate-bounce group-hover:text-accent transition-colors duration-300" 
+            className="w-6 h-6 text-white animate-bounce group-hover:text-zinc-300 transition-colors duration-300" 
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24"

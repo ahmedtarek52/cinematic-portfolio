@@ -85,7 +85,7 @@ const TrailersList = () => {
         </div>
         <Link
           to="/admin/trailers/new"
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-accent text-white text-sm font-semibold hover:bg-blue-600 transition"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-accent text-accent-foreground text-sm font-semibold hover:bg-accent-hover transition"
         >
           <Plus className="w-4 h-4" />
           New Trailer

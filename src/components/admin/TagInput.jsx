@@ -35,7 +35,7 @@ const TagInput = ({ value = [], onChange, label, placeholder }) => {
       )}
 
       <div
-        className="flex flex-wrap gap-2 p-3 rounded-xl bg-space-800 border border-[#2a2a2a] focus-within:border-accent transition min-h-[44px] cursor-text"
+        className="flex flex-wrap gap-2 p-3 rounded-xl bg-space-800 border border-border focus-within:border-accent transition min-h-[44px] cursor-text"
         onClick={() => inputRef.current?.focus()}
       >
         {value.map((tag, index) => (

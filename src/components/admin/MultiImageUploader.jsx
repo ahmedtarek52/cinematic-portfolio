@@ -94,7 +94,7 @@ const MultiImageUploader = ({ value = [], onChange, folder, label }) => {
               onDragEnter={() => handleDragEnter(index)}
               onDragEnd={handleDragEnd}
               onDragOver={(e) => e.preventDefault()}
-              className={`relative group rounded-lg overflow-hidden border border-[#2a2a2a] bg-space-800 cursor-grab active:cursor-grabbing ${
+              className={`relative group rounded-lg overflow-hidden border border-border bg-space-800 cursor-grab active:cursor-grabbing ${
                 dragIndex === index ? "opacity-50 ring-2 ring-accent" : ""
               }`}
             >
@@ -133,7 +133,7 @@ const MultiImageUploader = ({ value = [], onChange, folder, label }) => {
           className={`flex items-center justify-center h-20 rounded-xl border-2 border-dashed cursor-pointer transition-all ${
             dragOver
               ? "border-accent bg-accent/10"
-              : "border-[#2a2a2a] bg-space-800/50 hover:border-gray-500"
+              : "border-border bg-space-800/50 hover:border-gray-500"
           }`}
         >
           {uploading ? (

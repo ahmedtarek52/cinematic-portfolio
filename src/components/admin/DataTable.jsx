@@ -58,16 +58,16 @@ const DataTable = ({
             placeholder="Search..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-space-800 text-sm text-white placeholder-gray-500 border border-[#2a2a2a] focus:border-accent focus:outline-none transition"
+            className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-space-800 text-sm text-white placeholder-gray-500 border border-border focus:border-accent focus:outline-none transition"
           />
         </div>
       )}
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-xl border border-[#2a2a2a]">
+      <div className="overflow-x-auto rounded-xl border border-border">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-space-800/80 border-b border-[#2a2a2a]">
+            <tr className="bg-space-800/80 border-b border-border">
               {columns.map((col) => (
                 <th
                   key={col.key}
@@ -97,7 +97,7 @@ const DataTable = ({
               )}
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#2a2a2a]">
+          <tbody className="divide-y divide-border">
             {sortedData.length === 0 ? (
               <tr>
                 <td

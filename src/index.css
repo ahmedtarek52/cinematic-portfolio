@@ -2,6 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =========================================================================
+   STANDARDIZED COLOR SYSTEM (Design Tokens)
+   Updating any value here automatically cascades across the entire application
+   ========================================================================= */
+:root {
+  /* Surface & Background Palette */
+  --color-space-950: 8 8 10;        /* #08080a - Deepest background */
+  --color-space-900: 13 13 15;      /* #0d0d0f - Primary base surface */
+  --color-space-800: 20 20 23;      /* #141417 - Secondary panels, cards */
+  --color-space-750: 24 24 28;      /* #18181c - Elevated elements */
+  --color-space-700: 27 27 30;      /* #1b1b1e - Interactive hover / active */
+  --color-space-600: 38 38 43;      /* #26262b - High contrast borders/highlights */
+
+  --color-sidebar: 15 15 17;        /* #0f0f11 - Sidebar background */
+  --color-card: 19 19 22;           /* #131316 - Standard card background */
+  --color-input: 22 22 26;          /* #16161a - Form inputs background */
+
+  /* Border Palette */
+  --color-border: 42 42 45;         /* #2a2a2d - Standard subtle border */
+  --color-border-subtle: 32 32 35;  /* #202023 - Deep subtle border */
+  --color-border-hover: 70 70 76;   /* #46464c - Interactive hover border */
+
+  /* Standard Accent Palette: High-Contrast Cinematic Silver/Platinum Grade */
+  --color-accent: 228 228 231;        /* #e4e4e7 (Zinc-200) - Luminous silver accent */
+  --color-accent-hover: 255 255 255;  /* #ffffff - Pure white on hover */
+  --color-accent-text: 10 10 12;      /* #0a0a0c - Dark text on solid accent */
+  --color-accent-muted: 161 161 170;  /* #a1a1aa (Zinc-400) - Muted silver text */
+  --color-accent-glow: rgba(228, 228, 231, 0.25); /* Glow reflection */
+  --color-accent-subtle: rgba(228, 228, 231, 0.12); /* Subtle pill / badge background */
+}
+
 /* Toast notification animation */
 @keyframes slideInRight {
   from {
@@ -602,7 +633,7 @@ html {
   }
 }
 
-/* Custom Hide Scrollbar Utility */
+/* Custom Utilities */
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -610,5 +641,31 @@ html {
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  /* Cinematic Metallic Silver Text Gradient */
+  .text-gradient-cinematic {
+    background-image: linear-gradient(135deg, #ffffff 0%, #e4e4e7 40%, #a1a1aa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-silver {
+    background-image: linear-gradient(to right, #f4f4f5, #d4d4d8, #a1a1aa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Cinematic Accent Glow Utilities */
+  .glow-accent-subtle {
+    box-shadow: 0 0 15px rgba(228, 228, 231, 0.15);
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 25px rgba(228, 228, 231, 0.28);
+  }
+
+  .glow-accent-strong {
+    box-shadow: 0 0 35px rgba(228, 228, 231, 0.4);
   }
 }

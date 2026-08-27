@@ -69,39 +69,39 @@ const ContactInfoEditor = () => {
       </div>
 
       <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="space-y-8">
-        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-[#2a2a2a]">
+        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-border">
           <h2 className="text-lg font-semibold text-white">General</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div><label className="block text-sm font-medium text-gray-300 mb-1">Heading</label><input {...register("heading")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
-            <div><label className="block text-sm font-medium text-gray-300 mb-1">Title</label><input {...register("title")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
-            <div><label className="block text-sm font-medium text-gray-300 mb-1">Email</label><input {...register("email")} type="email" className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
-            <div><label className="block text-sm font-medium text-gray-300 mb-1">Kakao</label><input {...register("kakao")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+            <div><label className="block text-sm font-medium text-gray-300 mb-1">Heading</label><input {...register("heading")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+            <div><label className="block text-sm font-medium text-gray-300 mb-1">Title</label><input {...register("title")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+            <div><label className="block text-sm font-medium text-gray-300 mb-1">Email</label><input {...register("email")} type="email" className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+            <div><label className="block text-sm font-medium text-gray-300 mb-1">Kakao</label><input {...register("kakao")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
           </div>
         </section>
 
-        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-[#2a2a2a]">
+        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-border">
           <h2 className="text-lg font-semibold text-white">Locations</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div><label className="block text-sm font-medium text-gray-300 mb-1">Residing — Country</label><input {...register("residing.country")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
-            <div><label className="block text-sm font-medium text-gray-300 mb-1">Residing — City</label><input {...register("residing.city")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
-            <div><label className="block text-sm font-medium text-gray-300 mb-1">Home State — Country</label><input {...register("stateHome.country")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
-            <div><label className="block text-sm font-medium text-gray-300 mb-1">Home State — City</label><input {...register("stateHome.city")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+            <div><label className="block text-sm font-medium text-gray-300 mb-1">Residing — Country</label><input {...register("residing.country")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+            <div><label className="block text-sm font-medium text-gray-300 mb-1">Residing — City</label><input {...register("residing.city")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+            <div><label className="block text-sm font-medium text-gray-300 mb-1">Home State — Country</label><input {...register("stateHome.country")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+            <div><label className="block text-sm font-medium text-gray-300 mb-1">Home State — City</label><input {...register("stateHome.city")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
           </div>
         </section>
 
-        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-[#2a2a2a]">
+        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-border">
           <h2 className="text-lg font-semibold text-white">Social Links</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div><label className="block text-sm font-medium text-gray-300 mb-1">Instagram</label><input {...register("social.instagram")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
-            <div><label className="block text-sm font-medium text-gray-300 mb-1">Vimeo</label><input {...register("social.vimeo")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
-            <div><label className="block text-sm font-medium text-gray-300 mb-1">LinkedIn</label><input {...register("social.linkedin")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
-            <div><label className="block text-sm font-medium text-gray-300 mb-1">Twitter / X</label><input {...register("social.twitter")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+            <div><label className="block text-sm font-medium text-gray-300 mb-1">Instagram</label><input {...register("social.instagram")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+            <div><label className="block text-sm font-medium text-gray-300 mb-1">Vimeo</label><input {...register("social.vimeo")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+            <div><label className="block text-sm font-medium text-gray-300 mb-1">LinkedIn</label><input {...register("social.linkedin")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+            <div><label className="block text-sm font-medium text-gray-300 mb-1">Twitter / X</label><input {...register("social.twitter")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
           </div>
         </section>
 
         <div className="flex justify-end">
-          <button type="submit" disabled={mutation.isPending} className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-accent text-white text-sm font-semibold hover:bg-blue-600 transition disabled:opacity-50">
-            {mutation.isPending ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-4 h-4" />}Save Changes
+          <button type="submit" disabled={mutation.isPending} className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-accent text-accent-foreground text-sm font-semibold hover:bg-accent-hover transition disabled:opacity-50">
+            {mutation.isPending ? <div className="w-4 h-4 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" /> : <Save className="w-4 h-4" />}Save Changes
           </button>
         </div>
       </form>

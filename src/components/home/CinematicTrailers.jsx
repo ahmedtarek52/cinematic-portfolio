@@ -85,10 +85,10 @@ export const CinematicTrailers = () => {
       className="relative py-8 md:py-16 px-4 md:px-6"
     >
       {/* Background ambient lighting */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-accent/10 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-zinc-700/10 blur-[150px] pointer-events-none rounded-full" />
 
       {/* Dynamic Section Header - Cinema Vault Split Layout */}
-      <div className="relative mb-14 pb-6 border-b border-[#2a2a2a]/60">
+      <div className="relative mb-14 pb-6 border-b border-border/60">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           {/* Left Column: Eyebrow + Bold Title + Lead */}
           <div className="space-y-3 max-w-2xl">
@@ -99,7 +99,7 @@ export const CinematicTrailers = () => {
               className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-none"
             >
               Cinematic{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-white">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 via-zinc-200 to-zinc-400">
                 Trailers
               </span>
             </motion.h2>
@@ -125,20 +125,20 @@ export const CinematicTrailers = () => {
           >
             <Link
               to="/trailers"
-              className="inline-flex items-center gap-3.5 px-5 py-3.5 rounded-2xl bg-space-800/90 hover:bg-space-700/90 border border-[#2a2a2a] hover:border-blue-500/40 text-white transition-all duration-300 group shadow-lg cursor-pointer"
+              className="inline-flex items-center gap-3.5 px-5 py-3.5 rounded-2xl bg-space-800/90 hover:bg-space-700/90 border border-border hover:border-zinc-500 text-white transition-all duration-300 group shadow-lg cursor-pointer"
             >
-              <div className="w-9 h-9 rounded-xl bg-accent/20 border border-accent/40 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
+              <div className="w-9 h-9 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-200 group-hover:scale-110 transition-transform">
                 <Film className="w-4 h-4 fill-current" />
               </div>
               <div className="text-left">
-                <p className="text-xs font-bold text-white group-hover:text-blue-400 transition-colors">
+                <p className="text-xs font-bold text-white group-hover:text-zinc-200 transition-colors">
                   Open Trailers Vault
                 </p>
                 <p className="text-[11px] text-gray-400">
                   Dolby Vision &amp; 5.1 Cuts
                 </p>
               </div>
-              <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-blue-400 group-hover:translate-x-1 transition-all ml-1" />
+              <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-zinc-200 group-hover:translate-x-1 transition-all ml-1" />
             </Link>
           </motion.div>
         </div>
@@ -198,7 +198,7 @@ export const CinematicTrailers = () => {
                 onClick={() => scrollToMobileSlide(i)}
                 className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                   activeMobileIndex === i
-                    ? "w-7 bg-accent shadow-[0_0_12px_rgba(0,68,255,0.7)]"
+                    ? "w-7 bg-zinc-200 shadow-[0_0_12px_rgba(255,255,255,0.4)]"
                     : "w-2 bg-white/25 hover:bg-white/50"
                 }`}
                 aria-label={`Go to trailer ${i + 1}`}
@@ -211,7 +211,7 @@ export const CinematicTrailers = () => {
             <button
               onClick={scrollToPrevMobileSlide}
               disabled={activeMobileIndex === 0}
-              className="p-2 rounded-lg bg-space-800/90 border border-[#2a2a2a] text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:text-white transition-all cursor-pointer"
+              className="p-2 rounded-lg bg-space-800/90 border border-border text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:text-white transition-all cursor-pointer"
               aria-label="Previous slide"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -219,7 +219,7 @@ export const CinematicTrailers = () => {
             <button
               onClick={scrollToNextMobileSlide}
               disabled={activeMobileIndex === featuredTrailers.length - 1}
-              className="p-2 rounded-lg bg-space-800/90 border border-[#2a2a2a] text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:text-white transition-all cursor-pointer"
+              className="p-2 rounded-lg bg-space-800/90 border border-border text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:text-white transition-all cursor-pointer"
               aria-label="Next slide"
             >
               <ChevronRight className="w-4 h-4" />

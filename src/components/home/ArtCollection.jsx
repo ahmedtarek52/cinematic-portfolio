@@ -94,7 +94,7 @@ export const ArtCollection = () => {
       className="relative py-8 md:py-16 px-4 md:px-6"
     >
       {/* Background ambient lighting */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-accent/10 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-zinc-700/10 blur-[150px] pointer-events-none rounded-full" />
 
       {/* Section Header */}
       <div className="relative text-center mb-16 space-y-4">
@@ -106,7 +106,7 @@ export const ArtCollection = () => {
           className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white"
         >
           Visual Art{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-white">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 via-zinc-200 to-zinc-400">
             Collection
           </span>
         </motion.h2>
@@ -135,7 +135,7 @@ export const ArtCollection = () => {
           return (
             <div
               key={image.id}
-              className="relative min-w-0 h-full rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 group cursor-pointer border border-[#2a2a2a]/60 bg-[#121216]"
+              className="relative min-w-0 h-full rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 group cursor-pointer border border-border/60 bg-space-800"
               style={{
                 flex: isActive ? 3.5 : 1,
                 transition: "flex 0.5s cubic-bezier(0.25, 1, 0.5, 1)",
@@ -178,7 +178,7 @@ export const ArtCollection = () => {
           {images.map((image, index) => (
             <div
               key={image.id}
-              className="w-[82vw] max-w-[340px] aspect-[4/5] flex-shrink-0 snap-center rounded-2xl overflow-hidden shadow-xl border border-[#2a2a2a]/60 bg-[#121216] relative group cursor-pointer"
+              className="w-[82vw] max-w-[340px] aspect-[4/5] flex-shrink-0 snap-center rounded-2xl overflow-hidden shadow-xl border border-border/60 bg-space-800 relative group cursor-pointer"
               onClick={() => scrollToMobileSlide(index)}
             >
               <img
@@ -223,7 +223,7 @@ export const ArtCollection = () => {
                 onClick={() => scrollToMobileSlide(i)}
                 className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                   activeMobileIndex === i
-                    ? "w-7 bg-accent shadow-[0_0_12px_rgba(0,68,255,0.7)]"
+                    ? "w-7 bg-zinc-200 shadow-[0_0_12px_rgba(255,255,255,0.4)]"
                     : "w-2 bg-white/25 hover:bg-white/50"
                 }`}
                 aria-label={`Go to artwork ${i + 1}`}
@@ -236,7 +236,7 @@ export const ArtCollection = () => {
             <button
               onClick={scrollToPrevMobileSlide}
               disabled={activeMobileIndex === 0}
-              className="p-2 rounded-lg bg-space-800/90 border border-[#2a2a2a] text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:text-white transition-all cursor-pointer"
+              className="p-2 rounded-lg bg-space-800/90 border border-border text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:text-white transition-all cursor-pointer"
               aria-label="Previous artwork"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -244,7 +244,7 @@ export const ArtCollection = () => {
             <button
               onClick={scrollToNextMobileSlide}
               disabled={activeMobileIndex === images.length - 1}
-              className="p-2 rounded-lg bg-space-800/90 border border-[#2a2a2a] text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:text-white transition-all cursor-pointer"
+              className="p-2 rounded-lg bg-space-800/90 border border-border text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:text-white transition-all cursor-pointer"
               aria-label="Next artwork"
             >
               <ChevronRight className="w-4 h-4" />

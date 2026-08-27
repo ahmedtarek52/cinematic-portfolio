@@ -38,9 +38,9 @@ const AdminLayout = () => {
     <ToastProvider>
       <div className="min-h-screen bg-space-900 flex">
         {/* Sidebar */}
-        <aside className="fixed left-0 top-0 bottom-0 w-64 bg-space-800 border-r border-[#2a2a2a] flex flex-col z-50">
+        <aside className="fixed left-0 top-0 bottom-0 w-64 bg-space-800 border-r border-border flex flex-col z-50">
           {/* Logo / Brand */}
-          <div className="p-5 border-b border-[#2a2a2a]">
+          <div className="p-5 border-b border-border">
             <NavLink to="/" className="flex items-center gap-2 text-gray-400 hover:text-white transition text-xs mb-3">
               <ChevronLeft className="w-3 h-3" />
               Back to Site
@@ -75,7 +75,7 @@ const AdminLayout = () => {
           </nav>
 
           {/* Sign Out */}
-          <div className="p-3 border-t border-[#2a2a2a]">
+          <div className="p-3 border-t border-border">
             <button
               onClick={handleSignOut}
               className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium text-gray-400 hover:text-red-400 hover:bg-red-500/10 transition"

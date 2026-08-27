@@ -65,48 +65,48 @@ const AboutEditor = () => {
 
       <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="space-y-8">
         {/* Hero Section */}
-        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-[#2a2a2a]">
+        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-border">
           <h2 className="text-lg font-semibold text-white">Hero Section</h2>
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">Title</label>
-            <input {...register("hero.title")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" />
+            <input {...register("hero.title")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">Description</label>
-            <textarea {...register("hero.description")} rows={3} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition resize-none" />
+            <textarea {...register("hero.description")} rows={3} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition resize-none" />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">Background Image URL</label>
-            <input {...register("hero.backgroundImage")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" />
+            <input {...register("hero.backgroundImage")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" />
           </div>
         </section>
 
         {/* Profile */}
-        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-[#2a2a2a]">
+        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-border">
           <h2 className="text-lg font-semibold text-white">Profile</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">Name</label>
-              <input {...register("profile.name")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" />
+              <input {...register("profile.name")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">Title / Role</label>
-              <input {...register("profile.title")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" />
+              <input {...register("profile.title")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" />
             </div>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">Profile Image URL</label>
-            <input {...register("profile.image")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" />
+            <input {...register("profile.image")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">Bio</label>
-            <textarea {...register("profile.bio")} rows={5} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition resize-none" />
+            <textarea {...register("profile.bio")} rows={5} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition resize-none" />
           </div>
         </section>
 
         <div className="flex justify-end">
-          <button type="submit" disabled={mutation.isPending} className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-accent text-white text-sm font-semibold hover:bg-blue-600 transition disabled:opacity-50">
-            {mutation.isPending ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-4 h-4" />}
+          <button type="submit" disabled={mutation.isPending} className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-accent text-accent-foreground text-sm font-semibold hover:bg-accent-hover transition disabled:opacity-50">
+            {mutation.isPending ? <div className="w-4 h-4 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" /> : <Save className="w-4 h-4" />}
             Save Changes
           </button>
         </div>

@@ -51,7 +51,7 @@ const Login = () => {
         {/* Login Form */}
         <form
           onSubmit={handleSubmit}
-          className="space-y-5 p-6 rounded-2xl bg-space-800 border border-[#2a2a2a] shadow-2xl"
+          className="space-y-5 p-6 rounded-2xl bg-space-800 border border-border shadow-2xl"
         >
           {error && (
             <div className="px-4 py-3 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 text-sm">
@@ -69,7 +69,7 @@ const Login = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
               autoComplete="email"
-              className="w-full px-4 py-3 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm placeholder-gray-500 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition"
+              className="w-full px-4 py-3 rounded-xl bg-space-900 border border-border text-white text-sm placeholder-gray-500 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition"
               placeholder="admin@studio.com"
             />
           </div>
@@ -84,7 +84,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
               autoComplete="current-password"
-              className="w-full px-4 py-3 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm placeholder-gray-500 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition"
+              className="w-full px-4 py-3 rounded-xl bg-space-900 border border-border text-white text-sm placeholder-gray-500 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition"
               placeholder="••••••••"
             />
           </div>
@@ -92,10 +92,10 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-xl bg-accent text-white font-semibold text-sm hover:bg-blue-600 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full py-3 rounded-xl bg-accent text-accent-foreground font-semibold text-sm hover:bg-accent-hover transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {loading && (
-              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <div className="w-4 h-4 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" />
             )}
             {loading ? "Signing in..." : "Sign In"}
           </button>

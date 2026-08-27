@@ -71,7 +71,7 @@ const CloudinaryUploader = ({ value, onChange, folder, label }) => {
 
       {value ? (
         // Preview
-        <div className="relative group rounded-xl overflow-hidden border border-[#2a2a2a] bg-space-800">
+        <div className="relative group rounded-xl overflow-hidden border border-border bg-space-800">
           <img
             src={value}
             alt="Upload preview"
@@ -81,7 +81,7 @@ const CloudinaryUploader = ({ value, onChange, folder, label }) => {
             <button
               type="button"
               onClick={() => setShowLibrary(true)}
-              className="px-3 py-1.5 rounded-lg bg-accent/80 text-white text-xs font-medium hover:bg-accent transition cursor-pointer"
+              className="px-3 py-1.5 rounded-lg bg-accent/80 text-accent-foreground text-xs font-medium hover:bg-accent transition cursor-pointer"
             >
               Choose Existing
             </button>
@@ -112,7 +112,7 @@ const CloudinaryUploader = ({ value, onChange, folder, label }) => {
           className={`relative flex flex-col items-center justify-center h-48 rounded-xl border-2 border-dashed transition-all ${
             dragOver
               ? "border-accent bg-accent/10"
-              : "border-[#2a2a2a] bg-space-800/50 hover:border-gray-500"
+              : "border-border bg-space-800/50 hover:border-gray-500"
           }`}
         >
           {uploading ? (
@@ -126,7 +126,7 @@ const CloudinaryUploader = ({ value, onChange, folder, label }) => {
               <div>
                 <p className="text-sm text-gray-300 font-medium">
                   Drop image here or{" "}
-                  <label className="text-accent underline cursor-pointer hover:text-blue-400">
+                  <label className="text-accent underline cursor-pointer hover:text-accent-hover">
                     browse
                     <input
                       type="file"

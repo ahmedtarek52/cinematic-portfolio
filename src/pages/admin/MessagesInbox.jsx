@@ -56,7 +56,7 @@ const MessagesInbox = () => {
               key={msg.id}
               className={`p-5 rounded-2xl border transition ${
                 msg.read
-                  ? "bg-space-800/30 border-[#2a2a2a]/50"
+                  ? "bg-space-800/30 border-border/50"
                   : "bg-space-800 border-accent/20 shadow-lg shadow-accent/5"
               }`}
             >

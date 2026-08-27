@@ -39,7 +39,7 @@ export const FeaturedWorks = () => {
       className="relative py-8 md:py-16 px-4 md:px-6"
     >
       {/* Background ambient lighting */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-accent/10 blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-zinc-700/10 blur-[150px] pointer-events-none rounded-full" />
 
       {/* Section Header */}
       <div className="relative text-center mb-16 space-y-4">

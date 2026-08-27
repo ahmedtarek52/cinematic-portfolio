@@ -141,7 +141,7 @@ const ProjectForm = () => {
       <div className="flex items-center gap-4">
         <button
           onClick={() => navigate("/admin/projects")}
-          className="p-2 rounded-lg bg-space-800 text-gray-400 hover:text-white border border-[#2a2a2a] transition"
+          className="p-2 rounded-lg bg-space-800 text-gray-400 hover:text-white border border-border transition"
         >
           <ArrowLeft className="w-4 h-4" />
         </button>
@@ -163,7 +163,7 @@ const ProjectForm = () => {
         className="space-y-8"
       >
         {/* Basic Info */}
-        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-[#2a2a2a]">
+        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-border">
           <h2 className="text-lg font-semibold text-white">Basic Information</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -174,7 +174,7 @@ const ProjectForm = () => {
               <input
                 {...register("id")}
                 readOnly={isEditing}
-                className={`w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition ${isEditing ? "opacity-60" : ""}`}
+                className={`w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition ${isEditing ? "opacity-60" : ""}`}
                 placeholder="e.g. nocturne"
               />
               {errors.id && (
@@ -188,7 +188,7 @@ const ProjectForm = () => {
               </label>
               <input
                 {...register("title")}
-                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition"
+                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition"
                 placeholder="Project title"
               />
               {errors.title && (
@@ -202,7 +202,7 @@ const ProjectForm = () => {
               </label>
               <select
                 {...register("category")}
-                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition"
+                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition"
               >
                 <option value="">Select category...</option>
                 <option value="TCP">TCP</option>
@@ -228,7 +228,7 @@ const ProjectForm = () => {
               </label>
               <input
                 {...register("year")}
-                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition"
+                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition"
                 placeholder="2025"
               />
             </div>
@@ -239,7 +239,7 @@ const ProjectForm = () => {
               </label>
               <input
                 {...register("type")}
-                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition"
+                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition"
                 placeholder="Commercial, Narrative, etc."
               />
             </div>
@@ -251,14 +251,14 @@ const ProjectForm = () => {
               <input
                 type="number"
                 {...register("sortOrder", { valueAsNumber: true })}
-                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition"
+                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition"
               />
             </div>
           </div>
         </section>
 
         {/* Images */}
-        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-[#2a2a2a]">
+        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-border">
           <h2 className="text-lg font-semibold text-white">Images</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -308,7 +308,7 @@ const ProjectForm = () => {
         </section>
 
         {/* Content */}
-        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-[#2a2a2a]">
+        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-border">
           <h2 className="text-lg font-semibold text-white">Content</h2>
 
           <div>
@@ -318,7 +318,7 @@ const ProjectForm = () => {
             <textarea
               {...register("description")}
               rows={3}
-              className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition resize-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition resize-none"
               placeholder="Brief project description..."
             />
           </div>
@@ -330,7 +330,7 @@ const ProjectForm = () => {
             <textarea
               {...register("overview")}
               rows={4}
-              className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition resize-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition resize-none"
               placeholder="Detailed project overview..."
             />
           </div>
@@ -342,7 +342,7 @@ const ProjectForm = () => {
             <textarea
               {...register("approach")}
               rows={4}
-              className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition resize-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition resize-none"
               placeholder="Technical approach and methodology..."
             />
           </div>
@@ -353,14 +353,14 @@ const ProjectForm = () => {
             </label>
             <input
               {...register("vimeo")}
-              className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition"
+              className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition"
               placeholder="https://vimeo.com/..."
             />
           </div>
         </section>
 
         {/* Tags & Services */}
-        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-[#2a2a2a]">
+        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-border">
           <h2 className="text-lg font-semibold text-white">Tags & Services</h2>
 
           <Controller
@@ -391,7 +391,7 @@ const ProjectForm = () => {
         </section>
 
         {/* Credits */}
-        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-[#2a2a2a]">
+        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-border">
           <h2 className="text-lg font-semibold text-white">Credits</h2>
 
           <Controller
@@ -412,7 +412,7 @@ const ProjectForm = () => {
         </section>
 
         {/* Tech Specs */}
-        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-[#2a2a2a]">
+        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-border">
           <h2 className="text-lg font-semibold text-white">Tech Specs</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -422,7 +422,7 @@ const ProjectForm = () => {
               </label>
               <input
                 {...register("techSpecs.master")}
-                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition"
+                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition"
                 placeholder="e.g. 4K DCI"
               />
             </div>
@@ -432,7 +432,7 @@ const ProjectForm = () => {
               </label>
               <input
                 {...register("techSpecs.colorSpace")}
-                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition"
+                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition"
                 placeholder="e.g. P3-D65"
               />
             </div>
@@ -442,7 +442,7 @@ const ProjectForm = () => {
               </label>
               <input
                 {...register("techSpecs.hdr")}
-                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition"
+                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition"
                 placeholder="e.g. Dolby V."
               />
             </div>
@@ -452,7 +452,7 @@ const ProjectForm = () => {
               </label>
               <input
                 {...register("techSpecs.pipeline")}
-                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition"
+                className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition"
                 placeholder="e.g. ACES"
               />
             </div>
@@ -464,17 +464,17 @@ const ProjectForm = () => {
           <button
             type="button"
             onClick={() => navigate("/admin/projects")}
-            className="px-6 py-2.5 rounded-xl bg-space-700 text-gray-300 text-sm font-medium hover:bg-space-600 transition border border-[#2a2a2a]"
+            className="px-6 py-2.5 rounded-xl bg-space-700 text-gray-300 text-sm font-medium hover:bg-space-600 transition border border-border"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={mutation.isPending}
-            className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-accent text-white text-sm font-semibold hover:bg-blue-600 transition disabled:opacity-50"
+            className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-accent text-accent-foreground text-sm font-semibold hover:bg-accent-hover transition disabled:opacity-50"
           >
             {mutation.isPending ? (
-              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <div className="w-4 h-4 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" />
             ) : (
               <Save className="w-4 h-4" />
             )}

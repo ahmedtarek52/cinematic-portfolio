@@ -17,7 +17,7 @@ import { getAllCareers } from "../../services/careers";
 const StatCard = ({ icon: Icon, label, count, to, color }) => (
   <Link
     to={to}
-    className="group p-5 rounded-2xl bg-space-800 border border-[#2a2a2a] hover:border-accent/30 transition-all hover:shadow-lg hover:shadow-accent/5"
+    className="group p-5 rounded-2xl bg-space-800 border border-border hover:border-accent/30 transition-all hover:shadow-lg hover:shadow-accent/5"
   >
     <div className="flex items-center justify-between">
       <div
@@ -75,35 +75,35 @@ const DashboardHome = () => {
           label="Projects"
           count={projects?.length}
           to="/admin/projects"
-          color="bg-blue-500/20 text-blue-400"
+          color="bg-space-700 text-zinc-200"
         />
         <StatCard
           icon={Clapperboard}
           label="Trailers"
           count={trailers?.length}
           to="/admin/trailers"
-          color="bg-purple-500/20 text-purple-400"
+          color="bg-space-700 text-zinc-300"
         />
         <StatCard
           icon={Briefcase}
           label="Services"
           count={services?.length}
           to="/admin/services"
-          color="bg-emerald-500/20 text-emerald-400"
+          color="bg-space-700 text-zinc-200"
         />
         <StatCard
           icon={GraduationCap}
           label="Careers"
           count={careers?.length}
           to="/admin/careers"
-          color="bg-amber-500/20 text-amber-400"
+          color="bg-space-700 text-zinc-300"
         />
         <StatCard
           icon={MessageSquare}
           label="Unread Messages"
           count={unreadMessages}
           to="/admin/messages"
-          color="bg-red-500/20 text-red-400"
+          color="bg-space-700 text-zinc-100"
         />
       </div>
 
@@ -125,7 +125,7 @@ const DashboardHome = () => {
                 key={msg.id}
                 className={`p-4 rounded-xl border transition ${
                   msg.read
-                    ? "bg-space-800/50 border-[#2a2a2a]"
+                    ? "bg-space-800/50 border-border"
                     : "bg-space-800 border-accent/20"
                 }`}
               >

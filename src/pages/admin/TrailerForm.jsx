@@ -93,7 +93,7 @@ const TrailerForm = () => {
   return (
     <div className="max-w-4xl space-y-6">
       <div className="flex items-center gap-4">
-        <button onClick={() => navigate("/admin/trailers")} className="p-2 rounded-lg bg-space-800 text-gray-400 hover:text-white border border-[#2a2a2a] transition">
+        <button onClick={() => navigate("/admin/trailers")} className="p-2 rounded-lg bg-space-800 text-gray-400 hover:text-white border border-border transition">
           <ArrowLeft className="w-4 h-4" />
         </button>
         <div>
@@ -102,43 +102,43 @@ const TrailerForm = () => {
       </div>
 
       <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="space-y-8">
-        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-[#2a2a2a]">
+        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-border">
           <h2 className="text-lg font-semibold text-white">Basic Information</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">Slug (ID)</label>
-              <input {...register("id")} readOnly={isEditing} className={`w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition ${isEditing ? "opacity-60" : ""}`} placeholder="e.g. al-sofara" />
+              <input {...register("id")} readOnly={isEditing} className={`w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition ${isEditing ? "opacity-60" : ""}`} placeholder="e.g. al-sofara" />
               {errors.id && <p className="text-red-400 text-xs mt-1">{errors.id.message}</p>}
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">Title</label>
-              <input {...register("title")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" />
+              <input {...register("title")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" />
               {errors.title && <p className="text-red-400 text-xs mt-1">{errors.title.message}</p>}
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">Vimeo ID</label>
-              <input {...register("vimeoId")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" placeholder="e.g. 811861466" />
+              <input {...register("vimeoId")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" placeholder="e.g. 811861466" />
               {errors.vimeoId && <p className="text-red-400 text-xs mt-1">{errors.vimeoId.message}</p>}
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">Subtitle</label>
-              <input {...register("subtitle")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" />
+              <input {...register("subtitle")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">Year</label>
-              <input {...register("year")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" />
+              <input {...register("year")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">Duration</label>
-              <input {...register("duration")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" placeholder="e.g. 02:26" />
+              <input {...register("duration")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" placeholder="e.g. 02:26" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">Category</label>
-              <input {...register("category")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" />
+              <input {...register("category")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">Filter Category</label>
-              <select {...register("filterCategory")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition">
+              <select {...register("filterCategory")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition">
                 <option value="">Select...</option>
                 <option value="Official Trailers">Official Trailers</option>
                 <option value="Teasers & Spots">Teasers & Spots</option>
@@ -147,43 +147,43 @@ const TrailerForm = () => {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">Genre</label>
-              <input {...register("genre")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" />
+              <input {...register("genre")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-1">Client</label>
-              <input {...register("client")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" />
+              <input {...register("client")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" />
             </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">Vimeo Review URL</label>
-            <input {...register("vimeoReviewUrl")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" />
+            <input {...register("vimeoReviewUrl")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">Description</label>
-            <textarea {...register("description")} rows={3} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition resize-none" />
+            <textarea {...register("description")} rows={3} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition resize-none" />
           </div>
         </section>
 
-        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-[#2a2a2a]">
+        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-border">
           <h2 className="text-lg font-semibold text-white">Thumbnail</h2>
           <Controller name="thumbnail" control={control} render={({ field }) => (
             <CloudinaryUploader label="Trailer Thumbnail" value={field.value} onChange={field.onChange} folder="portfolio/trailers" />
           )} />
         </section>
 
-        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-[#2a2a2a]">
+        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-border">
           <h2 className="text-lg font-semibold text-white">Specs</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div><label className="block text-sm font-medium text-gray-300 mb-1">Resolution</label><input {...register("specs.resolution")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
-            <div><label className="block text-sm font-medium text-gray-300 mb-1">Color Space</label><input {...register("specs.colorSpace")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
-            <div><label className="block text-sm font-medium text-gray-300 mb-1">Sound</label><input {...register("specs.sound")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
-            <div><label className="block text-sm font-medium text-gray-300 mb-1">Role</label><input {...register("specs.role")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-[#2a2a2a] text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+            <div><label className="block text-sm font-medium text-gray-300 mb-1">Resolution</label><input {...register("specs.resolution")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+            <div><label className="block text-sm font-medium text-gray-300 mb-1">Color Space</label><input {...register("specs.colorSpace")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+            <div><label className="block text-sm font-medium text-gray-300 mb-1">Sound</label><input {...register("specs.sound")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
+            <div><label className="block text-sm font-medium text-gray-300 mb-1">Role</label><input {...register("specs.role")} className="w-full px-4 py-2.5 rounded-xl bg-space-900 border border-border text-white text-sm focus:border-accent focus:outline-none transition" /></div>
           </div>
         </section>
 
-        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-[#2a2a2a]">
+        <section className="space-y-4 p-6 rounded-2xl bg-space-800 border border-border">
           <h2 className="text-lg font-semibold text-white">Tags</h2>
           <Controller name="tags" control={control} render={({ field }) => (
             <TagInput value={field.value} onChange={field.onChange} placeholder="e.g. Official Teaser, Dolby Vision..." />
@@ -191,9 +191,9 @@ const TrailerForm = () => {
         </section>
 
         <div className="flex items-center justify-end gap-4">
-          <button type="button" onClick={() => navigate("/admin/trailers")} className="px-6 py-2.5 rounded-xl bg-space-700 text-gray-300 text-sm font-medium hover:bg-space-600 transition border border-[#2a2a2a]">Cancel</button>
-          <button type="submit" disabled={mutation.isPending} className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-accent text-white text-sm font-semibold hover:bg-blue-600 transition disabled:opacity-50">
-            {mutation.isPending ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save className="w-4 h-4" />}
+          <button type="button" onClick={() => navigate("/admin/trailers")} className="px-6 py-2.5 rounded-xl bg-space-700 text-gray-300 text-sm font-medium hover:bg-space-600 transition border border-border">Cancel</button>
+          <button type="submit" disabled={mutation.isPending} className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-accent text-accent-foreground text-sm font-semibold hover:bg-accent-hover transition disabled:opacity-50">
+            {mutation.isPending ? <div className="w-4 h-4 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" /> : <Save className="w-4 h-4" />}
             {isEditing ? "Save Changes" : "Create Trailer"}
           </button>
         </div>

@@ -14,7 +14,7 @@ export const TrailerCard = ({
     <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`group relative rounded-2xl overflow-hidden bg-[#121216] border border-[#2a2a2a] transition-all duration-500 flex flex-col shadow-xl h-full ${className}`}
+      className={`group relative rounded-2xl overflow-hidden bg-space-800 border border-border group-hover:border-zinc-500 transition-all duration-500 flex flex-col shadow-xl group-hover:shadow-[0_0_35px_rgba(255,255,255,0.15)] h-full ${className}`}
     >
       {/* Top Video Preview & Poster */}
       <div
@@ -51,30 +51,27 @@ export const TrailerCard = ({
         />
 
         {/* Dark Gradient Vignette Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#121216] via-transparent to-black/50 opacity-85 group-hover:opacity-60 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-space-800 via-transparent to-black/50 opacity-85 group-hover:opacity-60 transition-opacity duration-300" />
 
         {/* Floating Category & Year Chips */}
         <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none">
           <span className="px-2.5 py-1 rounded-md text-[11px] font-semibold tracking-wide bg-black/60 backdrop-blur-md text-white/90 border border-white/10 shadow-sm">
             {trailer.category}
           </span>
-          {/* <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-accent/80 backdrop-blur-sm text-white shadow-sm">
-            {trailer.year}
-          </span> */}
         </div>
 
         {/* Pulsing Central Play Button */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="relative flex items-center justify-center">
             <div
-              className={`absolute w-16 h-16 rounded-full bg-accent/30 transition-transform duration-700 ease-out ${
+              className={`absolute w-16 h-16 rounded-full bg-white/20 transition-transform duration-700 ease-out ${
                 isHovered ? 'scale-150 opacity-100 animate-ping' : 'scale-100 opacity-0'
               }`}
             />
             <div
               className={`w-14 h-14 rounded-full bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-2xl transition-all duration-300 ${
                 isHovered
-                  ? 'scale-110 bg-accent text-white border-accent shadow-[0_0_25px_rgba(0,68,255,0.7)]'
+                  ? 'scale-110 bg-zinc-100 text-zinc-950 border-white shadow-[0_0_25px_rgba(255,255,255,0.4)]'
                   : 'scale-100'
               }`}
             >
@@ -85,7 +82,7 @@ export const TrailerCard = ({
 
         {/* Duration Badge Bottom Right */}
         <div className="absolute bottom-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium bg-black/75 backdrop-blur-md text-white/90 border border-white/10 shadow-md">
-          <Clock size={12} className="text-accent" />
+          <Clock size={12} className="text-zinc-300" />
           <span>{trailer.duration}</span>
         </div>
       </div>
@@ -102,7 +99,7 @@ export const TrailerCard = ({
 
           <h3
             onClick={() => onPlay && onPlay(trailer)}
-            className="text-xl font-bold text-white transition-colors duration-300 cursor-pointer"
+            className="text-xl font-bold text-white group-hover:text-zinc-200 transition-colors duration-300 cursor-pointer"
           >
             {trailer.title}
           </h3>
@@ -117,38 +114,17 @@ export const TrailerCard = ({
         </div>
 
         {/* Tech Specs & Tags */}
-        <div className="space-y-4 pt-2 border-t border-[#2a2a2a]/60">
+        <div className="space-y-4 pt-2 border-t border-border/60">
           <div className="flex flex-wrap gap-1.5">
             {trailer.tags.map((tag) => (
               <span
                 key={tag}
-                className="text-[11px] font-medium text-gray-300 bg-space-800/90 px-2 py-0.5 rounded border border-[#2a2a2a] transition-colors"
+                className="text-[11px] font-medium text-gray-300 bg-space-800/90 px-2 py-0.5 rounded border border-border transition-colors"
               >
                 {tag}
               </span>
             ))}
           </div>
-
-          {/* Card Action Buttons */}
-          {/* <div className="flex items-center gap-2.5 pt-2">
-            <button
-              onClick={() => onPlay && onPlay(trailer)}
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-accent text-white font-medium text-xs sm:text-sm hover:bg-blue-600 active:scale-95 transition-all shadow-[0_0_15px_rgba(0,68,255,0.3)] hover:shadow-[0_0_20px_rgba(0,68,255,0.5)] cursor-pointer"
-            >
-              <Play size={14} className="fill-current" />
-              <span>Watch Trailer</span>
-            </button>
-
-            <a
-              href={trailer.vimeoReviewUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Open Vimeo Review Page"
-              className="p-2.5 rounded-lg bg-space-800 text-gray-400 hover:text-white hover:bg-space-700 border border-[#2a2a2a] hover:border-white/20 transition-all cursor-pointer flex items-center justify-center"
-            >
-              <ExternalLink size={16} />
-            </a>
-          </div> */}
         </div>
       </div>
     </div>

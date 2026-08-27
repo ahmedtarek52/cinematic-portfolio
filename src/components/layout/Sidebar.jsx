@@ -64,16 +64,16 @@ const Sidebar = () => {
               Project
             </h3>
             <div className="flex flex-wrap gap-2">
-              <span className="text-gray-400 text-sm bg-space-800 px-3 py-1.5 rounded-lg border border-[#2a2a2a]">
+              <span className="text-gray-400 text-sm bg-space-800 px-3 py-1.5 rounded-lg border border-border">
                 {currentProject.type || currentProject.category}
               </span>
-              <span className="text-gray-400 text-sm bg-space-800 px-3 py-1.5 rounded-lg border border-[#2a2a2a]">
+              <span className="text-gray-400 text-sm bg-space-800 px-3 py-1.5 rounded-lg border border-border">
                 {currentProject.year}
               </span>
               {currentProject.services.slice(0, 2).map((service) => (
                 <span 
                   key={service}
-                  className="text-gray-400 text-sm bg-space-800 px-3 py-1.5 rounded-lg border border-[#2a2a2a]"
+                  className="text-gray-400 text-sm bg-space-800 px-3 py-1.5 rounded-lg border border-border"
                 >
                   {service}
                 </span>

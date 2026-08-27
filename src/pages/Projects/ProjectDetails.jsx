@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getProjectById, getRelatedProjects } from "../../services/projects";
 import { ArrowLeft, Play } from "lucide-react";
 import { getOptimizedUrl } from "../../lib/cloudinary";
 import ProjectCard from "./ProjectCard";
+import CinemaModal from "../../components/ui/CinemaModal";
 
 const ProjectDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [isPlayingVideo, setIsPlayingVideo] = useState(false);
 
   const {
     data: project,
@@ -56,7 +58,7 @@ const ProjectDetails = () => {
         <p className="text-gray-400 text-lg">Project not found.</p>
         <Link
           to="/projects"
-          className="text-accent hover:underline mt-4 inline-block"
+          className="text-zinc-300 hover:underline mt-4 inline-block"
         >
           Back to Projects
         </Link>
@@ -101,13 +103,16 @@ const ProjectDetails = () => {
           <div className="flex gap-3">
             <button
               onClick={() => navigate("/projects")}
-              className="flex items-center gap-2 bg-space-700 text-white px-6 py-3 rounded-lg font-medium hover:bg-space-600 transition border border-[#2a2a2a]"
+              className="flex items-center gap-2 bg-space-700 text-white px-6 py-3 rounded-lg font-medium hover:bg-space-600 transition border border-border"
             >
               <ArrowLeft size={18} />
               Back to Projects
             </button>
             {project.vimeo && (
-              <button className="flex items-center gap-2 bg-accent text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-600 transition">
+              <button
+                onClick={() => setIsPlayingVideo(true)}
+                className="flex items-center gap-2 bg-zinc-100 text-zinc-950 px-6 py-3 rounded-lg font-medium hover:bg-white transition shadow-lg cursor-pointer"
+              >
                 <Play size={18} />
                 Play Case Study
               </button>
@@ -125,7 +130,7 @@ const ProjectDetails = () => {
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="text-gray-400 text-sm bg-space-800 px-3 py-1.5 rounded-lg border border-[#2a2a2a]"
+                className="text-gray-400 text-sm bg-space-800 px-3 py-1.5 rounded-lg border border-border"
               >
                 {tag}
               </span>
@@ -199,25 +204,25 @@ const ProjectDetails = () => {
           <div className="space-y-4">
             <h2 className="text-2xl font-bold text-white">Tech Specs</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-space-800 border border-[#2a2a2a] rounded-lg p-4">
+              <div className="bg-space-800 border border-border rounded-lg p-4">
                 <div className="text-white font-bold text-xl mb-1">
                   {project.techSpecs.master}
                 </div>
                 <div className="text-gray-400 text-sm">Master</div>
               </div>
-              <div className="bg-space-800 border border-[#2a2a2a] rounded-lg p-4">
+              <div className="bg-space-800 border border-border rounded-lg p-4">
                 <div className="text-white font-bold text-xl mb-1">
                   {project.techSpecs.colorSpace}
                 </div>
                 <div className="text-gray-400 text-sm">Color Space</div>
               </div>
-              <div className="bg-space-800 border border-[#2a2a2a] rounded-lg p-4">
+              <div className="bg-space-800 border border-border rounded-lg p-4">
                 <div className="text-white font-bold text-xl mb-1">
                   {project.techSpecs.hdr}
                 </div>
                 <div className="text-gray-400 text-sm">HDR</div>
               </div>
-              <div className="bg-space-800 border border-[#2a2a2a] rounded-lg p-4">
+              <div className="bg-space-800 border border-border rounded-lg p-4">
                 <div className="text-white font-bold text-xl mb-1">
                   {project.techSpecs.pipeline}
                 </div>
@@ -242,6 +247,20 @@ const ProjectDetails = () => {
           </div>
         )}
       </div>
+
+      {/* Shared Cinema Modal for Project Case Study */}
+      <CinemaModal
+        video={
+          isPlayingVideo && project
+            ? {
+                title: project.title,
+                subtitle: project.metadata,
+                vimeoId: project.vimeo,
+              }
+            : null
+        }
+        onClose={() => setIsPlayingVideo(false)}
+      />
     </div>
   );
 };
