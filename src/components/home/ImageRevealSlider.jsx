@@ -294,6 +294,8 @@ export const ImageRevealSlider = () => {
             src="/images/before_edit.webp"
             alt="Raw Ungraded Flat Footage"
             className="w-full h-full object-cover pointer-events-none"
+            loading="lazy"
+            decoding="async"
             draggable={false}
           />
           {/* RAW watermark tag */}
@@ -313,6 +315,8 @@ export const ImageRevealSlider = () => {
             src="/images/after_edit.webp"
             alt="Final Master Color Grade"
             className="w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
             draggable={false}
           />
         </motion.div>

@@ -1,4 +1,5 @@
 import { supabase } from "../lib/supabaseClient";
+import { sendContactEmail } from "./email";
 
 // ──────────────────────────────────────────────────────
 // Contact Info (singleton row, id = 1)
@@ -59,18 +60,9 @@ export async function updateContactInfo(payload) {
 // ──────────────────────────────────────────────────────
 
 export async function submitContactMessage({ firstName, lastName, email, message }) {
-  const { data, error } = await supabase
-    .from("contact_messages")
-    .insert({
-      first_name: firstName,
-      last_name: lastName,
-      email,
-      message,
-    })
-    .select()
-    .single();
-  if (error) throw error;
-  return data;
+  // Routes to /api/send-email which securely writes to Supabase using admin service key
+  // and delivers the notification email to Mahmoud via Resend
+  return await sendContactEmail({ firstName, lastName, email, message });
 }
 
 export async function getContactMessages() {

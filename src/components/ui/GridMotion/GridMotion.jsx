@@ -18,15 +18,22 @@ const GridMotion = ({ items = [], gradientColor = 'black' }) => {
       mouseXRef.current = e.clientX;
     };
 
+    const handleTouchMove = e => {
+      if (e.touches && e.touches[0]) {
+        mouseXRef.current = e.touches[0].clientX;
+      }
+    };
+
     const updateMotion = () => {
-      const maxMoveAmount = 300;
-      const baseDuration = 0.8;
+      const isMobile = window.innerWidth < 768;
+      const maxMoveAmount = isMobile ? 140 : 300;
+      const baseDuration = isMobile ? 0.9 : 0.8;
       const inertiaFactors = [0.6, 0.4, 0.3, 0.2];
 
       rowRefs.current.forEach((row, index) => {
         if (row) {
           const direction = index % 2 === 0 ? 1 : -1;
-          const moveAmount = ((mouseXRef.current / window.innerWidth) * maxMoveAmount - maxMoveAmount / 2) * direction;
+          const moveAmount = ((mouseXRef.current / (window.innerWidth || 1)) * maxMoveAmount - maxMoveAmount / 2) * direction;
 
           gsap.to(row, {
             x: moveAmount,
@@ -41,9 +48,11 @@ const GridMotion = ({ items = [], gradientColor = 'black' }) => {
     const removeAnimationLoop = gsap.ticker.add(updateMotion);
 
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
       removeAnimationLoop();
     };
   }, []);

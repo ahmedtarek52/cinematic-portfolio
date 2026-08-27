@@ -5,42 +5,42 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const images = [
   {
     id: 1,
-    url: "/images/art_01.png",
+    url: "/images/art_01.webp",
     alt: "Abstract Art 1",
     title: "Colorful Waves",
     description: "Vibrant abstract composition with flowing lines",
   },
   {
     id: 2,
-    url: "/images/art_02.png",
+    url: "/images/art_02.webp",
     alt: "Abstract Art 2",
     title: "Geometric Harmony",
     description: "Bold shapes and contrasting colors in perfect balance",
   },
   {
     id: 3,
-    url: "/images/art_03.png",
+    url: "/images/art_03.webp",
     alt: "Abstract Art 3",
     title: "Midnight Dreams",
     description: "Deep blues and purples creating a dreamy atmosphere",
   },
   {
     id: 4,
-    url: "/images/art_04.png",
+    url: "/images/art_04.webp",
     alt: "Abstract Art 4",
     title: "Sunset Embrace",
     description: "Warm oranges and reds blending into soft yellows",
   },
   {
     id: 5,
-    url: "/images/art_05.png",
+    url: "/images/art_05.webp",
     alt: "Abstract Art 5",
     title: "Ocean Depths",
     description: "Cool greens and blues evoking underwater tranquility",
   },
   {
     id: 6,
-    url: "/images/art_06.png",
+    url: "/images/art_06.webp",
     alt: "Abstract Art 6",
     title: "Desert Mirage",
     description: "Earthy tones and textures inspired by desert landscapes",
@@ -147,6 +147,8 @@ export const ArtCollection = () => {
                 src={image.url}
                 alt={image.alt}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                loading="lazy"
+                decoding="async"
               />
               {/* Overlay for active image */}
               <div
