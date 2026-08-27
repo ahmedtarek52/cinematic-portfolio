@@ -157,7 +157,7 @@ const Footer = () => {
                     },
                     {
                       icon: WhatsAppIcon,
-                      href: 'https://wa.me/201016627737',
+                      href: 'https://wa.me/201015627737',
                       label: 'WhatsApp',
                     },
                     {
