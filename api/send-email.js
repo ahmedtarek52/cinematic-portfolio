@@ -87,10 +87,16 @@ export default async function handler(req, res) {
     process.env.VITE_SUPABASE_SERVICE_ROLE_KEY ||
     process.env.VITE_SUPABASE_ANON_KEY;
 
-  const OWNER_EMAIL =
+  const OWNER_EMAIL = (
     process.env.OWNER_EMAIL ||
     process.env.VITE_OWNER_EMAIL ||
-    'Mahmoudaboheussin57@gmail.com';
+    'mahmoudaboheussin57@gmail.com'
+  ).trim().toLowerCase();
+
+  const FROM_EMAIL =
+    process.env.RESEND_FROM_EMAIL ||
+    process.env.VITE_RESEND_FROM_EMAIL ||
+    'Portfolio Contact <onboarding@resend.dev>';
 
   try {
     let body = req.body;
@@ -149,154 +155,23 @@ export default async function handler(req, res) {
     }
 
     // 2. Dispatch email via Resend API with native Node HTTPS request
-    const emailHtml = `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>New Portfolio Message</title>
-        <style>
-          body {
-            margin: 0;
-            padding: 0;
-            background-color: #0c0c0e;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            color: #ffffff;
-          }
-          .container {
-            max-width: 600px;
-            margin: 30px auto;
-            background-color: #141418;
-            border: 1px solid #27272a;
-            border-radius: 16px;
-            overflow: hidden;
-          }
-          .header {
-            padding: 32px 32px 24px;
-            background: linear-gradient(180deg, #1c1c22 0%, #141418 100%);
-            border-bottom: 1px solid #27272a;
-          }
-          .brand {
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: #a1a1aa;
-            text-transform: uppercase;
-            margin: 0 0 6px;
-          }
-          .title {
-            font-size: 22px;
-            font-weight: 800;
-            color: #ffffff;
-            margin: 0;
-            letter-spacing: -0.5px;
-          }
-          .content {
-            padding: 32px;
-          }
-          .field-group {
-            margin-bottom: 20px;
-          }
-          .field-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #71717a;
-            margin-bottom: 6px;
-            font-weight: 600;
-          }
-          .field-value {
-            font-size: 15px;
-            color: #e4e4e7;
-            font-weight: 500;
-          }
-          .message-box {
-            background-color: #09090b;
-            border: 1px solid #27272a;
-            border-radius: 12px;
-            padding: 20px;
-            font-size: 15px;
-            line-height: 1.6;
-            color: #f4f4f5;
-            white-space: pre-wrap;
-            margin-top: 10px;
-          }
-          .cta-container {
-            margin-top: 32px;
-            text-align: center;
-          }
-          .reply-button {
-            display: inline-block;
-            background-color: #ffffff;
-            color: #09090b !important;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 14px;
-            padding: 12px 28px;
-            border-radius: 10px;
-          }
-          .footer {
-            padding: 20px 32px;
-            background-color: #09090b;
-            border-top: 1px solid #1f1f23;
-            text-align: center;
-            font-size: 12px;
-            color: #52525b;
-          }
-        </style>
-      </head>
-      <body>
-        <div class="container">
-          <div class="header">
-            <p class="brand">Mahmoud Abo Hussein • Portfolio</p>
-            <h1 class="title">New Client Inquiry</h1>
-          </div>
-          
-          <div class="content">
-            <div class="field-group">
-              <div class="field-label">Sender Name</div>
-              <div class="field-value">${fullName}</div>
-            </div>
+    const emailText = `New Client Inquiry - Mahmoud Abo Hussein Portfolio
+--------------------------------------------------
+Sender Name: ${fullName}
+Email Address: ${email}
+Received At: ${submittedAt}
 
-            <div class="field-group">
-              <div class="field-label">Email Address</div>
-              <div class="field-value">
-                <a href="mailto:${email}" style="color: #60a5fa; text-decoration: none;">${email}</a>
-              </div>
-            </div>
-
-            <div class="field-group">
-              <div class="field-label">Received At</div>
-              <div class="field-value">${submittedAt}</div>
-            </div>
-
-            <div class="field-group" style="margin-top: 24px;">
-              <div class="field-label">Message Details</div>
-              <div class="message-box">${message}</div>
-            </div>
-
-            <div class="cta-container">
-              <a href="mailto:${email}?subject=Re:%20Inquiry%20from%20Portfolio" class="reply-button">
-                Reply to ${firstName}
-              </a>
-            </div>
-          </div>
-
-          <div class="footer">
-            Delivered directly via Resend • Cinematic Portfolio System
-          </div>
-        </div>
-      </body>
-      </html>
-    `;
+Message Details:
+${message}
+--------------------------------------------------
+Delivered directly via Resend • Cinematic Portfolio System`;
 
     const resendPayload = {
-      from: 'Portfolio Contact <onboarding@resend.dev>',
+      from: FROM_EMAIL,
       to: [OWNER_EMAIL],
       reply_to: email,
       subject: `🎬 New Portfolio Message from ${fullName}`,
-      html: emailHtml,
+      text: emailText,
     };
 
     let resendResult;

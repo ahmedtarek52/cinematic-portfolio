@@ -74,7 +74,7 @@ const descFoldVariants = {
 const titleWords = [
   { text: 'Welcome', isGradient: false },
   { text: 'to', isGradient: false },
-  { text: 'Our', isGradient: false },
+  { text: 'My', isGradient: false },
   { text: 'Creative', isGradient: true },
   { text: 'Studio', isGradient: true },
 ];

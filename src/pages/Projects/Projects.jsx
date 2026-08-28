@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllProjects } from "../../services/projects";
 import ProjectCard from "./ProjectCard";
 
-const CATEGORIES = ["All", "TCP", "Cinema", "Drama"];
+const CATEGORIES = ["All", "TVC", "Cinema", "Drama"];
 
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
