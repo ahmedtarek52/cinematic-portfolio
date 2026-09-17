@@ -8,7 +8,8 @@ const ContactForm = ({ className = '' }) => {
     firstName: '',
     lastName: '',
     email: '',
-    message: ''
+    message: '',
+    _hp: '' // Honeypot field for bot spam prevention
   });
 
   const [focusedField, setFocusedField] = useState(null);
@@ -18,7 +19,7 @@ const ContactForm = ({ className = '' }) => {
   const [errors, setErrors] = useState({});
 
   const validateEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
     return regex.test(email);
   };
 
@@ -46,19 +47,35 @@ const ContactForm = ({ className = '' }) => {
     const newErrors = {};
     
     // Validation
-    if (!formData.firstName.trim()) {
+    const trimmedFirstName = formData.firstName.trim();
+    const trimmedLastName = formData.lastName.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedMessage = formData.message.trim();
+
+    if (!trimmedFirstName) {
       newErrors.firstName = 'First name is required';
+    } else if (trimmedFirstName.length > 80) {
+      newErrors.firstName = 'First name cannot exceed 80 characters';
     }
-    if (!formData.lastName.trim()) {
+
+    if (!trimmedLastName) {
       newErrors.lastName = 'Last name is required';
+    } else if (trimmedLastName.length > 80) {
+      newErrors.lastName = 'Last name cannot exceed 80 characters';
     }
-    if (!formData.email.trim()) {
+
+    if (!trimmedEmail) {
       newErrors.email = 'Email is required';
-    } else if (!validateEmail(formData.email)) {
+    } else if (trimmedEmail.length > 120) {
+      newErrors.email = 'Email cannot exceed 120 characters';
+    } else if (!validateEmail(trimmedEmail)) {
       newErrors.email = 'Please enter a valid email address';
     }
-    if (!formData.message.trim()) {
+
+    if (!trimmedMessage) {
       newErrors.message = 'Message is required';
+    } else if (trimmedMessage.length > 3000) {
+      newErrors.message = 'Message cannot exceed 3000 characters';
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -75,10 +92,11 @@ const ContactForm = ({ className = '' }) => {
       // 1. Saves to Supabase 'contact_messages'
       // 2. Sends HTML notification email via Resend to Mahmoudaboheussin57@gmail.com
       await submitContactMessage({
-        firstName: formData.firstName.trim(),
-        lastName: formData.lastName.trim(),
-        email: formData.email.trim(),
-        message: formData.message.trim(),
+        firstName: trimmedFirstName,
+        lastName: trimmedLastName,
+        email: trimmedEmail,
+        message: trimmedMessage,
+        _hp: formData._hp || '',
       });
 
       setSubmitted(true);
@@ -90,7 +108,8 @@ const ContactForm = ({ className = '' }) => {
           firstName: '',
           lastName: '',
           email: '',
-          message: ''
+          message: '',
+          _hp: ''
         });
       }, 4000);
     } catch (err) {
@@ -117,6 +136,20 @@ const ContactForm = ({ className = '' }) => {
       role="form"
       aria-label="Contact form"
     >
+      {/* Anti-spam Honeypot Field (hidden from real visitors, catches automated bots) */}
+      <div className="hidden" aria-hidden="true" style={{ display: 'none' }}>
+        <label htmlFor="_hp">Leave this field blank</label>
+        <input
+          type="text"
+          id="_hp"
+          name="_hp"
+          value={formData._hp || ''}
+          onChange={handleChange}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       {/* Name Fields */}
       <div className="grid sm:grid-cols-2 gap-6">
         {/* First Name */}
@@ -131,6 +164,7 @@ const ContactForm = ({ className = '' }) => {
             type="text"
             id="firstName"
             name="firstName"
+            maxLength={80}
             value={formData.firstName}
             onChange={handleChange}
             onFocus={() => setFocusedField('firstName')}
@@ -167,6 +201,7 @@ const ContactForm = ({ className = '' }) => {
             type="text"
             id="lastName"
             name="lastName"
+            maxLength={80}
             value={formData.lastName}
             onChange={handleChange}
             onFocus={() => setFocusedField('lastName')}
@@ -204,6 +239,7 @@ const ContactForm = ({ className = '' }) => {
           type="email"
           id="email"
           name="email"
+          maxLength={120}
           value={formData.email}
           onChange={handleChange}
           onFocus={() => setFocusedField('email')}
@@ -239,6 +275,7 @@ const ContactForm = ({ className = '' }) => {
         <textarea
           id="message"
           name="message"
+          maxLength={3000}
           value={formData.message}
           onChange={handleChange}
           onFocus={() => setFocusedField('message')}

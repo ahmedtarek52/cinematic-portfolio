@@ -55,15 +55,31 @@ function postToResend(payload, apiKey) {
   });
 }
 
-export default async function handler(req, res) {
-  // Enable CORS headers
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+function setCorsHeaders(req, res) {
+  const origin = req.headers.origin;
+  const isAllowedOrigin =
+    !origin ||
+    origin.includes('localhost') ||
+    origin.includes('127.0.0.1') ||
+    origin.endsWith('.vercel.app') ||
+    origin.includes('mahmoudabohussein.com');
+
+  if (isAllowedOrigin && origin) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  } else if (!origin) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
   res.setHeader(
     'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    'Content-Type, Authorization, X-Requested-With, Accept'
   );
+}
+
+export default async function handler(req, res) {
+  setCorsHeaders(req, res);
 
   if (req.method === 'OPTIONS') {
     res.status(200).end();
@@ -108,19 +124,54 @@ export default async function handler(req, res) {
       }
     }
 
-    const { firstName, lastName = '', email, message } = body || {};
+    const { firstName, lastName = '', email, message, _hp } = body || {};
 
-    if (!firstName || !email || !message) {
-      return res.status(400).json({ error: 'First name, email, and message are required.' });
+    // 1. Anti-spam honeypot: silently drop bot submissions without consuming quotas
+    if (_hp) {
+      return res.status(200).json({ success: true, dbSaved: false });
     }
 
-    const fullName = `${firstName} ${lastName}`.trim();
+    // 2. Strict Input Validation
+    if (!firstName || typeof firstName !== 'string' || !firstName.trim()) {
+      return res.status(400).json({ error: 'First name is required.' });
+    }
+    if (!email || typeof email !== 'string' || !email.trim()) {
+      return res.status(400).json({ error: 'Email is required.' });
+    }
+    if (!message || typeof message !== 'string' || !message.trim()) {
+      return res.status(400).json({ error: 'Message is required.' });
+    }
+
+    // 3. Length caps to protect against memory/storage abuse
+    if (firstName.length > 80 || (typeof lastName === 'string' && lastName.length > 80)) {
+      return res.status(400).json({ error: 'Name cannot exceed 80 characters.' });
+    }
+    if (email.length > 120) {
+      return res.status(400).json({ error: 'Email cannot exceed 120 characters.' });
+    }
+    if (message.length > 3000) {
+      return res.status(400).json({ error: 'Message cannot exceed 3000 characters.' });
+    }
+
+    // 4. Strict Email Regex validation
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+    if (!emailRegex.test(email.trim())) {
+      return res.status(400).json({ error: 'Please provide a valid email address.' });
+    }
+
+    // 5. Sanitize header injection (strip CRLF from name)
+    const cleanFirstName = firstName.replace(/[\r\n]/g, ' ').trim();
+    const cleanLastName = typeof lastName === 'string' ? lastName.replace(/[\r\n]/g, ' ').trim() : '';
+    const fullName = `${cleanFirstName} ${cleanLastName}`.trim();
+    const cleanEmail = email.trim();
+    const cleanMessage = message.trim();
+
     const submittedAt = new Date().toLocaleString('en-US', {
       dateStyle: 'full',
       timeStyle: 'short',
     });
 
-    // 1. Insert into Supabase table (service role key bypasses RLS safely on server)
+    // 6. Insert into Supabase table (service role key bypasses RLS safely on server)
     let dbRecord = null;
     if (SUPABASE_URL && SUPABASE_SERVICE_KEY) {
       try {
@@ -128,10 +179,10 @@ export default async function handler(req, res) {
         const { data, error: dbErr } = await supabaseAdmin
           .from('contact_messages')
           .insert({
-            first_name: firstName,
-            last_name: lastName,
-            email,
-            message,
+            first_name: cleanFirstName,
+            last_name: cleanLastName,
+            email: cleanEmail,
+            message: cleanMessage,
           })
           .select()
           .single();
@@ -158,18 +209,18 @@ export default async function handler(req, res) {
     const emailText = `New Client Inquiry - Mahmoud Abo Hussein Portfolio
 --------------------------------------------------
 Sender Name: ${fullName}
-Email Address: ${email}
+Email Address: ${cleanEmail}
 Received At: ${submittedAt}
 
 Message Details:
-${message}
+${cleanMessage}
 --------------------------------------------------
 Delivered directly via Resend • Cinematic Portfolio System`;
 
     const resendPayload = {
       from: FROM_EMAIL,
       to: [OWNER_EMAIL],
-      reply_to: email,
+      reply_to: cleanEmail,
       subject: `🎬 New Portfolio Message from ${fullName}`,
       text: emailText,
     };

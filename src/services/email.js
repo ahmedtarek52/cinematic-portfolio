@@ -14,7 +14,7 @@
  * @param {string} params.message
  * @returns {Promise<Object>}
  */
-export async function sendContactEmail({ firstName, lastName, email, message }) {
+export async function sendContactEmail({ firstName, lastName, email, message, _hp }) {
   const response = await fetch('/api/send-email', {
     method: 'POST',
     headers: {
@@ -25,6 +25,7 @@ export async function sendContactEmail({ firstName, lastName, email, message }) 
       lastName,
       email,
       message,
+      _hp,
     }),
   });
 

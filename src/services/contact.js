@@ -59,10 +59,10 @@ export async function updateContactInfo(payload) {
 // Contact Messages (form submissions)
 // ──────────────────────────────────────────────────────
 
-export async function submitContactMessage({ firstName, lastName, email, message }) {
+export async function submitContactMessage({ firstName, lastName, email, message, _hp }) {
   // Routes to /api/send-email which securely writes to Supabase using admin service key
   // and delivers the notification email to Mahmoud via Resend
-  return await sendContactEmail({ firstName, lastName, email, message });
+  return await sendContactEmail({ firstName, lastName, email, message, _hp });
 }
 
 export async function getContactMessages() {

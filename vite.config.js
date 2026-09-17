@@ -2,10 +2,10 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 
-function contactApiDevPlugin() {
+function apiDevPlugin() {
   let devMode = 'development';
   return {
-    name: 'contact-api-dev',
+    name: 'api-dev-middleware',
     config(config, { mode }) {
       devMode = mode;
       const env = loadEnv(mode, process.cwd(), '');
@@ -13,7 +13,13 @@ function contactApiDevPlugin() {
     },
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
-        if (req.url === '/api/send-email' && req.method === 'POST') {
+        const url = req.url?.split('?')[0];
+        const handlers = {
+          '/api/send-email': './api/send-email.js',
+          '/api/delete-image': './api/delete-image.js',
+        };
+
+        if (handlers[url] && (req.method === 'POST' || req.method === 'OPTIONS')) {
           // Always refresh env variables from .env on each request
           const env = loadEnv(devMode, process.cwd(), '');
           Object.assign(process.env, env);
@@ -41,15 +47,15 @@ function contactApiDevPlugin() {
                 };
               }
 
-              const { default: handler } = await import('./api/send-email.js');
+              const { default: handler } = await import(handlers[url]);
               await handler(req, res);
             } catch (err) {
-              console.error('[contact-api-dev error]:', err);
+              console.error(`[api-dev error on ${url}]:`, err);
               res.statusCode = 500;
               res.setHeader('Content-Type', 'application/json');
               res.end(
                 JSON.stringify({
-                  error: err.message || 'Internal dev server email handler error',
+                  error: err.message || 'Internal dev server handler error',
                 })
               );
             }
@@ -67,7 +73,7 @@ export default defineConfig({
   base: '/',
   plugins: [
     react(),
-    contactApiDevPlugin(),
+    apiDevPlugin(),
     visualizer({
       filename: 'stats.html',
       title: 'Bundle Analytics - Cinematic Portfolio',

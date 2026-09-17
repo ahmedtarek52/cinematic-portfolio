@@ -147,11 +147,18 @@ create policy "public read contact_info" on contact_info for select using (true)
 create policy "public read services" on services for select using (true);
 create policy "public read careers" on careers for select using (true);
 
--- Public insert-only on contact_messages (public contact form)
+-- Contact messages:
+-- Submissions are securely routed via /api/send-email using the SUPABASE_SERVICE_ROLE_KEY
+-- which safely bypasses RLS on the server.
+-- Optional: If direct client submissions via anon key are NOT wanted, you can omit the public insert policy below.
 create policy "public insert contact_messages" on contact_messages
   for insert with check (true);
 
--- Admin (authenticated) full access — all tables
+-- Admin (authenticated) access — all tables
+-- SECURITY NOTE: In your Supabase Dashboard under Authentication -> Providers -> Email,
+-- ensure "Allow new users to sign up" is DISABLED so unauthorized users cannot create accounts.
+-- Alternatively, bind the policy to your specific admin email:
+--   using (auth.jwt() ->> 'email' = 'mahmoudaboheussin57@gmail.com')
 create policy "admin all projects" on projects for all
   using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
 create policy "admin all trailers" on trailers for all
