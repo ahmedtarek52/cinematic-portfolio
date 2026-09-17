@@ -4,12 +4,17 @@ import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motio
 import { ArrowUpRight } from "lucide-react";
 import { getOptimizedUrl } from "../../lib/cloudinary";
 
+// Detect touch-only devices once at module level — avoids per-render checks
+const canHover =
+  typeof window !== "undefined" &&
+  window.matchMedia("(hover: hover)").matches;
+
 const ProjectCard = ({ project }) => {
   const cardRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [spotlightPos, setSpotlightPos] = useState({ x: 0, y: 0 });
 
-  // Motion values for smooth cursor tracking
+  // Motion values for smooth cursor tracking — only on hover-capable devices
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -19,7 +24,7 @@ const ProjectCard = ({ project }) => {
   const cursorY = useSpring(mouseY, springConfig);
 
   const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
+    if (!canHover || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -30,6 +35,7 @@ const ProjectCard = ({ project }) => {
   };
 
   const handleMouseEnter = (e) => {
+    if (!canHover) return;
     if (cardRef.current) {
       const rect = cardRef.current.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -42,6 +48,7 @@ const ProjectCard = ({ project }) => {
   };
 
   const handleMouseLeave = () => {
+    if (!canHover) return;
     setIsHovered(false);
   };
 
@@ -52,10 +59,10 @@ const ProjectCard = ({ project }) => {
     >
       <div
         ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        className="relative aspect-video w-full overflow-hidden rounded-2xl bg-space-800 border border-border group-hover:border-zinc-500 transition-all duration-500 shadow-xl group-hover:shadow-[0_0_35px_rgba(255,255,255,0.15)] md:cursor-none cursor-pointer"
+        onMouseMove={canHover ? handleMouseMove : undefined}
+        onMouseEnter={canHover ? handleMouseEnter : undefined}
+        onMouseLeave={canHover ? handleMouseLeave : undefined}
+        className={`relative aspect-video w-full overflow-hidden rounded-2xl bg-space-800 border border-border group-hover:border-zinc-500 transition-all duration-500 shadow-xl group-hover:shadow-[0_0_35px_rgba(255,255,255,0.15)] cursor-pointer ${canHover ? 'md:cursor-none' : ''}`}
       >
         {/* Project Thumbnail Image with Cinematic Scale */}
         <img
@@ -74,49 +81,53 @@ const ProjectCard = ({ project }) => {
         {/* Ambient Dark Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none" />
 
-        {/* Interactive Magic Spotlight Radial Glow */}
-        <div
-          className="absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100 z-10"
-          style={{
-            background: isHovered
-              ? `radial-gradient(350px circle at ${spotlightPos.x}px ${spotlightPos.y}px, rgba(255, 255, 255, 0.12), transparent 70%)`
-              : "none",
-          }}
-        />
+        {/* Interactive Magic Spotlight Radial Glow — desktop only */}
+        {canHover && (
+          <div
+            className="absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100 z-10"
+            style={{
+              background: isHovered
+                ? `radial-gradient(350px circle at ${spotlightPos.x}px ${spotlightPos.y}px, rgba(255, 255, 255, 0.12), transparent 70%)`
+                : "none",
+            }}
+          />
+        )}
 
-        {/* Magic Floating Cursor Box (Follows Mouse with Project Title) */}
-        <AnimatePresence>
-          {isHovered && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.6, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.6, y: 10 }}
-              transition={{ duration: 0.22, ease: "easeOut" }}
-              style={{
-                left: cursorX,
-                top: cursorY,
-                translateX: "-50%",
-                translateY: "-50%",
-              }}
-              className="absolute pointer-events-none z-30 hidden md:flex items-center gap-3 px-4 py-2.5 rounded-full bg-black/85 backdrop-blur-xl border border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.15),0_10px_25px_rgba(0,0,0,0.8)]"
-            >
-              <div className="w-2 h-2 rounded-full bg-zinc-200 animate-pulse shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
-              <div className="flex flex-col text-left">
-                <span className="text-sm font-bold text-white tracking-wide leading-tight whitespace-nowrap">
-                  {project.title}
-                </span>
-                {project.services && project.services.length > 0 && (
-                  <span className="text-[10px] text-zinc-300 font-medium tracking-wider uppercase leading-none mt-0.5">
-                    {project.services.join(" • ")}
+        {/* Magic Floating Cursor Box (Follows Mouse with Project Title) — desktop only */}
+        {canHover && (
+          <AnimatePresence>
+            {isHovered && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.6, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.6, y: 10 }}
+                transition={{ duration: 0.22, ease: "easeOut" }}
+                style={{
+                  left: cursorX,
+                  top: cursorY,
+                  translateX: "-50%",
+                  translateY: "-50%",
+                }}
+                className="absolute pointer-events-none z-30 hidden md:flex items-center gap-3 px-4 py-2.5 rounded-full bg-black/85 backdrop-blur-xl border border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.15),0_10px_25px_rgba(0,0,0,0.8)]"
+              >
+                <div className="w-2 h-2 rounded-full bg-zinc-200 animate-pulse shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
+                <div className="flex flex-col text-left">
+                  <span className="text-sm font-bold text-white tracking-wide leading-tight whitespace-nowrap">
+                    {project.title}
                   </span>
-                )}
-              </div>
-              <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-white/90 ml-0.5 flex-shrink-0">
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                  {project.services && project.services.length > 0 && (
+                    <span className="text-[10px] text-zinc-300 font-medium tracking-wider uppercase leading-none mt-0.5">
+                      {project.services.join(" • ")}
+                    </span>
+                  )}
+                </div>
+                <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-white/90 ml-0.5 flex-shrink-0">
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        )}
 
         {/* Mobile Fallback Overlay (Visible on Touch Devices < md) */}
         <div className="md:hidden absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex items-center justify-between pointer-events-none z-20">
@@ -140,4 +151,5 @@ const ProjectCard = ({ project }) => {
 };
 
 export default ProjectCard;
+
 

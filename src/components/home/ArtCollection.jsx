@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -52,16 +52,23 @@ export const ArtCollection = () => {
   const [activeMobileIndex, setActiveMobileIndex] = useState(0);
   const sectionRef = useRef(null);
   const mobileGalleryRef = useRef(null);
+  const scrollTicking = useRef(false);
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
 
-  // Mobile slider navigation handlers
-  const handleMobileScroll = () => {
-    if (!mobileGalleryRef.current) return;
-    const { scrollLeft, clientWidth } = mobileGalleryRef.current;
-    const cardWidth = clientWidth * 0.82;
-    const index = Math.round(scrollLeft / (cardWidth || 1));
-    setActiveMobileIndex(Math.min(Math.max(0, index), images.length - 1));
-  };
+  // Mobile slider navigation handlers — RAF-throttled for smooth momentum scroll
+  const handleMobileScroll = useCallback(() => {
+    if (scrollTicking.current) return;
+    scrollTicking.current = true;
+    requestAnimationFrame(() => {
+      if (mobileGalleryRef.current) {
+        const { scrollLeft, clientWidth } = mobileGalleryRef.current;
+        const cardWidth = clientWidth * 0.82;
+        const index = Math.round(scrollLeft / (cardWidth || 1));
+        setActiveMobileIndex(Math.min(Math.max(0, index), images.length - 1));
+      }
+      scrollTicking.current = false;
+    });
+  }, []);
 
   const scrollToMobileSlide = (index) => {
     if (!mobileGalleryRef.current) return;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import gsap from 'gsap';
 
 const heroImages = [
@@ -8,7 +8,11 @@ const heroImages = [
   '/images/hero_03.webp',
 ];
 
-// 3D Fold Animation Variants
+// Detect touch-only devices (no hover) for lighter animation paths
+const isTouchDevice =
+  typeof window !== 'undefined' && !window.matchMedia('(hover: hover)').matches;
+
+// 3D Fold Animation Variants — blur removed on mobile for GPU perf
 const titleContainerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -26,14 +30,14 @@ const titleFoldVariants = {
     rotateX: -85,
     y: 35,
     scale: 0.95,
-    filter: 'blur(6px)',
+    ...(isTouchDevice ? {} : { filter: 'blur(6px)' }),
   },
   visible: {
     opacity: 1,
     rotateX: 0,
     y: 0,
     scale: 1,
-    filter: 'blur(0px)',
+    ...(isTouchDevice ? {} : { filter: 'blur(0px)' }),
     transition: {
       duration: 0.85,
       ease: [0.16, 1, 0.3, 1],
@@ -57,13 +61,13 @@ const descFoldVariants = {
     opacity: 0,
     rotateX: -70,
     y: 20,
-    filter: 'blur(4px)',
+    ...(isTouchDevice ? {} : { filter: 'blur(4px)' }),
   },
   visible: {
     opacity: 1,
     rotateX: 0,
     y: 0,
-    filter: 'blur(0px)',
+    ...(isTouchDevice ? {} : { filter: 'blur(0px)' }),
     transition: {
       duration: 0.65,
       ease: [0.16, 1, 0.3, 1],
@@ -132,23 +136,24 @@ const Hero = () => {
 
   return (
     <div className="relative w-full h-screen overflow-hidden flex items-center justify-center">
-      {/* Background Image Carousel */}
+      {/* Background Image Carousel — Pre-rendered, opacity-only cross-fade (no DOM churn) */}
       <div className="absolute inset-0">
-        <AnimatePresence initial={false}>
-          <motion.img
-            key={currentImageIndex}
-            src={heroImages[currentImageIndex]}
+        {heroImages.map((src, i) => (
+          <img
+            key={src}
+            src={src}
             alt="Hero background"
-            className="absolute inset-0 w-full h-full object-cover"
-            fetchPriority={currentImageIndex === 0 ? "high" : "auto"}
-            loading={currentImageIndex === 0 ? "eager" : "lazy"}
-            decoding={currentImageIndex === 0 ? "sync" : "async"}
-            initial={{ opacity: 0, scale: 1.06 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, ease: 'easeInOut' }}
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out"
+            style={{
+              opacity: i === currentImageIndex ? 1 : 0,
+              willChange: "opacity",
+              contain: "paint",
+            }}
+            fetchPriority={i === 0 ? "high" : "auto"}
+            loading={i === 0 ? "eager" : "lazy"}
+            decoding={i === 0 ? "sync" : "async"}
           />
-        </AnimatePresence>
+        ))}
       </div>
 
       {/* Curtain Overlays */}
@@ -270,4 +275,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default Hero;

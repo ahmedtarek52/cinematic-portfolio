@@ -25,18 +25,22 @@ const Navbar = () => {
     "Contact",
   ];
 
-  // Handle scroll event to change navbar style
+  // Handle scroll event to change navbar style — RAF-throttled for performance
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          const shouldBeScrolled = window.scrollY > 50;
+          setScrolled((prev) => (prev === shouldBeScrolled ? prev : shouldBeScrolled));
+          ticking = false;
+        });
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   // Determine if we're on the home page

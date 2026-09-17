@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from "react";
+import React, { useState, useRef, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { Film, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
@@ -12,6 +12,7 @@ export const CinematicTrailers = () => {
   const [activeMobileIndex, setActiveMobileIndex] = useState(0);
   const sectionRef = useRef(null);
   const mobileSliderRef = useRef(null);
+  const scrollTicking = useRef(false);
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
 
   const { data: trailers = [] } = useQuery({
@@ -43,16 +44,22 @@ export const CinematicTrailers = () => {
     setActiveTrailerId(trailers[prevIdx].id);
   };
 
-  // Mobile slider navigation handlers
-  const handleMobileScroll = () => {
-    if (!mobileSliderRef.current) return;
-    const { scrollLeft, clientWidth } = mobileSliderRef.current;
-    const cardWidth = clientWidth * 0.85;
-    const index = Math.round(scrollLeft / (cardWidth || 1));
-    setActiveMobileIndex(
-      Math.min(Math.max(0, index), featuredTrailers.length - 1),
-    );
-  };
+  // Mobile slider navigation handlers — RAF-throttled for smooth momentum scroll
+  const handleMobileScroll = useCallback(() => {
+    if (scrollTicking.current) return;
+    scrollTicking.current = true;
+    requestAnimationFrame(() => {
+      if (mobileSliderRef.current) {
+        const { scrollLeft, clientWidth } = mobileSliderRef.current;
+        const cardWidth = clientWidth * 0.85;
+        const index = Math.round(scrollLeft / (cardWidth || 1));
+        setActiveMobileIndex(
+          Math.min(Math.max(0, index), featuredTrailers.length - 1),
+        );
+      }
+      scrollTicking.current = false;
+    });
+  }, [featuredTrailers.length]);
 
   const scrollToMobileSlide = (index) => {
     if (!mobileSliderRef.current) return;

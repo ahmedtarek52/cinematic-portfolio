@@ -624,6 +624,23 @@ html {
   [class*="absolute"] {
     max-width: 100vw;
   }
+
+  /* Reduce GPU-heavy backdrop-blur on mobile for smoother scrolling.
+     Stacked blur layers (navbar + control bars + overlays) choke mobile GPUs. */
+  .backdrop-blur-md {
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+  }
+  .backdrop-blur-xl {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+
+  /* Promote animated/fixed elements to their own compositor layer on mobile */
+  header {
+    will-change: transform;
+    contain: layout style;
+  }
 }
 
 /* Ultra-wide screen optimizations */

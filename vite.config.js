@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 function contactApiDevPlugin() {
   let devMode = 'development';
@@ -64,7 +65,17 @@ function contactApiDevPlugin() {
 // https://vite.dev/config/
 export default defineConfig({
   base: '/',
-  plugins: [react(), contactApiDevPlugin()],
+  plugins: [
+    react(),
+    contactApiDevPlugin(),
+    visualizer({
+      filename: 'stats.html',
+      title: 'Bundle Analytics - Cinematic Portfolio',
+      open: true,
+      gzipSize: true,
+      brotliSize: true,
+    }),
+  ],
   build: {
     rollupOptions: {
       output: {

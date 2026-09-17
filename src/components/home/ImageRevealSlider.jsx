@@ -7,7 +7,6 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import {
-  Sparkles,
   Play,
   Pause,
   RotateCcw,
@@ -20,13 +19,12 @@ import {
 
 export const ImageRevealSlider = () => {
   const containerRef = useRef(null);
+  const labelRef = useRef(null);
+  const dividerLabelRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [showMetadata, setShowMetadata] = useState(false);
-  const [activeLayerLabel, setActiveLayerLabel] = useState(
-    "50% RAW / 50% Grade",
-  );
 
   // Motion Value normalized 0 -> 1 (tracks divider position)
   const x = useMotionValue(0.5);
@@ -35,17 +33,20 @@ export const ImageRevealSlider = () => {
   const splitClipGrade = useTransform(x, (val) => `inset(0 0 0 ${val * 100}%)`);
   const splitDividerLeft = useTransform(x, (val) => `${val * 100}%`);
 
-  // Update dynamic layer label based on slider coordinate
+  // Update dynamic layer label via direct DOM mutation — bypasses React reconciliation
+  // for zero re-renders during auto-sweep (was causing 60 setState/s)
   useEffect(() => {
     const unsubscribeX = x.on("change", (currX) => {
-      if (currX <= 0.05) {
-        setActiveLayerLabel("100% RAW Sensor Flat");
-      } else if (currX >= 0.95) {
-        setActiveLayerLabel("100% Master Color Grade");
-      } else {
-        setActiveLayerLabel(
-          `${Math.round((1 - currX) * 100)}% RAW / ${Math.round(currX * 100)}% Grade`,
-        );
+      if (labelRef.current) {
+        labelRef.current.textContent =
+          currX <= 0.05
+            ? "100% RAW Sensor Flat"
+            : currX >= 0.95
+              ? "100% Master Color Grade"
+              : `${Math.round((1 - currX) * 100)}% RAW / ${Math.round(currX * 100)}% Grade`;
+      }
+      if (dividerLabelRef.current) {
+        dividerLabelRef.current.textContent = `Divider: ${Math.round(currX * 100)}%`;
       }
     });
 
@@ -219,8 +220,8 @@ export const ImageRevealSlider = () => {
           <span className="font-semibold text-zinc-400 uppercase tracking-wider text-[11px]">
             Reveal:
           </span>
-          <span className="font-mono text-zinc-200 font-bold">
-            {activeLayerLabel}
+          <span ref={labelRef} className="font-mono text-zinc-200 font-bold">
+            50% RAW / 50% Grade
           </span>
         </div>
 
@@ -365,7 +366,7 @@ export const ImageRevealSlider = () => {
           </div>
 
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-black/75 backdrop-blur-md border border-white/10 text-[11px] font-mono text-zinc-300">
-            <span>Divider: {Math.round(x.get() * 100)}%</span>
+            <span ref={dividerLabelRef}>Divider: 50%</span>
           </div>
         </div>
 
