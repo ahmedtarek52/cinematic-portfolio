@@ -127,7 +127,7 @@
     letter-spacing="5"
   >MAHMOUD ABO HUSSEIN</text>
 
-  <!-- CINEMATIC COLORIST -->
+  <!--  Colorist -->
   <text 
     x="256" 
     y="432" 
@@ -137,5 +137,5 @@
     font-size="11.5" 
     font-weight="600" 
     letter-spacing="6"
-  >CINEMATIC COLORIST</text>
+  > Colorist</text>
 </svg>

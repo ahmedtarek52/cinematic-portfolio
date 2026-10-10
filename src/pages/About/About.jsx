@@ -27,7 +27,7 @@ export const aboutData = {
     image: "/images/mahmoud.webp",
     name: "Mahmoud Abo hessein",
     title: "About Me",
-    role: "Cinematic Colorist & Visual Storyteller",
+    role: " Colorist",
     quote: "I believe the best grades are often the ones you don’t notice immediately — they simply make the image feel right.",
     paragraphs: [
       "For me, color grading is more than balancing exposure or creating beautiful images. It’s about understanding the story behind every frame and using color, contrast, light, and texture to shape how an audience feels.",

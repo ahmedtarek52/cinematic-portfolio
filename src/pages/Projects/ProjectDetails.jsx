@@ -123,6 +123,7 @@ const ProjectDetails = () => {
         </div>
 
         {/* Overview div */}
+        {project.overview && project.overview?.length > 0 && (
         <div className="space-y-4">
           <h2 className="text-2xl font-bold text-white">Overview</h2>
           <p className="text-gray-400 leading-relaxed text-lg">
@@ -139,14 +140,17 @@ const ProjectDetails = () => {
             ))}
           </div>
         </div>
+        )}
 
         {/* Approach div */}
+        {project.approach && project.approach?.length > 0 && (
         <div className="space-y-4">
           <h2 className="text-2xl font-bold text-white">Approach</h2>
           <p className="text-gray-400 leading-relaxed text-lg">
             {project.approach}
           </p>
         </div>
+        )}
 
         {/* Stills div */}
         {project.stills && project.stills.length > 0 && (

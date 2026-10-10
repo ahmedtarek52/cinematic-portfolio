@@ -45,8 +45,7 @@ const Footer = () => {
                 </span>
               </Link>
               <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
-                Cinematic colorist — shaping emotion through light,
-                hue, and narrative.
+                Colorist — shaping emotion through light, hue, and narrative.
               </p>
             </div>
 
