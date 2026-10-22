@@ -22,8 +22,6 @@ export const ImageRevealSlider = () => {
   const labelRef = useRef(null);
   const dividerLabelRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
   const [showMetadata, setShowMetadata] = useState(false);
 
   // Motion Value normalized 0 -> 1 (tracks divider position)
@@ -74,96 +72,24 @@ export const ImageRevealSlider = () => {
     };
   }, [isPlaying, x]);
 
-  // Unified pointer down handler that keeps line and puck handle 100% anchored together
-  const handlePointerDownSplit = (e) => {
-    e.stopPropagation();
-    setIsPlaying(false);
-    setIsDragging(true);
-
-    const updatePosition = (clientX) => {
-      if (!containerRef.current || clientX === undefined) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const newX = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-      x.set(newX);
-    };
-
-    updatePosition(e.clientX ?? e.touches?.[0]?.clientX);
-
-    const onPointerMove = (moveEvent) => {
-      const clientX = moveEvent.clientX ?? moveEvent.touches?.[0]?.clientX;
-      if (clientX !== undefined) updatePosition(clientX);
-    };
-
-    const onPointerUp = () => {
-      setIsDragging(false);
-      window.removeEventListener("pointermove", onPointerMove);
-      window.removeEventListener("pointerup", onPointerUp);
-      window.removeEventListener("touchmove", onPointerMove);
-      window.removeEventListener("touchend", onPointerUp);
-    };
-
-    window.addEventListener("pointermove", onPointerMove);
-    window.addEventListener("pointerup", onPointerUp);
-    window.addEventListener("touchmove", onPointerMove, { passive: true });
-    window.addEventListener("touchend", onPointerUp);
+  const updateDividerPosition = (clientX) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    x.set(Math.max(0, Math.min(1, (clientX - rect.left) / rect.width)));
   };
 
-  // Handle pointer coordinate updates when clicking anywhere on the container.
-  // On touch devices we must distinguish a deliberate tap from a scroll gesture —
-  // if the finger moves more than 10px between touchstart and touchend we treat
-  // it as a scroll and do nothing.
-  const touchStartRef = useRef(null);
+  const handlePointerDownSplit = (e) => {
+    e.preventDefault();
+    setIsPlaying(false);
+    e.currentTarget.setPointerCapture(e.pointerId);
+    updateDividerPosition(e.clientX);
+  };
 
-  const handleContainerTouchStart = useCallback((e) => {
-    const touch = e.touches?.[0];
-    if (touch) {
-      touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+  const handlePointerMoveSplit = (e) => {
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      updateDividerPosition(e.clientX);
     }
-  }, []);
-
-  const handleContainerTouchEnd = useCallback(
-    (e) => {
-      if (!touchStartRef.current || !containerRef.current) return;
-      const touch = e.changedTouches?.[0];
-      if (!touch) return;
-
-      const dx = Math.abs(touch.clientX - touchStartRef.current.x);
-      const dy = Math.abs(touch.clientY - touchStartRef.current.y);
-      touchStartRef.current = null;
-
-      // Only treat as a tap if the finger barely moved
-      if (dx > 10 || dy > 10) return;
-
-      setIsPlaying(false);
-      const rect = containerRef.current.getBoundingClientRect();
-      const newX = Math.max(
-        0,
-        Math.min(1, (touch.clientX - rect.left) / rect.width),
-      );
-      animate(x, newX, { type: "spring", stiffness: 350, damping: 28 });
-    },
-    [x],
-  );
-
-  // Desktop mouse clicks — fire immediately (no scroll ambiguity)
-  const handlePointerDownContainer = useCallback(
-    (e) => {
-      // Ignore touch events — handled by touch start/end pair above
-      if (e.pointerType === "touch") return;
-      if (!containerRef.current) return;
-      setIsPlaying(false);
-      const rect = containerRef.current.getBoundingClientRect();
-      const clientX = e.clientX;
-      if (clientX === undefined) return;
-
-      const newX = Math.max(
-        0,
-        Math.min(1, (clientX - rect.left) / rect.width),
-      );
-      animate(x, newX, { type: "spring", stiffness: 350, damping: 28 });
-    },
-    [x],
-  );
+  };
 
   // Keyboard navigation
   const handleKeyDown = useCallback(
@@ -326,16 +252,7 @@ export const ImageRevealSlider = () => {
         aria-valuemax={100}
         aria-valuenow={Math.round(x.get() * 100)}
         onKeyDown={handleKeyDown}
-        onPointerDown={handlePointerDownContainer}
-        onTouchStart={handleContainerTouchStart}
-        onTouchEnd={handleContainerTouchEnd}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => {
-          setIsHovered(false);
-          setIsDragging(false);
-        }}
-        className="relative w-full aspect-[16/9] md:aspect-[21/9] max-h-[640px] rounded-3xl overflow-hidden border border-zinc-700 shadow-2xl bg-zinc-950 cursor-ew-resize focus:outline-none focus:ring-2 focus:ring-zinc-400 transition-shadow z-10"
-        style={{ touchAction: "pan-y" }}
+        className="relative w-full aspect-[16/9] md:aspect-[21/9] max-h-[640px] rounded-3xl overflow-hidden border border-zinc-700 shadow-2xl bg-zinc-950 focus:outline-none focus:ring-2 focus:ring-zinc-400 transition-shadow z-10"
       >
         {/* Layer 1: Base RAW Flat Image (Before Edit) */}
         <div className="absolute inset-0 w-full h-full">
@@ -384,6 +301,7 @@ export const ImageRevealSlider = () => {
         <motion.div
           style={{ left: splitDividerLeft }}
           onPointerDown={handlePointerDownSplit}
+          onPointerMove={handlePointerMoveSplit}
           className="absolute top-0 bottom-0 z-30 -translate-x-1/2 flex items-center justify-center cursor-ew-resize select-none touch-none pointer-events-auto"
         >
           {/* Full-height glowing divider line */}

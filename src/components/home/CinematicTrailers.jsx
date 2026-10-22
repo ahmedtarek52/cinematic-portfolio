@@ -50,12 +50,22 @@ export const CinematicTrailers = () => {
     scrollTicking.current = true;
     requestAnimationFrame(() => {
       if (mobileSliderRef.current) {
-        const { scrollLeft, clientWidth } = mobileSliderRef.current;
-        const cardWidth = clientWidth * 0.85;
-        const index = Math.round(scrollLeft / (cardWidth || 1));
-        setActiveMobileIndex(
-          Math.min(Math.max(0, index), featuredTrailers.length - 1),
-        );
+        const slider = mobileSliderRef.current;
+        const sliderCenter =
+          slider.getBoundingClientRect().left + slider.clientWidth / 2;
+        let closestIndex = 0;
+        let closestDistance = Infinity;
+
+        Array.from(slider.children).forEach((card, index) => {
+          const rect = card.getBoundingClientRect();
+          const distance = Math.abs(rect.left + rect.width / 2 - sliderCenter);
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestIndex = index;
+          }
+        });
+
+        setActiveMobileIndex(closestIndex);
       }
       scrollTicking.current = false;
     });
@@ -176,13 +186,11 @@ export const CinematicTrailers = () => {
           ref={mobileSliderRef}
           onScroll={handleMobileScroll}
           className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar gap-4 pb-6 pt-1 -mx-4 px-4"
-          style={{ touchAction: "pan-x pan-y" }}
         >
           {featuredTrailers.map((trailer) => (
             <div
               key={trailer.id}
               className="w-[85vw] max-w-[340px] flex-shrink-0 snap-center"
-              style={{ touchAction: "pan-y" }}
             >
               <TrailerCard
                 trailer={trailer}

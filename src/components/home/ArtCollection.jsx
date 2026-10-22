@@ -61,10 +61,22 @@ export const ArtCollection = () => {
     scrollTicking.current = true;
     requestAnimationFrame(() => {
       if (mobileGalleryRef.current) {
-        const { scrollLeft, clientWidth } = mobileGalleryRef.current;
-        const cardWidth = clientWidth * 0.82;
-        const index = Math.round(scrollLeft / (cardWidth || 1));
-        setActiveMobileIndex(Math.min(Math.max(0, index), images.length - 1));
+        const gallery = mobileGalleryRef.current;
+        const galleryCenter =
+          gallery.getBoundingClientRect().left + gallery.clientWidth / 2;
+        let closestIndex = 0;
+        let closestDistance = Infinity;
+
+        Array.from(gallery.children).forEach((card, index) => {
+          const rect = card.getBoundingClientRect();
+          const distance = Math.abs(rect.left + rect.width / 2 - galleryCenter);
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestIndex = index;
+          }
+        });
+
+        setActiveMobileIndex(closestIndex);
       }
       scrollTicking.current = false;
     });
@@ -183,14 +195,11 @@ export const ArtCollection = () => {
           ref={mobileGalleryRef}
           onScroll={handleMobileScroll}
           className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar gap-4 pb-4 -mx-4 px-4"
-          style={{ touchAction: "pan-x pan-y" }}
         >
-          {images.map((image, index) => (
+          {images.map((image) => (
             <div
               key={image.id}
-              className="w-[82vw] max-w-[340px] aspect-[4/5] flex-shrink-0 snap-center rounded-2xl overflow-hidden shadow-xl border border-border/60 bg-space-800 relative group cursor-pointer"
-              style={{ touchAction: "pan-y" }}
-              onClick={() => scrollToMobileSlide(index)}
+              className="w-[82vw] max-w-[340px] aspect-[4/5] flex-shrink-0 snap-center rounded-2xl overflow-hidden shadow-xl border border-border/60 bg-space-800 relative group"
             >
               <img
                 src={image.url}
