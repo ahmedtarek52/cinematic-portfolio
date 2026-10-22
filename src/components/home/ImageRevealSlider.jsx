@@ -108,17 +108,62 @@ export const ImageRevealSlider = () => {
     window.addEventListener("touchend", onPointerUp);
   };
 
-  // Handle pointer coordinate updates when clicking anywhere on the container
-  const handlePointerDownContainer = (e) => {
-    if (!containerRef.current) return;
-    setIsPlaying(false);
-    const rect = containerRef.current.getBoundingClientRect();
-    const clientX = e.clientX ?? (e.touches && e.touches[0]?.clientX);
-    if (clientX === undefined) return;
+  // Handle pointer coordinate updates when clicking anywhere on the container.
+  // On touch devices we must distinguish a deliberate tap from a scroll gesture —
+  // if the finger moves more than 10px between touchstart and touchend we treat
+  // it as a scroll and do nothing.
+  const touchStartRef = useRef(null);
 
-    const newX = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-    animate(x, newX, { type: "spring", stiffness: 350, damping: 28 });
-  };
+  const handleContainerTouchStart = useCallback((e) => {
+    const touch = e.touches?.[0];
+    if (touch) {
+      touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+    }
+  }, []);
+
+  const handleContainerTouchEnd = useCallback(
+    (e) => {
+      if (!touchStartRef.current || !containerRef.current) return;
+      const touch = e.changedTouches?.[0];
+      if (!touch) return;
+
+      const dx = Math.abs(touch.clientX - touchStartRef.current.x);
+      const dy = Math.abs(touch.clientY - touchStartRef.current.y);
+      touchStartRef.current = null;
+
+      // Only treat as a tap if the finger barely moved
+      if (dx > 10 || dy > 10) return;
+
+      setIsPlaying(false);
+      const rect = containerRef.current.getBoundingClientRect();
+      const newX = Math.max(
+        0,
+        Math.min(1, (touch.clientX - rect.left) / rect.width),
+      );
+      animate(x, newX, { type: "spring", stiffness: 350, damping: 28 });
+    },
+    [x],
+  );
+
+  // Desktop mouse clicks — fire immediately (no scroll ambiguity)
+  const handlePointerDownContainer = useCallback(
+    (e) => {
+      // Ignore touch events — handled by touch start/end pair above
+      if (e.pointerType === "touch") return;
+      if (!containerRef.current) return;
+      setIsPlaying(false);
+      const rect = containerRef.current.getBoundingClientRect();
+      const clientX = e.clientX;
+      if (clientX === undefined) return;
+
+      const newX = Math.max(
+        0,
+        Math.min(1, (clientX - rect.left) / rect.width),
+      );
+      animate(x, newX, { type: "spring", stiffness: 350, damping: 28 });
+    },
+    [x],
+  );
 
   // Keyboard navigation
   const handleKeyDown = useCallback(
@@ -282,12 +327,15 @@ export const ImageRevealSlider = () => {
         aria-valuenow={Math.round(x.get() * 100)}
         onKeyDown={handleKeyDown}
         onPointerDown={handlePointerDownContainer}
+        onTouchStart={handleContainerTouchStart}
+        onTouchEnd={handleContainerTouchEnd}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => {
           setIsHovered(false);
           setIsDragging(false);
         }}
         className="relative w-full aspect-[16/9] md:aspect-[21/9] max-h-[640px] rounded-3xl overflow-hidden border border-zinc-700 shadow-2xl bg-zinc-950 cursor-ew-resize focus:outline-none focus:ring-2 focus:ring-zinc-400 transition-shadow z-10"
+        style={{ touchAction: "pan-y" }}
       >
         {/* Layer 1: Base RAW Flat Image (Before Edit) */}
         <div className="absolute inset-0 w-full h-full">

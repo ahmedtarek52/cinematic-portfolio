@@ -182,12 +182,14 @@ export const ArtCollection = () => {
         <div
           ref={mobileGalleryRef}
           onScroll={handleMobileScroll}
-          className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar gap-4 pb-4 -mx-4 px-4 touch-pan-x"
+          className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar gap-4 pb-4 -mx-4 px-4"
+          style={{ touchAction: "pan-x pan-y" }}
         >
           {images.map((image, index) => (
             <div
               key={image.id}
               className="w-[82vw] max-w-[340px] aspect-[4/5] flex-shrink-0 snap-center rounded-2xl overflow-hidden shadow-xl border border-border/60 bg-space-800 relative group cursor-pointer"
+              style={{ touchAction: "pan-y" }}
               onClick={() => scrollToMobileSlide(index)}
             >
               <img

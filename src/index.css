@@ -641,6 +641,17 @@ html {
     will-change: transform;
     contain: layout style;
   }
+
+  /* Promote lazy-loaded sections so content paint doesn't trigger main-thread layout */
+  section {
+    contain: content;
+  }
+
+  /* Disable the continuous pulsing ring on the slider puck handle — it burns
+     GPU cycles on every composite frame and causes scroll jank on mobile */
+  .animate-ping {
+    animation: none !important;
+  }
 }
 
 /* Ultra-wide screen optimizations */

@@ -175,12 +175,14 @@ export const CinematicTrailers = () => {
         <div
           ref={mobileSliderRef}
           onScroll={handleMobileScroll}
-          className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar gap-4 pb-6 pt-1 -mx-4 px-4 touch-pan-x"
+          className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar gap-4 pb-6 pt-1 -mx-4 px-4"
+          style={{ touchAction: "pan-x pan-y" }}
         >
           {featuredTrailers.map((trailer) => (
             <div
               key={trailer.id}
               className="w-[85vw] max-w-[340px] flex-shrink-0 snap-center"
+              style={{ touchAction: "pan-y" }}
             >
               <TrailerCard
                 trailer={trailer}

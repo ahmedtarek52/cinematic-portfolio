@@ -115,13 +115,21 @@ const Footer = () => {
           <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent mb-6" />
 
           {/* Bottom bar */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-gray-600 text-xs">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+            <p className="text-gray-600 text-center sm:text-left">
               © {new Date().getFullYear()} Mahmoud Abo Hussein. All rights
               reserved.
             </p>
-            <p className="text-gray-700 text-xs">
-              Crafted with passion &amp; precision
+            <p className="text-gray-600 text-center sm:text-right">
+              Designed &amp; Developed by{' '}
+              <a
+                href="https://ahmedtarek.online"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors duration-200 font-medium underline underline-offset-4 decoration-gray-700 hover:decoration-gray-300"
+              >
+                Ahmed Tarek
+              </a>
             </p>
           </div>
         </div>
